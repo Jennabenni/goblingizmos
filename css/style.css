@@ -1,0 +1,54 @@
+img {
+    width: 100px;
+    height: auto;
+}
+
+aside {
+    /*Code from another assignment*/
+    float: right;
+    /*position: absolute;*/
+    height: 100px;
+
+    /*margin-left: 800px;*/
+    height: 600px;
+    width: 250px;
+    text-align: center;
+    border: solid 1px black;
+    font-size: large;
+
+}
+
+.firstContainer {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+}
+
+
+.secondContainer {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+}
+
+
+.categoryContainer {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    padding: 10px;
+}
+
+
+/*Phone*/
+@media (max-width:600px) {}
+
+
+
+
+/*Tablet*/
+@media (min-width: 600px) and (max-width: 1000px) {}
+
+
+
+/*Desktop*/
+@media (min-width:1000px) {}
