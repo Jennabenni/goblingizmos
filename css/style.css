@@ -1,3 +1,27 @@
+body {
+    background-color: #E4E9ED;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+
+h1,
+h2,
+h3 {
+    font-style: verdana;
+}
+
+
+p {
+    font-style: arial;
+}
+
 img {
     width: 100px;
     height: auto;
@@ -32,11 +56,7 @@ aside {
 }
 
 
-.categoryContainer {
-    display: grid;
-    grid-template-columns: auto auto auto auto auto;
-    padding: 10px;
-}
+
 
 
 /*Phone*/
@@ -51,4 +71,68 @@ aside {
 
 
 /*Desktop*/
-@media (min-width:1000px) {}
+@media (min-width:1000px) {
+
+
+    header {
+        background-color: #232C33;
+        padding: 5px;
+        display: block;
+        color: white;
+    }
+
+    .headerGrid {
+
+        display: flex;
+        /* grid-template-columns: auto auto auto auto;*/
+        justify-content: space-between;
+        padding: 5px;
+        align-items: end;
+        /*DO NOT TOUCH THE ITEM ALIGN*/
+        align-content: first baseline;
+    }
+
+    ol {
+        list-style: none;
+        display: flex;
+        align-items: center;
+
+        justify-content: space-around;
+    }
+
+    li {
+        padding: 3px;
+
+
+    }
+
+
+    .logoImage {
+        width: 120px;
+        height: auto;
+    }
+
+    .titleLink {
+        color: white;
+        font-size: large;
+
+    }
+
+
+
+    h1 {
+        font-size: xxx-large;
+
+
+    }
+
+
+    .categoryContainer {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto;
+        padding: 10px;
+    }
+
+
+
+}
