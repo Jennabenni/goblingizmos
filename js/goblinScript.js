@@ -23,6 +23,9 @@ var theTextOne = document.createTextNode(
 
 )
 
+textOneAnchor.appendChild(theTextOne);
+
+
 divForText.appendChild(textOneAnchor);
 
 
