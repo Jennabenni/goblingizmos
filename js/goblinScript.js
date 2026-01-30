@@ -5,11 +5,11 @@ FAQ section because we decided to do a drop down arrow*/
 
 function insideBrowser() {
     // debugging
-    console.log("Script loaded");
+    //console.log("Script loaded");
 
     // store the faq answers here
     var faqAnswers = {
-        questionOneClick: "Not at all! At Goblin Gizmos, we welcome collectors of all expertise levels. If you have something you collect, then congratulations! You’re welcome on our website.",
+        questionOneClick: "Not at all! At Goblin Gizmos, we welcome collectors of all expertise levels. If you have something you collect, then congratulations! You're welcome on our website.",
 
         questionTwoClick: "Be sure to check out our specific list of categories to see more specifics on what others are posting. Otherwise, check out our Terms of Service (TOS) to see any items or themes that may be banned.",
 
@@ -23,25 +23,25 @@ function insideBrowser() {
     // toggling the dropdown
     function toggleDropdown(event) {
         // debugging
-        console.log("Clicked:", event.currentTarget.id);
+        //console.log("Clicked:", event.currentTarget.id);
 
         var clickedId = event.currentTarget.id;
         var answerDivId = clickedId.replace("Click", "DOM");
         var answerDiv = document.getElementById(answerDivId);
 
         // debugging
-        console.log("Current content:", answerDiv.innerHTML);
+        //console.log("Current content:", answerDiv.innerHTML);
 
         // closing the dropdown
         if (answerDiv.innerHTML.trim() !== "") {
             // debugging
-            console.log("Closing dropdown");
+            //console.log("Closing dropdown");
             answerDiv.innerHTML = "";
             return;
         }
 
         // debugging
-        console.log("Opening dropdown");
+        //console.log("Opening dropdown");
 
         // showing the answer
         var paragraph = document.createElement("p");
