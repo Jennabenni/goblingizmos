@@ -1,6 +1,4 @@
 
-/*At the moment, I only need JS for small things.  This is DOM for the
-FAQ section because we decided to do a drop down arrow*/
 
 
 function insideBrowser() {
