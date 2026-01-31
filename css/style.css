@@ -603,5 +603,14 @@ img {
 
     }
 
+    .bountiesSection {
+        background-color: #E4E9ED;
+        border: none;
+        border-left: black 1px solid;
+        font-size: x-large;
+        font-weight: 700;
+    }
+
+
 
 }
