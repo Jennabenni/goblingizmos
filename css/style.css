@@ -443,13 +443,19 @@ img {
     .searchGridContainer {
         display: grid;
         grid-template-columns: auto auto auto;
-        grid-template-rows: auto auto
+        grid-template-rows: auto auto;
+        margin-top: 25px;
+
+
     }
 
     #searchGridItem1 {
         /*aside*/
         grid-column-start: 3;
         grid-row: 2 / span 2;
+        align-content: center;
+
+
 
     }
 
@@ -459,12 +465,18 @@ img {
         grid-row-start: 1;
         background-color: white;
         padding: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 700px;
+        box-shadow: 5px 5px 5px gray;
     }
 
     #searchGridItem3 {
         /*Bounty button*/
         grid-column-start: 3;
         grid-row-start: 1;
+        padding: 10px;
+        align-content: center;
     }
 
     #searchGridItem4 {
@@ -484,6 +496,7 @@ img {
         border-radius: 5px;
 
 
+
     }
 
     .searchBarItems {
@@ -499,5 +512,19 @@ img {
         border-right: solid black 3px;
         height: 40px;
     }
+
+
+    /*Buttons (Perhaps this can be used later)*/
+
+    .goblinButtons {
+        background-color: #375F5D;
+        padding: 25px;
+        color: white;
+        font-size: larger;
+        font-weight: 800;
+
+    }
+
+
 
 }
