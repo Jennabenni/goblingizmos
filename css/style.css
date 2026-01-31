@@ -348,7 +348,8 @@ img {
     .communityGridContainer {
         display: grid;
         grid-template-columns: auto auto auto;
-        ;
+
+
     }
 
     #comGridItem1 {
@@ -370,6 +371,11 @@ img {
         grid-column: 1 / span 2;
         grid-row-start: 2;
         justify-self: center;
+        border: solid 1px gray;
+        box-shadow: 5px 5px 5px gray;
+        background-color: white;
+        width: 700px;
+        height: 100px;
     }
 
     #comGridItem4 {
@@ -432,5 +438,66 @@ img {
     }
 
 
+    /*Search Tab*/
+
+    .searchGridContainer {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-template-rows: auto auto
+    }
+
+    #searchGridItem1 {
+        /*aside*/
+        grid-column-start: 3;
+        grid-row: 2 / span 2;
+
+    }
+
+    #searchGridItem2 {
+        /*search bar*/
+        grid-column: 1 / span 2;
+        grid-row-start: 1;
+        background-color: white;
+        padding: 10px;
+    }
+
+    #searchGridItem3 {
+        /*Bounty button*/
+        grid-column-start: 3;
+        grid-row-start: 1;
+    }
+
+    #searchGridItem4 {
+        /*Posts*/
+        grid-column: 1 / span 2;
+        grid-row: 2 / span 2;
+    }
+
+    .searchBar {
+        background-color: white;
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        background-color: #B4BEC9;
+        padding: 10px;
+        justify-content: center;
+        column-gap: 7px;
+        border-radius: 5px;
+
+
+    }
+
+    .searchBarItems {
+        width: 150px;
+        height: 35px;
+        border: none;
+        background-color: #B4BEC9;
+        color: black;
+        font-weight: 700;
+    }
+
+    #borderForSearch {
+        border-right: solid black 3px;
+        height: 40px;
+    }
 
 }
