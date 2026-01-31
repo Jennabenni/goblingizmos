@@ -536,6 +536,7 @@ img {
         grid-template-columns: auto auto auto;
         grid-auto-rows: max-content;
         margin-top: 25px;
+        margin-bottom: 25px;
 
 
     }
