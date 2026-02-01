@@ -68,100 +68,138 @@
     </header>
 
 
+    <div class="FAQ">
 
-    <h2>Frequently Asked Questions</h2>
-    <!--Would this be DOM??-->
-
-    <div>
-        <div>
-            <a href="#" id="questionOneClick">Is the website only for advanced collectors?</a>
-        </div>
-        <div id="questionOneDOM">
-
-        </div>
-
+        <h2 class="FAQHeading">Frequently Asked Questions</h2>
+        <!--Would this be DOM??-->
 
         <div>
-            <a href="#" id="questionTwoClick">What am I allowed to post here?</a>
-        </div>
-        <div id="questionTwoDOM">
+            <div class="bordersForQuestions">
+                <a href="#" id="questionOneClick">Is the website only for advanced collectors? </a>
+
+            </div>
+            <div id="questionOneDOM" class="answerBox">
+
+
+            </div>
+
+
+
+
+
+
+            <div class="bordersForQuestions">
+                <a href="#" id="questionTwoClick">What am I allowed to post here? </a>
+            </div>
+            <div id="questionTwoDOM" class="answerBox">
+
+            </div>
+
+
+            <div class="bordersForQuestions">
+                <a href="#" id="questionThreeClick">Do I need an account to post here?</a>
+            </div>
+            <div id="questionThreeDOM" class="answerBox">
+
+            </div>
+
+
+            <div class="bordersForQuestions">
+                <a href="#" id="questionFourClick">Can I make transactions on the website? </a>
+            </div>
+            <div id="questionFourDOM" class="answerBox">
+
+            </div>
+
+
+            <div class="bordersForQuestions">
+                <a href="#" id="questionFiveClick">What do I do if someone scams me?</a>
+            </div>
+            <div id="questionFiveDOM" class="answerBox">
+
+            </div>
+
+
 
         </div>
+    </div>
 
-
+    <div class="FAQ">
+        <div class="FAQHeading">
+            <h2>Contact Us</h2>
+        </div>
         <div>
-            <a href="#" id="questionThreeClick">Do I need an account to post here?</a>
+
+            <p>Have some feedback? Contact us through our email to ensure we can respond to you as soon as possible.
+                goblingizmos@goblins.net</p>
         </div>
-        <div id="questionThreeDOM">
+    </div>
 
-        </div>
+    <div class="FAQ">
 
-
-        <div>
-            <a href="#" id="questionFourClick">Can I make transactions on the website?</a>
-        </div>
-        <div id="questionFourDOM">
-
+        <div class="FAQHeading">
+            <h2>Report</h2>
         </div>
 
+        <form action="/support.html">
 
-        <div>
-            <a href="#" id="questionFiveClick">What do I do if someone scams me?</a>
-        </div>
-        <div id="questionFiveDOM">
+            <div class="formStyleSupport">
+                <label for="fname">Your username</label>
+            </div>
 
-        </div>
 
+            <div class="formStyleSupport">
+
+                <input type="text" id="fname" name="fname">
+            </div>
+
+            <div class="formStyleSupport">
+                <label for="userreport">Username of person being reported</label>
+            </div>
+
+
+            <div class="formStyleSupport">
+                <input type="text" id="userreport" name="userreport">
+            </div>
+
+            <div class="formStyleSupport">
+                <label for="report">Reason for reporting</label>
+            </div>
+
+
+            <div class="formStyleSupport">
+                <select name="reportreason" id="report">
+                    <option value="Hate">Hate speech or harmful language</option>
+                    <option value="sexual">Sexual content</option>
+
+                    <option value="scam">User is a scammer</option>
+
+                    <option value="otheroption">Other (please write in box below)</option>
+
+                </select>
+            </div>
+
+            <div class="formStyleSupport">
+                <label for="text">Additional Details</label>
+            </div>
+            <div class="formStyleSupport">
+                <textarea name="information" rows="10" columns="30" id="text"></textarea>
+            </div>
+
+
+            <div class="formStyleSupport">
+                <label for="submitForm"></label>
+            </div>
+            <div class="formStyleSupport">
+                <input type="button" id="submitForm" value="Submit Report" class="goblinButtons">
+            </div>
+
+
+
+        </form>
 
 
     </div>
-
-
-    <div>
-        <h2>Contact Us</h2>
-
-        <p>Have some feedback? Contact us through our email to ensure we can respond to you as soon as possible.
-            goblingizmos@goblins.net</p>
-    </div>
-
-
-
-    <h2>Report</h2>
-    <!--THIS IS A FORMMMMMMM-->
-    <form action="/support.html">
-        <!--Will need to be changed when the time comes-->
-
-        <label for="fname">Your username</label>
-        <input type="text" id="fname" name="fname">
-
-
-        <label for="userreport">Username of person being reported</label>
-        <input type="text" id="userreport" name="userreport">
-
-        <label></label>
-        <select name="reportreason" id="report">
-            <option value="Hate">Hate speech or harmful language</option>
-            <option value="sexual">Sexual content</option>
-
-            <option value="scam">User is a scammer</option>
-
-            <option value="otheroption">Other (please write in box below)</option>
-
-        </select>
-
-
-        <textarea name="information" rows="10" columns="30"></textarea>
-
-
-        <label for="submitForm"></label>
-        <input type="button" id="submitForm" value="Submit Report">
-
-
-
-    </form>
-
-
-
 
 
     <footer>

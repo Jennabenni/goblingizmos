@@ -660,4 +660,63 @@ img {
 
     }
 
+
+    /*Support*/
+
+
+    .FAQ {
+        background-color: white;
+        padding: 10px;
+        box-shadow: 5px 5px 5px gray;
+        margin-left: auto;
+        margin-right: auto;
+        width: 700px;
+        text-align: left;
+        margin-top: 25px;
+        margin-bottom: 25px;
+
+    }
+
+
+    .FAQHeading {
+        border-bottom: solid 1px gray;
+    }
+
+
+
+    .downArrowIcon {
+        width: 25px;
+    }
+
+    .bordersForQuestions {
+        padding: 10px;
+        border-bottom: solid gray 1px;
+
+    }
+
+    .bordersForQuestions a {
+        color: black;
+    }
+
+
+    .answerBox {
+        border-bottom: solid 1px gray;
+
+
+    }
+
+
+    .formStyleSupport {
+        padding: 10px;
+    }
+
+    .formStyleSupport textarea {
+        width: 600px;
+    }
+
+
+    /*User Profile*/
+
+
+
 }
