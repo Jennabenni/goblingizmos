@@ -645,4 +645,19 @@ img {
         margin-bottom: 25px;
     }
 
+
+    /*TOS*/
+
+    .TOS {
+        background-color: white;
+        padding: 10px;
+        width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 5px 5px 5px gray;
+        margin-bottom: 25px;
+        margin-top: 25px;
+
+    }
+
 }
