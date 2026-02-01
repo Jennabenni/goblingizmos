@@ -522,6 +522,7 @@ img {
         color: white;
         font-size: larger;
         font-weight: 800;
+        display: inline-block;
 
     }
 
@@ -717,6 +718,47 @@ img {
 
     /*User Profile*/
 
+    .entireAreaUserProfile {
+        text-align: center;
+        padding: 20px;
+        width: 700px;
+        margin: auto;
+
+    }
+
+    .smallerProfileBox {
+        background-color: white;
+        padding: 10px;
+        box-shadow: 5px 5px 5px gray;
+        display: grid;
+        grid-template-columns: 25% auto;
+        grid-template-rows: auto auto auto;
+        row-gap: 5px;
+        margin-bottom: 25px;
+
+    }
+
+    .evenSmallerProfileBox {
+        background-color: #232C33;
+        color: white;
+        padding: 10px;
+        width: 450px;
+        border-radius: 5px;
 
 
+    }
+
+    .evenSmallerProfileBox input {
+        width: 400px;
+        height: 40px;
+        background-color: #232C33;
+        border: solid 1px white;
+    }
+
+    .smallerLabelProfile {
+        padding: 10px;
+        width: 400px;
+        text-align: left;
+
+    }
 }
