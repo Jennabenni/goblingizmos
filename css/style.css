@@ -744,6 +744,7 @@ img {
         padding: 10px;
         width: 450px;
         border-radius: 5px;
+        margin-bottom: 25px;
 
 
     }
@@ -753,6 +754,7 @@ img {
         height: 40px;
         background-color: #232C33;
         border: solid 1px white;
+        color: white;
     }
 
     .smallerLabelProfile {
@@ -761,4 +763,25 @@ img {
         text-align: left;
 
     }
+
+    /*Account settings*/
+
+    .accountInfo {
+        text-align: center;
+    }
+
+
+    .deleteButton {
+        background-color: #FF7373;
+        padding: 25px;
+        color: white;
+        font-size: larger;
+        font-weight: 800;
+        display: inline-block;
+        border: solid 1px #FF7373;
+
+
+
+    }
+
 }
