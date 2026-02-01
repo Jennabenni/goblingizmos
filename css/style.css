@@ -613,4 +613,36 @@ img {
 
 
 
+    /*Sign in*/
+
+    .signUpForms {
+        background-color: white;
+        box-shadow: 5px 5px 5px gray;
+        text-align: center;
+        padding: 10px;
+        width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+
+    }
+
+    .signInForm {
+        display: grid;
+        grid-template-columns: auto;
+        row-gap: 20px;
+    }
+
+    .inputBoxes {
+        width: 400px;
+        height: 40px;
+
+    }
+
+    .signUpGap {
+        display: grid;
+        row-gap: 50px;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
 }
