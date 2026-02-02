@@ -23,6 +23,7 @@ p {
     font-style: arial;
 }
 
+
 img {
     width: 100px;
     height: auto;
@@ -54,7 +55,805 @@ img {
 
 
 /*Tablet*/
-@media (min-width: 600px) and (max-width: 1000px) {}
+@media (min-width: 600px) and (max-width: 1000px) {
+
+
+
+    /*Home Page
+    */
+
+
+    .headerGridItem a img {
+        width: 50px;
+    }
+
+
+
+    aside {
+        /*Code from another assignment*/
+        /*float: right;*/
+
+        /*  height: 100px;*/
+
+        /*margin-left: 800px;*/
+        height: 250px;
+        width: 500px;
+        text-align: center;
+        border: solid 1px black;
+        font-size: large;
+        background-color: rgb(233, 233, 233);
+        display: grid;
+        grid-template-columns: auto auto;
+
+        padding: 8px;
+
+
+        /*See, this disturbs the flow, BUUUT it looks like the thing.  And it's not crazy*/
+
+
+
+    }
+
+    .adBoxes {
+        border: 1px black solid;
+
+    }
+
+
+    /*Header css*/
+
+    header {
+        background-color: #232C33;
+        padding: 5px;
+        display: block;
+        color: white;
+    }
+
+    .headerGrid {
+
+        display: flex;
+        /* grid-template-columns: auto auto auto auto;*/
+        justify-content: space-between;
+        padding: 3px;
+        /* align-items: end;*/
+        /*DO NOT TOUCH THE ITEM ALIGN*/
+        align-content: first baseline;
+    }
+
+    ol {
+        list-style: none;
+        display: flex;
+        align-items: center;
+
+        /* justify-content: space-around;*/
+    }
+
+    li {
+        padding: 2px;
+
+
+    }
+
+    /*
+    .logoImage {
+        width: 100px;
+        height: auto;
+    }
+        */
+
+    .titleLink {
+        color: white;
+        font-size: large;
+
+    }
+
+
+
+    h1 {
+        font-size: xx-large;
+
+
+    }
+
+
+
+
+
+
+    /*Footer info*/
+    footer {
+        background-color: #232C33;
+        padding: 5px;
+        display: block;
+        color: white;
+    }
+
+
+    footer a {
+        color: white;
+    }
+
+    .footerFlex {
+
+        display: block;
+        padding: 5px;
+
+    }
+
+    .iconImg {
+        width: 30px;
+        height: auto;
+        padding: 5px;
+    }
+
+    #bottomLogo {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        width: 200px;
+    }
+
+
+
+    /*Home*/
+
+    .homeTabLinks {
+        color: white;
+        font-size: larger;
+        background-color: #375F5D;
+        padding: 20px;
+        /* width: 300px;*/
+
+        text-align: center;
+        justify-content: center;
+
+        border-radius: 2px;
+
+    }
+
+    .homeTabGrid {
+
+        display: flex;
+        align-items: center;
+
+    }
+
+    .homeTabImgBox {
+        background-color: white;
+        padding: 10px;
+        /*width: 650px;*/
+        box-shadow: 10px 5px 5px gray;
+    }
+
+    .homeTabLinks a {
+        color: white;
+    }
+
+    #infoBoxHome {
+        background-color: white;
+        padding: 20px;
+        /*width: 500px;*/
+        box-shadow: 10px 5px 5px gray;
+        /* margin-left: auto;
+        margin-right: 400px;*/
+
+    }
+
+
+
+    .footerGrid {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    .homeImg {
+        width: 220px;
+        background-color: white;
+        padding: 10px;
+        box-shadow: 5px 5px 5px gray;
+    }
+
+
+    .megaGridOrFlex {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-template-rows: max-content;
+    }
+
+    #homeGridItem1 {
+        /*The aside*/
+        grid-column: 1 / span 2;
+        grid-row: 5 / span 4;
+        justify-self: center;
+    }
+
+    #homeGridItem2 {
+        /*welcome box*/
+        grid-column: 1 / span 2;
+        grid-row-start: 1;
+        justify-self: center;
+        /* margin-left: 20px;*/
+        width: 400px;
+    }
+
+    #homeGridItem3 {
+        /*categories button*/
+        grid-column-start: 1;
+        grid-row-start: 2;
+        justify-self: center;
+        padding: 10px;
+        /* height: 50px;*/
+        width: 200px;
+
+
+
+    }
+
+    #homeGridItem4 {
+        /* sign up bitton*/
+        grid-column-start: 2;
+        grid-row-start: 2;
+        justify-self: center;
+        padding: 10px;
+        height: 50px;
+        width: 200px;
+
+    }
+
+    #homeGridItem5 {
+        /* coins img*/
+        grid-column-start: 1;
+        grid-row-start: 3;
+        justify-self: center;
+    }
+
+    #homeGridItem6 {
+        /*turtle*/
+        grid-column-start: 2;
+        grid-row-start: 3;
+        justify-self: center;
+    }
+
+
+
+    /*Categories*/
+
+
+
+    /*This is for categories*/
+
+    .categoryContainer {
+        display: grid;
+        grid-template-columns: auto auto;
+        padding: 10px;
+        row-gap: 50px;
+        column-gap: 50px;
+
+    }
+
+    .categoryGridItem {
+        background-color: white;
+        padding: 5px;
+        box-shadow: 5px 5px 5px gray;
+        border: solid 1px gray;
+
+        text-align: center;
+
+    }
+
+    .categoryGridItem a {
+        color: black
+    }
+
+
+    /*Community Tab*/
+
+    .communityGridContainer {
+        display: grid;
+        grid-template-columns: auto;
+
+
+    }
+
+    #comGridItem1 {
+        /*The aside*/
+
+        grid-row-start: 2;
+        justify-self: center;
+
+        margin-bottom: 25px;
+    }
+
+    #comGridItem2 {
+
+        grid-row-start: 1;
+        justify-self: center;
+        background-color: white;
+        margin-bottom: 25px;
+
+    }
+
+    #comGridItem3 {
+
+        grid-row-start: 3;
+        /* justify-self: center;*/
+        border: solid 1px gray;
+        box-shadow: 5px 5px 5px gray;
+        background-color: white;
+        /* width: 700px;*/
+        /* height: 100px;*/
+        margin-bottom: 25px;
+        text-align: center;
+
+    }
+
+
+
+    #comGridItem4 {
+
+        grid-row-start: 3;
+        justify-self: center;
+    }
+
+
+
+    .comFriendsHeader {
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+
+    /*Smaller grid for text area*/
+
+
+    .secondComGridPost {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto auto;
+        /* width: 500px;*/
+        border: solid 1px gray;
+        box-shadow: 5px 5px 5px gray;
+        height: 200px;
+
+    }
+
+    #postItem1 {
+        grid-column-start: 1;
+        justify-self: center;
+        margin-top: 10px;
+    }
+
+    #postItem2 {
+        grid-column-start: 2;
+        justify-self: center;
+        margin-top: 10px;
+
+    }
+
+    #postItem2 textarea {
+        width: 400px;
+    }
+
+
+    #postItem3 {
+        grid-column-start: 2;
+        grid-row-start: 2;
+        justify-self: center;
+        font-size: larger;
+    }
+
+
+    #postItem4 {
+        grid-column-start: 3;
+        grid-row-start: 2;
+        justify-self: center;
+    }
+
+    /*Images on this tab*/
+    #userProfilePicture {
+        width: 50px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .comIcons {
+        width: 30px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+
+    /*Search Tab*/
+
+    .searchGridContainer {
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: max-content;
+        margin-top: 25px;
+
+
+    }
+
+    #searchGridItem1 {
+        /*aside*/
+        grid-column-start: 1;
+        grid-row-start: 3;
+
+        justify-self: center;
+
+
+    }
+
+    #searchGridItem2 {
+        /*search bar*/
+        grid-column-start: 1;
+        grid-row-start: 1;
+        background-color: white;
+        padding: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        /*width: 500px;*/
+        box-shadow: 5px 5px 5px gray;
+    }
+
+    #searchGridItem3 {
+        /*Bounty button*/
+
+        grid-row-start: 2;
+        padding: 10px;
+        /*align-content: center;*/
+        justify-self: center;
+    }
+
+    #searchGridItem4 {
+        /*Posts*/
+        grid-column-start: 1;
+        grid-row: 4 / span 2;
+    }
+
+    .searchBar {
+        background-color: white;
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        background-color: #B4BEC9;
+        padding: 10px;
+        justify-content: center;
+        column-gap: 7px;
+        border-radius: 5px;
+
+
+
+    }
+
+    .searchBarItems {
+        width: 150px;
+        height: 35px;
+        border: none;
+        background-color: #B4BEC9;
+        color: black;
+        font-weight: 700;
+    }
+
+    #borderForSearch {
+        border-right: solid black 3px;
+        height: 40px;
+    }
+
+
+    /*Buttons (Perhaps this can be used later)*/
+
+    .goblinButtons {
+        background-color: #375F5D;
+        padding: 25px;
+        color: white;
+        font-size: larger;
+        font-weight: 800;
+        display: inline-block;
+
+    }
+
+    .goblinButtons a {
+        color: white;
+    }
+
+
+
+
+    /*The categories themselves (autographs...)*/
+
+
+    .specificCategoryLayoutGrid {
+        display: grid;
+        grid-template-columns: auto;
+        grid-auto-rows: max-content;
+        margin-top: 25px;
+        margin-bottom: 25px;
+
+
+    }
+
+    .specificCatItem1 {
+        /*aside*/
+        grid-column-start: 1;
+        grid-row-start: 3;
+        /*Had to specify the amount of rows it spanned or else it would've
+        gone on forever*/
+        justify-self: center;
+
+
+
+    }
+
+    .specificCatItem2 {
+        /*button*/
+        grid-column-start: 1;
+        grid-row-start: 2;
+        padding: 10px;
+        justify-self: center;
+    }
+
+    .specificCatItem3 {
+        /*info part*/
+        grid-column-start: 1;
+        grid-row-start: 1;
+        display: grid;
+        grid-template-columns: auto auto;
+        background-color: white;
+        padding: 15px;
+        /*width: 700px;*/
+        height: 250px;
+        text-align: center;
+        justify-self: center;
+        column-gap: 10px;
+    }
+
+    .specificCatItem3 img {
+        width: 150px;
+
+    }
+
+    .specificCatItem4 {
+        /*post heading*/
+        grid-column-start: 1;
+        grid-row-start: 4;
+        font-size: larger;
+        font-weight: 700;
+        text-decoration: underline;
+        padding: 10px;
+        justify-self: center;
+    }
+
+    .specificCatItem5 {
+        /*post section*/
+        grid-column: 1 / span 2;
+        grid-row-start: 5;
+    }
+
+    .grayBoxInInfo {
+        background-color: #B4BEC9;
+        padding: 20px;
+        align-self: center;
+
+
+    }
+
+    .bountiesSection {
+        background-color: #E4E9ED;
+        text-decoration: underline;
+        font-size: x-large;
+        font-weight: 700;
+        border: solid 1px black;
+
+    }
+
+
+
+    /*Sign in*/
+
+    .signUpForms {
+        background-color: white;
+        box-shadow: 5px 5px 5px gray;
+        text-align: center;
+        padding: 10px;
+        /* width: 700px;*/
+        margin-left: auto;
+        margin-right: auto;
+
+    }
+
+    .signInForm {
+        display: grid;
+        grid-template-columns: auto;
+        row-gap: 20px;
+    }
+
+    .inputBoxes {
+        width: 400px;
+        height: 40px;
+
+    }
+
+    .signUpGap {
+        display: grid;
+        row-gap: 50px;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
+
+    /*TOS*/
+
+    .TOS {
+        background-color: white;
+        padding: 10px;
+        /* width: 900px;*/
+        margin-left: 25px;
+        margin-right: 25px;
+        box-shadow: 5px 5px 5px gray;
+        margin-bottom: 25px;
+        margin-top: 25px;
+
+    }
+
+
+    /*Support*/
+
+
+    .FAQ {
+        background-color: white;
+        padding: 10px;
+        box-shadow: 5px 5px 5px gray;
+        margin-left: 25px;
+        margin-right: 25px;
+        /* width: 700px;*/
+        text-align: left;
+        margin-top: 25px;
+        margin-bottom: 25px;
+
+    }
+
+
+    .FAQHeading {
+        border-bottom: solid 1px gray;
+    }
+
+
+
+    .downArrowIcon {
+        width: 25px;
+    }
+
+    .bordersForQuestions {
+        padding: 10px;
+        border-bottom: solid gray 1px;
+
+    }
+
+    .bordersForQuestions a {
+        color: black;
+    }
+
+
+    .answerBox {
+        border-bottom: solid 1px gray;
+
+
+    }
+
+
+    .formStyleSupport {
+        padding: 10px;
+    }
+
+    .formStyleSupport textarea {
+        width: 400px;
+    }
+
+
+    /*User Profile*/
+
+    .entireAreaUserProfile {
+        text-align: center;
+        padding: 20px;
+        /*width: 700px;*/
+        margin: auto;
+
+    }
+
+    .smallerProfileBox {
+        background-color: white;
+        padding: 10px;
+        box-shadow: 5px 5px 5px gray;
+        display: grid;
+        grid-template-columns: 25% auto;
+        grid-template-rows: auto auto auto;
+        row-gap: 5px;
+        margin-bottom: 25px;
+
+    }
+
+    .evenSmallerProfileBox {
+        background-color: #232C33;
+        color: white;
+        padding: 10px;
+        /* width: 300px;*/
+        border-radius: 5px;
+        margin-bottom: 25px;
+
+
+    }
+
+    .evenSmallerProfileBox input {
+        /* width: 400px;*/
+        height: 40px;
+        background-color: #232C33;
+        border: solid 1px white;
+        color: white;
+    }
+
+    .smallerLabelProfile {
+        padding: 10px;
+        width: 500px;
+        text-align: left;
+
+    }
+
+    /*Account settings*/
+
+    .accountInfo {
+        text-align: center;
+        /*This is literally just the heading*/
+    }
+
+
+    .deleteButton {
+        background-color: #FF7373;
+        padding: 25px;
+        color: white;
+        font-size: larger;
+        font-weight: 800;
+        display: inline-block;
+        border: solid 1px #FF7373;
+
+
+
+    }
+
+
+    .infoInAccountSettings {
+        display: grid;
+        grid-template-columns: 35% auto;
+
+    }
+
+    #deleteButtonSpecifically {
+        text-align: center;
+    }
+
+
+    /*Making a Post*/
+
+    .addBoxPost {
+        background-color: #B4BEC9;
+        width: 300px;
+        height: 100px;
+    }
+
+    .textAreaSize {
+        width: 500px;
+        height: 100px;
+    }
+
+
+    #holdingSpace {
+        margin-top: 25px;
+    }
+
+
+}
+
 
 
 
@@ -65,7 +864,6 @@ img {
 
     /*Home Page
     */
-
 
 
 
@@ -113,9 +911,9 @@ img {
         /* grid-template-columns: auto auto auto auto;*/
         justify-content: space-between;
         padding: 5px;
-        align-items: end;
+        /* align-items: end;*/
         /*DO NOT TOUCH THE ITEM ALIGN*/
-        align-content: first baseline;
+        /*align-content: first baseline;*/
     }
 
     ol {
@@ -132,11 +930,6 @@ img {
 
     }
 
-
-    .logoImage {
-        width: 120px;
-        height: auto;
-    }
 
     .titleLink {
         color: white;
@@ -234,7 +1027,10 @@ img {
 
     }
 
-
+    /*
+    .headerGridItem img {
+        width: 7000px;
+    }*/
 
     .footerGrid {
         display: flex;
