@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goblin Gizmos - User Profile</title>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+
+    <script src="js/goblinScript.js"></script>
+</head>
+
+<body>
+    <header>
+
+        <div class="headerGrid">
+
+            <!--This is the section with the logo, nav, and the user profile picture-->
+
+            <div class="headerGridItem" id="logoFlex">
+                <img class="logoImage" src="img/goblinLogo.png" alt="a goblin face in a coin; the logo">
+
+
+
+            </div>
+
+            <div class="headerGridItem">
+                <h1>Goblin Gizmos</h1>
+            </div>
+
+            <div class="headerGridItem">
+                <nav>
+                    <ol>
+                        <li>
+                            <a class="titleLink" href="index.html">Home</a>
+                        </li>
+                        <li>
+                            <p>|</p>
+                        </li>
+                        <li>
+                            <a class="titleLink" href="community.html">Community</a>
+                        </li>
+                        <li>
+                            <p>|</p>
+                        </li>
+                        <li>
+                            <a class="titleLink" href="search.html">Search</a>
+                        </li>
+                        <li>
+                            <p>|</p>
+                        </li>
+                        <li>
+                            <a class="titleLink" href="categories.html">Categories</a>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="headerGridItem">
+
+                <a href="userProfile.html"> <img src="img/PFP.png"></a>
+                <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
+            </div>
+
+        </div>
+    </header>
+
+    <!--Post and Bounty are the same thing, the difference is INTENT-->
+
+
+    <!--All of this will def need to be PHP but I can do front end stuff-->
+
+
+
+    <div class="FAQ">
+        <!--Omg shoutout to FAQ class-->
+        <form action="makePost.html">
+
+
+            <h3>Is this a Category Post or a Bounty?</h3>
+            <p>Are you showing off (post) or looking for this item (bounty)?</p>
+
+            <input type="radio" id="post" name="postOrBounty" value="post">
+            <label for="post">Post</label>
+
+            <input type="radio" id="bounty" name="postOrBounty" value="bounty">
+            <label for="bounty">Bounty</label>
+
+
+
+
+
+            <h3>Category</h3>
+            <!--Either this can't be left blank OR if blank it goes to other?-->
+
+            <label for="category"></label>
+            <select name="category" id="category" class="searchBarItems">
+                <option value="autographs">Autographs</option>
+                <option value="books">Books</option>
+                <option value="caps">Bottle Caps</option>
+                <option value="cans">Cans</option>
+                <option value="charms">Charms</option>
+                <option value="coins">Coins</option>
+                <option value="figures">Figures</option>
+                <option value="jewelry">Jewelry</option>
+                <option value="magnets">Magnets</option>
+                <option value="minerals">Minerals</option>
+                <option value="perfume">Perfume</option>
+                <option value="plates">Plates</option>
+                <option value="cards">Playing Cards</option>
+                <option value="plushies">Plushies</option>
+                <option value="prints">Prints</option>
+                <option value="stamps">Stamps</option>
+                <option value="tickets">Tickets</option>
+                <option value="games">Video Games</option>
+                <option value="vinyls">Vinyls</option>
+                <option value="other">Other</option>
+
+
+            </select>
+
+
+            <h3>Item Condition</h3>
+
+
+
+            <input type="radio" id="new" name="condition" value="new">
+            <label for="new">New</label>
+
+
+
+
+            <input type="radio" id="likeNew" name="condition" value="likeNew">
+            <label for="likeNew">Like New</label>
+
+
+            <input type="radio" id="used" name="condition" value="used">
+            <label for="used">Used</label>
+
+
+            <input type="radio" id="damaged" name="condition" value="damaged">
+            <label for="damaged">Damaged</label>
+
+
+            <input type="radio" id="noCondition" name="condition" value="noCondition">
+            <label for="noCondition">N/A</label>
+
+
+
+
+
+
+
+
+            <h3>Box Condition</h3>
+
+
+
+
+            <input type="radio" id="new" name="boxCondition" value="new">
+            <label for="new">New</label>
+
+
+            <input type="radio" id="likeNew" name="boxCondition" value="likeNew">
+            <label for="likeNew">Like New</label>
+
+
+            <input type="radio" id="used" name="boxCondition" value="used">
+            <label for="used">Used</label>
+
+
+            <input type="radio" id="damaged" name="boxCondition" value="damaged">
+            <label for="damaged">Damaged</label>
+
+
+            <input type="radio" id="noCondition" name="boxCondition" value="noCondition">
+            <label for="noCondition">N/A</label>
+
+
+
+
+
+            <h3>Price/Currency</h3>
+
+            <label for="currency"></label>
+            <input type="text" id="currency" placeholder="Enter Price">
+
+
+
+            <h3>Location (Optional)</h3>
+            <input type="text" placeholder="Enter Location">
+
+
+
+
+            <h3>Description</h3>
+            <textarea placeholder="Input Text" class="textAreaSize" rows="7" cols="50"></textarea>
+
+
+
+
+            <h3>Image</h3>
+            <div class="addBoxPost">
+                <img src="img/image.png" class="iconImg"> <label for="imagePost"></label>
+                <input type="file" id="imagePost">
+            </div>
+
+
+
+
+            <h3>Content Level</h3>
+            <input type="radio" id="sfw" name="sfwCheck" value="sfw">
+            <label for="sfw">SFW</label>
+
+
+            <input type="radio" id="nsfw" name="sfwCheck" value="nsfw">
+            <label for="nsfw">NSFW</label>
+
+
+
+            <div>
+                <button type="button" class="goblinButtons" id="holdingSpace">Post</button>
+
+            </div>
+
+        </form>
+    </div>
+
+
+
+
+
+
+
+    <footer>
+
+
+
+
+        <img src="img/goblinLogo.png" id="bottomLogo">
+        <!--PLACEHOLDER!! REPLACE LATER: LOGO-->
+        </div>
+
+        <div>
+            <div class="footerFlex">
+                <!--Bottom left-->
+                <nav>
+                    <div class="footerGrid">
+                        <div class="footerGridItem1">
+
+                            <ol>
+
+                                <li>
+                                    <a href="support.html" class="titleLink">Support</a>
+                                </li>
+                                <li>
+                                    <p class="titleLink"> |</p>
+                                </li>
+                                <li>
+                                    <a href="tos.html" class="titleLink">Terms of Service</a>
+                                </li>
+                            </ol>
+
+                        </div>
+
+                        <div class="footerGridItem2">
+                            <ol>
+
+
+                                <li><a href="https://x.com/"> <img src="img/TwitterLogo.png" class="iconImg"></a></li>
+
+                                <li><a href="https://www.instagram.com/"> <img src="img/instagram.png"
+                                            class="iconImg"></a>
+                                </li>
+
+                                <li> <a href="https://www.facebook.com/"> <img src="img/facebook.png"
+                                            class="iconImg"></a>
+                                </li>
+
+                                <!--This works, and now I'm too scared to touch it-->
+
+                            </ol>
+
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+
+            <div>
+
+                <!--This is bottom right-->
+                <!--Icons REPLACE-->
+                <!--
+                <a href="https://x.com/"> <img src="img/placeholder.png" class="iconImg"></a>
+                <a href="https://www.instagram.com/"> <img src="img/placeholder.png" class="iconImg"></a>
+                <a href="https://www.facebook.com/"> <img src="img/placeholder.png" class="iconImg"></a>
+                -->
+
+            </div>
+
+        </div>
+        </div>
+
+    </footer>
+</body>
+
+</html>

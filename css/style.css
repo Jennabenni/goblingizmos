@@ -526,6 +526,10 @@ img {
 
     }
 
+    .goblinButtons a {
+        color: white;
+    }
+
 
 
 
@@ -768,6 +772,7 @@ img {
 
     .accountInfo {
         text-align: center;
+        /*This is literally just the heading*/
     }
 
 
@@ -783,5 +788,36 @@ img {
 
 
     }
+
+
+    .infoInAccountSettings {
+        display: grid;
+        grid-template-columns: 25% auto;
+
+    }
+
+    #deleteButtonSpecifically {
+        text-align: center;
+    }
+
+
+    /*Making a Post*/
+
+    .addBoxPost {
+        background-color: #B4BEC9;
+        width: 300px;
+        height: 100px;
+    }
+
+    .textAreaSize {
+        width: 500px;
+        height: 100px;
+    }
+
+
+    #holdingSpace {
+        margin-top: 25px;
+    }
+
 
 }
