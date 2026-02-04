@@ -6,21 +6,62 @@ body {
     margin-bottom: 0px;
 }
 
+/* --- Sticky footer (basically stops the footer from just stopping halfway down shorter pages). sorry i have a larger monitor and this was bothering me a lot --- */
+html, body {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0; 
+}
+
+
+.page-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+
 a {
     text-decoration: none;
 }
 
+/* Account settings: prevent label text from being cut off (It was showing as Change Passwo which was silly*/
+.infoInAccountSettings {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) 2fr; 
+  column-gap: 40px;
+  align-items: center;
+}
+
+.smallerLabelProfile {
+  width: auto;             /* stops forcing awkward fixed width */
+  overflow: visible;       /* ensures text isn't clipped */
+  word-break: normal;
+}
+
+.infoInAccountSettings h3 {
+  margin: 0;
+}
 
 
 h1,
 h2,
 h3 {
-    font-style: verdana;
+    font-family: verdana;
 }
 
 
 p {
-    font-style: arial;
+    font-family: arial;
 }
 
 
