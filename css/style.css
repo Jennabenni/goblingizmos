@@ -907,7 +907,7 @@ img {
     }
 
     .textAreaSize {
-        width: 500px;
+        width: 400px;
         height: 100px;
     }
 
@@ -1627,7 +1627,7 @@ img {
         text-align: center;
         padding: 20px;
         /*width: 700px;*/
-        margin: auto;
+        /*margin: auto;*/
 
     }
 
@@ -1656,6 +1656,8 @@ img {
 
     .evenSmallerProfileBox input {
         /* width: 400px;*/
+
+
         height: 40px;
         background-color: #232C33;
         border: solid 1px white;
