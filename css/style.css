@@ -58,18 +58,53 @@ a {
     margin: 0;
 }
 
-
+/*
 h1,
 h2,
 h3 {
     font-family: verdana;
 }
+*/
+/*FONT???*/
+
+@font-face {
+    font-family: JotiOneFont;
+    src: url(../css/fonts/JotiOne-Regular.ttf);
+}
+
+@font-face {
+
+    font-family: tiltWarp;
+    src: url(../css/fonts/TiltWarp-Regular-VariableFont_XROT\,YROT.ttf);
+
+}
+
+@font-face {
+    font-family: rubik;
+    src: url(../css/fonts/Rubik-VariableFont_wght.ttf);
+}
+
+h1 {
+    font-family: JotiOneFont, Verdana;
+}
+
+h2,
+h3,
+h4 {
+    font-family: tiltWarp, Verdana;
+}
+
+p,
+a {
+    font-family: rubik, Arial;
+}
 
 
+/*
 p {
     font-family: arial;
 }
-
+*/
 
 img {
     width: 100px;
