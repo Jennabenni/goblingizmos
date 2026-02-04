@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -16,134 +16,134 @@
 
     <div class="page-wrap">
 
-    <header>
+        <header>
 
-        <div class="headerGrid">
+            <div class="headerGrid">
 
-            <!--This is the section with the logo, nav, and the user profile picture-->
+                <!--This is the section with the logo, nav, and the user profile picture-->
 
-            <div class="headerGridItem" id="logoFlex">
-                <img class="logoImage" src="img/goblinLogo.png" alt="a goblin face in a coin; the logo">
+                <div class="headerGridItem" id="logoFlex">
+                    <img class="logoImage" src="img/goblinLogo.png" alt="a goblin face in a coin; the logo">
 
 
+
+                </div>
+
+                <div class="headerGridItem">
+                    <h1>Goblin Gizmos</h1>
+                </div>
+
+                <div class="headerGridItem">
+                    <nav>
+                        <ol>
+                            <li>
+                                <a class="titleLink" href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <p>|</p>
+                            </li>
+                            <li>
+                                <a class="titleLink" href="community.html">Community</a>
+                            </li>
+                            <li>
+                                <p>|</p>
+                            </li>
+                            <li>
+                                <a class="titleLink" href="search.html">Search</a>
+                            </li>
+                            <li>
+                                <p>|</p>
+                            </li>
+                            <li>
+                                <a class="titleLink" href="categories.html">Categories</a>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="headerGridItem">
+
+                    <a href="userProfile.html"> <img src="img/PFP.png" alt="Profile Picture"></a>
+                    <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
+                </div>
+
+            </div>
+        </header>
+
+
+        <!--THIS NEEDS TO BE PHP EVENTUALLY-->
+
+
+        <div class="entireAreaUserProfile">
+
+
+
+
+            <div>
+                <img src="img/PFP.png">
+                <!--User's profile image-->
 
             </div>
 
-            <div class="headerGridItem">
-                <h1>Goblin Gizmos</h1>
-            </div>
+            <div class="smallerProfileBox">
 
-            <div class="headerGridItem">
-                <nav>
-                    <ol>
-                        <li>
-                            <a class="titleLink" href="index.html">Home</a>
-                        </li>
-                        <li>
-                            <p>|</p>
-                        </li>
-                        <li>
-                            <a class="titleLink" href="community.html">Community</a>
-                        </li>
-                        <li>
-                            <p>|</p>
-                        </li>
-                        <li>
-                            <a class="titleLink" href="search.html">Search</a>
-                        </li>
-                        <li>
-                            <p>|</p>
-                        </li>
-                        <li>
-                            <a class="titleLink" href="categories.html">Categories</a>
-                        </li>
-                    </ol>
-                </nav>
-            </div>
-            <div class="headerGridItem">
-
-                <a href="userProfile.html"> <img src="img/PFP.png" alt="Profile Picture"></a>
-                <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
-            </div>
-
-        </div>
-    </header>
-
-
-    <!--THIS NEEDS TO BE PHP EVENTUALLY-->
-
-
-    <div class="entireAreaUserProfile">
+                <div class="smallerLabelProfile">
+                    <label for="uname">
+                        <h3>Username</h3>
+                    </label>
+                </div>
+                <div class="evenSmallerProfileBox">
+                    <input type="text" id="uname" name="uname">
+                    <!--This just makes it look like it works, this'll need to be php-->
+                    <img src="img/pencilAndPaper.png" class="iconImg">
+                </div>
 
 
 
-
-        <div>
-            <img src="img/PFP.png">
-            <!--User's profile image-->
-
-        </div>
-
-        <div class="smallerProfileBox">
-
-            <div class="smallerLabelProfile">
-                <label for="uname">
-                    <h3>Username</h3>
-                </label>
-            </div>
-            <div class="evenSmallerProfileBox">
-                <input type="text" id="uname" name="uname">
-                <!--This just makes it look like it works, this'll need to be php-->
-                <img src="img/pencilAndPaper.png" class="iconImg">
-            </div>
+                <div class="smallerLabelProfile">
+                    <label for="bio">
+                        <h3>Bio</h3>
+                    </label>
+                </div>
+                <div class="evenSmallerProfileBox">
+                    <input type="text" id="bio" name="bio">
+                    <!--This just makes it look like it works, this'll need to be php-->
+                    <img src="img/pencilAndPaper.png" class="iconImg">
+                </div>
 
 
 
-            <div class="smallerLabelProfile">
-                <label for="bio">
-                    <h3>Bio</h3>
-                </label>
-            </div>
-            <div class="evenSmallerProfileBox">
-                <input type="text" id="bio" name="bio">
-                <!--This just makes it look like it works, this'll need to be php-->
-                <img src="img/pencilAndPaper.png" class="iconImg">
-            </div>
+                <div class="smallerLabelProfile">
+                    <h3>Top Categories</h3>
 
+                    <!--Oh god will this need JS to add the categories UGHHH-->
 
-
-            <div class="smallerLabelProfile">
-                <h3>Top Categories</h3>
-
-                <!--Oh god will this need JS to add the categories UGHHH-->
+                </div>
+                <div class="evenSmallerProfileBox"></div>
 
             </div>
-            <div class="evenSmallerProfileBox"></div>
 
-        </div>
+            <div>
 
-        <div>
+                <a href="settings.html" class="goblinButtons">Settings</a>
 
-            <a href="settings.html" class="goblinButtons">Settings</a>
-
-            <!--
+                <!--
             <a href="accessibility.html" class="goblinButtons">Accessibility</a>
             -->
-            <a href="signIn.html" class="goblinButtons">Log Out</a>
+                <a href="signIn.html" class="goblinButtons">Log Out</a>
 
+
+            </div>
+
+            <div>
+
+                <h3>Posts/Bounties</h3>
+            </div>
+
+            <div>
+                <!--Space for posts-->
+            </div>
 
         </div>
-
-        <div>
-
-            <h3>Posts/Bounties</h3>
-        </div>
-
-        <div>
-            <!--Space for posts-->
-        </div>
-
-    </div>
     </div>
 
 
@@ -182,14 +182,15 @@
                             <ol>
 
 
-                                <li><a href="https://x.com/"> <img src="img/TwitterLogo.png" class="iconImg" alt="X logo"></a></li>
+                                <li><a href="https://x.com/"> <img src="img/TwitterLogo.png" class="iconImg"
+                                            alt="X logo"></a></li>
 
-                                <li><a href="https://www.instagram.com/"> <img src="img/instagram.png"
-                                            class="iconImg" alt="Instagram logo"></a>
+                                <li><a href="https://www.instagram.com/"> <img src="img/instagram.png" class="iconImg"
+                                            alt="Instagram logo"></a>
                                 </li>
 
-                                <li> <a href="https://www.facebook.com/"> <img src="img/facebook.png"
-                                            class="iconImg" alt="Facebook logo"></a>
+                                <li> <a href="https://www.facebook.com/"> <img src="img/facebook.png" class="iconImg"
+                                            alt="Facebook logo"></a>
                                 </li>
 
                                 <!--This works, and now I'm too scared to touch it-->
