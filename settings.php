@@ -4,26 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goblin Gizmos - User Profile</title>
+
     <link rel="stylesheet" type="text/css" href="css/style.css">
+
+
     <script src="js/goblinScript.js"></script>
-
-    <title>Goblin Gizmos - Home</title>
 </head>
-
-
-<!--So, the back to top arrow, should it be fixed on the page?? Display: fixed
-Note to self: don't forget to add header and footer to each document
-holy goddamn div tabs Batman
-okay.  Grid.
-Three columns, three rows
--->
 
 <body>
 
     <div class="page-wrap">
-
-
-
 
         <header>
 
@@ -69,10 +60,9 @@ Three columns, three rows
                         </ol>
                     </nav>
                 </div>
-                <div class="headerGridItem" id="userIconGridItem">
+                <div class="headerGridItem">
 
-                    <a href="userProfile.html"> <img src="img/PFP.png" class="userIconImageForSmaller"
-                            alt="Profile"></a>
+                    <a href="userProfile.html"> <img src="img/PFP.png" alt="Profile Picture"></a>
                     <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
                 </div>
 
@@ -81,93 +71,67 @@ Three columns, three rows
 
 
 
-        <div class="megaGridOrFlex">
+        <!--THIS NEEDS TO BE PHP EVENTUALLY-->
+
+        <a href="userProfile.html">
+            <img src="img/backbutton.png" class="iconImg" alt="back button">
+        </a>
+        <h2 class="accountInfo">Account Information</h2>
+
+        <div class="FAQ">
 
 
-            <div id="homeGridItem1">
-                <aside>
-                    <!--
-        <p>ADS</p>
-        -->
+            <div class="infoInAccountSettings">
 
-                    <h4>Advertisements</h4>
-
-                    <div class="adBoxes">
-                        <p>Have you wondered what insurance can do for you?</p>
-                        <p>Call xxx-xxx-xxxx</p>
-                    </div>
-                    <div class="adBoxes">
-                        <p>Been in an accident? That's unfortunate</p>
-                        <p>Call xxx-xxx-xxxx</p>
-                    </div>
-                    <div class="adBoxes">
-                        <p>Your wife is hot.</p>
-                        <p>Call xxx-xxx-xxxx</p>
-                    </div>
-
-
-                </aside>
-            </div>
-
-
-            <div id="homeGridItem2">
-                <div class="biggerHomeBox">
-                    <h2>Welcome to Goblin Gizmos!</h2>
-
-                    <div id="infoBoxHome">
-                        <p>Welcome to Goblin Gizmos! Whether you're a novice, experienced, or an expert in collecting
-                            items,
-                            there
-                            is a
-                            place
-                            here for you in our community. Start by checking out what others are posting or explore one
-                            of
-                            our
-                            many
-                            categories!</p>
-                    </div>
+                <div class="smallerLabelProfile">
+                    <h3>Change Password</h3>
                 </div>
-            </div>
-            <br>
+                <div class="evenSmallerProfileBox">
+                    <input type="text" name="password">
+                    <img src="img/pencilAndPaper.png" class="iconImg">
+                </div>
 
 
+                <div class="smallerLabelProfile">
+                    <h3>Change Email</h3>
+                </div>
+                <div class="evenSmallerProfileBox">
+                    <input type="text" name="email">
+                    <img src="img/pencilAndPaper.png" class="iconImg">
+                </div>
 
-
-
-            <div id="homeGridItem3">
-                <a href="categories.html">
-                    <h3 class="homeTabLinks">See Categories</h3>
-                </a>
-            </div>
-
-            <div id="homeGridItem4">
-
-                <a href="signIn.html">
-                    <h3 class="homeTabLinks">Create an Account</h3>
-                </a>
 
             </div>
-
-            <br>
-
+            <!--
 
 
-
-            <div id="homeGridItem5">
-                <img src="img/homePennies.png" alt="image of pennies in a pile" class="homeImg">
-            </div>
-            <div id="homeGridItem6">
-                <img src="img/turtle.png" alt="turtle charm" class="homeImg">
-            </div>
+        I have to prioritize certain things over others.
+        <div>
 
 
+            <p>SFW/NSFW Toggle</p>
+
+
+
+            <p>Controls the content you can see on your feed. The toggle is switched off, which means you will see
+                content that is potentially 'not safe for work' (NSFW)</p>
 
 
 
         </div>
-    </div>
+        -->
 
-    <br>
+
+            <div id="deleteButtonSpecifically">
+                <button type="button" class="deleteButton">Delete Account</button>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
 
 
 

@@ -4,26 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goblin Gizmos - Sign In</title>
+
     <link rel="stylesheet" type="text/css" href="css/style.css">
+
+
     <script src="js/goblinScript.js"></script>
-
-    <title>Goblin Gizmos - Home</title>
 </head>
-
-
-<!--So, the back to top arrow, should it be fixed on the page?? Display: fixed
-Note to self: don't forget to add header and footer to each document
-holy goddamn div tabs Batman
-okay.  Grid.
-Three columns, three rows
--->
 
 <body>
 
     <div class="page-wrap">
-
-
-
 
         <header>
 
@@ -69,10 +60,9 @@ Three columns, three rows
                         </ol>
                     </nav>
                 </div>
-                <div class="headerGridItem" id="userIconGridItem">
+                <div class="headerGridItem">
 
-                    <a href="userProfile.html"> <img src="img/PFP.png" class="userIconImageForSmaller"
-                            alt="Profile"></a>
+                    <a href="userProfile.html"> <img src="img/PFP.png" alt="Profile Picture"></a>
                     <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
                 </div>
 
@@ -80,94 +70,96 @@ Three columns, three rows
         </header>
 
 
+        <!--This will have to be changed for PHP but thats for a Jenna in a few weeks from now-->
 
-        <div class="megaGridOrFlex">
 
+        <div class="signUpGap">
 
-            <div id="homeGridItem1">
-                <aside>
+            <form action="signIn.html" class="signUpForms">
+                <div class="signInForm">
+                    <div>
+                        <h2>Sign In</h2>
+                    </div>
+
                     <!--
-        <p>ADS</p>
-        -->
+            <div>
+                <label for="uname">Username</label>
+            </div>
+            -->
 
-                    <h4>Advertisements</h4>
-
-                    <div class="adBoxes">
-                        <p>Have you wondered what insurance can do for you?</p>
-                        <p>Call xxx-xxx-xxxx</p>
-                    </div>
-                    <div class="adBoxes">
-                        <p>Been in an accident? That's unfortunate</p>
-                        <p>Call xxx-xxx-xxxx</p>
-                    </div>
-                    <div class="adBoxes">
-                        <p>Your wife is hot.</p>
-                        <p>Call xxx-xxx-xxxx</p>
+                    <div>
+                        <input type="text" id="uname" name="uname" placeholder="Username/Email" class="inputBoxes">
                     </div>
 
-
-                </aside>
+                    <!--
+            <div>
+                <label for="password">Password</label>
             </div>
 
+            -->
 
-            <div id="homeGridItem2">
-                <div class="biggerHomeBox">
-                    <h2>Welcome to Goblin Gizmos!</h2>
 
-                    <div id="infoBoxHome">
-                        <p>Welcome to Goblin Gizmos! Whether you're a novice, experienced, or an expert in collecting
-                            items,
-                            there
-                            is a
-                            place
-                            here for you in our community. Start by checking out what others are posting or explore one
-                            of
-                            our
-                            many
-                            categories!</p>
+                    <div>
+                        <input type="text" id="password" name="password" placeholder="Password" class="inputBoxes">
                     </div>
+
+                    <a href="signIn.html">Forgot Password?</a>
+
+                    <div>
+                        <input type="submit" value="Log In" class="goblinButtons">
+                    </div>
+
+
                 </div>
+            </form>
+
+
+            <form action="signIn.html" class="signUpForms">
+                <div class="signInForm">
+                    <div>
+                        <h2>Sign Up</h2>
+                    </div>
+
+                    <!--
+            <div>
+
+                <label for=" email">Email</label>
             </div>
-            <br>
+            -->
 
+                    <div>
+                        <input type="text" id="email" name="email" placeholder="Email" class="inputBoxes">
+                    </div>
 
-
-
-
-            <div id="homeGridItem3">
-                <a href="categories.html">
-                    <h3 class="homeTabLinks">See Categories</h3>
-                </a>
+                    <!--
+            <div>
+                <label for="password">Password</label>
             </div>
+            -->
+                    <div>
+                        <input type="text" id="password" name="password" placeholder="Password" class="inputBoxes">
+                    </div>
 
-            <div id="homeGridItem4">
-
-                <a href="signIn.html">
-                    <h3 class="homeTabLinks">Create an Account</h3>
-                </a>
-
-            </div>
-
-            <br>
+                    <div>
+                        <input type="submit" value="Create Account" class="goblinButtons">
+                    </div>
 
 
-
-
-            <div id="homeGridItem5">
-                <img src="img/homePennies.png" alt="image of pennies in a pile" class="homeImg">
-            </div>
-            <div id="homeGridItem6">
-                <img src="img/turtle.png" alt="turtle charm" class="homeImg">
-            </div>
-
-
-
+                </div>
+            </form>
 
 
         </div>
-    </div>
 
-    <br>
+        <!--THIS NEEDS TO BE PHP EVENTUALLY-->
+
+    </div> <!--when you do php, keep this div after it, it's for the footer staying sticky-->
+
+
+
+
+
+
 
 
 

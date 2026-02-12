@@ -4,26 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goblin Gizmos - User Profile</title>
+
     <link rel="stylesheet" type="text/css" href="css/style.css">
+
+
     <script src="js/goblinScript.js"></script>
-
-    <title>Goblin Gizmos - Home</title>
 </head>
-
-
-<!--So, the back to top arrow, should it be fixed on the page?? Display: fixed
-Note to self: don't forget to add header and footer to each document
-holy goddamn div tabs Batman
-okay.  Grid.
-Three columns, three rows
--->
 
 <body>
 
     <div class="page-wrap">
-
-
-
 
         <header>
 
@@ -69,10 +60,9 @@ Three columns, three rows
                         </ol>
                     </nav>
                 </div>
-                <div class="headerGridItem" id="userIconGridItem">
+                <div class="headerGridItem">
 
-                    <a href="userProfile.html"> <img src="img/PFP.png" class="userIconImageForSmaller"
-                            alt="Profile"></a>
+                    <a href="userProfile.html"> <img src="img/PFP.png" alt="Profile Picture"></a>
                     <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
                 </div>
 
@@ -80,94 +70,81 @@ Three columns, three rows
         </header>
 
 
-
-        <div class="megaGridOrFlex">
-
-
-            <div id="homeGridItem1">
-                <aside>
-                    <!--
-        <p>ADS</p>
-        -->
-
-                    <h4>Advertisements</h4>
-
-                    <div class="adBoxes">
-                        <p>Have you wondered what insurance can do for you?</p>
-                        <p>Call xxx-xxx-xxxx</p>
-                    </div>
-                    <div class="adBoxes">
-                        <p>Been in an accident? That's unfortunate</p>
-                        <p>Call xxx-xxx-xxxx</p>
-                    </div>
-                    <div class="adBoxes">
-                        <p>Your wife is hot.</p>
-                        <p>Call xxx-xxx-xxxx</p>
-                    </div>
+        <!--THIS NEEDS TO BE PHP EVENTUALLY-->
 
 
-                </aside>
+        <div class="entireAreaUserProfile">
+
+
+
+
+            <div>
+                <img src="img/PFP.png">
+                <!--User's profile image-->
+
             </div>
 
+            <div class="smallerProfileBox">
 
-            <div id="homeGridItem2">
-                <div class="biggerHomeBox">
-                    <h2>Welcome to Goblin Gizmos!</h2>
-
-                    <div id="infoBoxHome">
-                        <p>Welcome to Goblin Gizmos! Whether you're a novice, experienced, or an expert in collecting
-                            items,
-                            there
-                            is a
-                            place
-                            here for you in our community. Start by checking out what others are posting or explore one
-                            of
-                            our
-                            many
-                            categories!</p>
-                    </div>
+                <div class="smallerLabelProfile">
+                    <label for="uname">
+                        <h3>Username</h3>
+                    </label>
                 </div>
-            </div>
-            <br>
+                <div class="evenSmallerProfileBox">
+                    <input type="text" id="uname" name="uname">
+                    <!--This just makes it look like it works, this'll need to be php-->
+                    <img src="img/pencilAndPaper.png" class="iconImg">
+                </div>
 
 
 
-
-
-            <div id="homeGridItem3">
-                <a href="categories.html">
-                    <h3 class="homeTabLinks">See Categories</h3>
-                </a>
-            </div>
-
-            <div id="homeGridItem4">
-
-                <a href="signIn.html">
-                    <h3 class="homeTabLinks">Create an Account</h3>
-                </a>
-
-            </div>
-
-            <br>
+                <div class="smallerLabelProfile">
+                    <label for="bio">
+                        <h3>Bio</h3>
+                    </label>
+                </div>
+                <div class="evenSmallerProfileBox">
+                    <input type="text" id="bio" name="bio">
+                    <!--This just makes it look like it works, this'll need to be php-->
+                    <img src="img/pencilAndPaper.png" class="iconImg">
+                </div>
 
 
 
+                <div class="smallerLabelProfile">
+                    <h3>Top Categories</h3>
 
-            <div id="homeGridItem5">
-                <img src="img/homePennies.png" alt="image of pennies in a pile" class="homeImg">
-            </div>
-            <div id="homeGridItem6">
-                <img src="img/turtle.png" alt="turtle charm" class="homeImg">
+                    <!--Oh god will this need JS to add the categories UGHHH-->
+
+                </div>
+                <div class="evenSmallerProfileBox"></div>
+
             </div>
 
+            <div>
+
+                <a href="settings.html" class="goblinButtons">Settings</a>
+
+                <!--
+            <a href="accessibility.html" class="goblinButtons">Accessibility</a>
+            -->
+                <a href="signIn.html" class="goblinButtons">Log Out</a>
 
 
+            </div>
 
+            <div>
+
+                <h3>Posts/Bounties</h3>
+            </div>
+
+            <div>
+                <!--Space for posts-->
+            </div>
 
         </div>
     </div>
-
-    <br>
 
 
 

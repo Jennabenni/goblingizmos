@@ -12,18 +12,24 @@
 
 
 <!--So, the back to top arrow, should it be fixed on the page?? Display: fixed
+
+
 Note to self: don't forget to add header and footer to each document
-holy goddamn div tabs Batman
-okay.  Grid.
-Three columns, three rows
+
+
+
+
+Search note from Jenna: I need to fix the gray box inside the white box, but I'm gonna leave it for now
+
+I also need to make the filter a drop down, but....... I could nix it
+
+
 -->
+
 
 <body>
 
     <div class="page-wrap">
-
-
-
 
         <header>
 
@@ -69,10 +75,9 @@ Three columns, three rows
                         </ol>
                     </nav>
                 </div>
-                <div class="headerGridItem" id="userIconGridItem">
+                <div class="headerGridItem">
 
-                    <a href="userProfile.html"> <img src="img/PFP.png" class="userIconImageForSmaller"
-                            alt="Profile"></a>
+                    <a href="userProfile.html"> <img src="img/PFP.png" alt="Profile Picture"></a>
                     <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
                 </div>
 
@@ -81,95 +86,103 @@ Three columns, three rows
 
 
 
-        <div class="megaGridOrFlex">
+        <div class="searchGridContainer">
 
-
-            <div id="homeGridItem1">
+            <div id="searchGridItem1">
                 <aside>
-                    <!--
-        <p>ADS</p>
-        -->
-
                     <h4>Advertisements</h4>
-
                     <div class="adBoxes">
-                        <p>Have you wondered what insurance can do for you?</p>
+                        <p>Miss your wife? Get another!</p>
                         <p>Call xxx-xxx-xxxx</p>
                     </div>
                     <div class="adBoxes">
-                        <p>Been in an accident? That's unfortunate</p>
+                        <p>Your foot fungus tells you a lot about your personality</p>
                         <p>Call xxx-xxx-xxxx</p>
                     </div>
                     <div class="adBoxes">
-                        <p>Your wife is hot.</p>
+                        <p>Is life a pain? Join the club</p>
                         <p>Call xxx-xxx-xxxx</p>
                     </div>
-
-
                 </aside>
             </div>
 
 
-            <div id="homeGridItem2">
-                <div class="biggerHomeBox">
-                    <h2>Welcome to Goblin Gizmos!</h2>
+            <div id="searchGridItem2">
+                <!--Search bar-->
 
-                    <div id="infoBoxHome">
-                        <p>Welcome to Goblin Gizmos! Whether you're a novice, experienced, or an expert in collecting
-                            items,
-                            there
-                            is a
-                            place
-                            here for you in our community. Start by checking out what others are posting or explore one
-                            of
-                            our
-                            many
-                            categories!</p>
+
+                <div class="searchBar">
+
+                    <div>
+                        <img src="img/magGlass.png" class="comIcons">
+                    </div>
+
+                    <div>
+                        <label for="search"></label>
+                        <input type="text" name="search" placeholder="Search Bounties..." class="searchBarItems"
+                            id="borderForSearch">
+                    </div>
+
+
+
+                    <div>
+                        <!--Category drop down-->
+                        <label for="category">Categories:</label>
+                        <select name="category" id="category" class="searchBarItems">
+                            <option value="autographs">Autographs</option>
+                            <option value="books">Books</option>
+                            <option value="caps">Bottle Caps</option>
+                            <option value="cans">Cans</option>
+                            <option value="charms">Charms</option>
+                            <option value="coins">Coins</option>
+                            <option value="figures">Figures</option>
+                            <option value="jewelry">Jewelry</option>
+                            <option value="magnets">Magnets</option>
+                            <option value="minerals">Minerals</option>
+                            <option value="perfume">Perfume</option>
+                            <option value="plates">Plates</option>
+                            <option value="cards">Playing Cards</option>
+                            <option value="plushies">Plushies</option>
+                            <option value="prints">Prints</option>
+                            <option value="stamps">Stamps</option>
+                            <option value="tickets">Tickets</option>
+                            <option value="games">Video Games</option>
+                            <option value="vinyls">Vinyls</option>
+                            <option value="other">Other</option>
+
+
+                        </select>
+                    </div>
+                    <div>
+
+                        <img src="img/filter.png" class="comIcons">
+
+
+
+
+
+                        <!--Oh damn it this has to be a drop down-->
                     </div>
                 </div>
-            </div>
-            <br>
 
 
 
-
-
-            <div id="homeGridItem3">
-                <a href="categories.html">
-                    <h3 class="homeTabLinks">See Categories</h3>
-                </a>
-            </div>
-
-            <div id="homeGridItem4">
-
-                <a href="signIn.html">
-                    <h3 class="homeTabLinks">Create an Account</h3>
-                </a>
-
-            </div>
-
-            <br>
-
-
-
-
-            <div id="homeGridItem5">
-                <img src="img/homePennies.png" alt="image of pennies in a pile" class="homeImg">
-            </div>
-            <div id="homeGridItem6">
-                <img src="img/turtle.png" alt="turtle charm" class="homeImg">
             </div>
 
 
 
+            <div id="searchGridItem3"><a href="makePost.html">
+                    <button type="button" class="goblinButtons">Create a Bounty</a></button>
+            </div>
+            <!--I think <button>'s cannot contain or be contained by <a>'s, no issue currently, works as intended, but if issues arise later check here, I'm not 100% sure myself-->
 
+            <div id="searchGridItem4">
+                <!--Posts go here-->
+            </div>
 
         </div>
+
     </div>
-
-    <br>
-
-
 
     <footer>
 

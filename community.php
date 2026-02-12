@@ -7,23 +7,18 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/goblinScript.js"></script>
 
-    <title>Goblin Gizmos - Home</title>
+    <title>Goblin Gizmos - Community</title>
 </head>
 
 
-<!--So, the back to top arrow, should it be fixed on the page?? Display: fixed
-Note to self: don't forget to add header and footer to each document
-holy goddamn div tabs Batman
-okay.  Grid.
-Three columns, three rows
--->
+
+
+
+
 
 <body>
 
     <div class="page-wrap">
-
-
-
 
         <header>
 
@@ -69,106 +64,133 @@ Three columns, three rows
                         </ol>
                     </nav>
                 </div>
-                <div class="headerGridItem" id="userIconGridItem">
+                <div class="headerGridItem">
 
-                    <a href="userProfile.html"> <img src="img/PFP.png" class="userIconImageForSmaller"
-                            alt="Profile"></a>
+                    <a href="userProfile.html"> <img src="img/PFP.png" alt="Profile Picture"></a>
                     <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
                 </div>
 
             </div>
         </header>
 
+        <div class="communityGridContainer">
 
-
-        <div class="megaGridOrFlex">
-
-
-            <div id="homeGridItem1">
+            <div id="comGridItem1">
                 <aside>
-                    <!--
-        <p>ADS</p>
-        -->
 
                     <h4>Advertisements</h4>
-
                     <div class="adBoxes">
-                        <p>Have you wondered what insurance can do for you?</p>
+                        <p>Tired of the ads? Wish you could get rid of them?</p>
                         <p>Call xxx-xxx-xxxx</p>
                     </div>
                     <div class="adBoxes">
-                        <p>Been in an accident? That's unfortunate</p>
+                        <p>Wear protection.</p>
                         <p>Call xxx-xxx-xxxx</p>
                     </div>
                     <div class="adBoxes">
-                        <p>Your wife is hot.</p>
+                        <p>Find your soulmate!</p>
                         <p>Call xxx-xxx-xxxx</p>
                     </div>
-
 
                 </aside>
             </div>
 
 
-            <div id="homeGridItem2">
-                <div class="biggerHomeBox">
-                    <h2>Welcome to Goblin Gizmos!</h2>
 
-                    <div id="infoBoxHome">
-                        <p>Welcome to Goblin Gizmos! Whether you're a novice, experienced, or an expert in collecting
-                            items,
-                            there
-                            is a
-                            place
-                            here for you in our community. Start by checking out what others are posting or explore one
-                            of
-                            our
-                            many
-                            categories!</p>
-                    </div>
+            <div id="comGridItem2" class="secondComGridPost">
+                <!--This is where user makes post PHP-->
+
+                <div id="postItem1">
+                    <img src="img/PFP.png" id="userProfilePicture" alt="profile picture">
                 </div>
+                <div id="postItem2">
+                    <textarea name="information" rows="5" columns="30"></textarea>
+                </div>
+                <div id="postItem3">
+                    <img src="img/image.png" class="comIcons" alt="upload image">
+                    <!--This is the upload icon-->
+
+                    <label for="category">Category</label>
+
+                    <select name="category" id="category">
+                        <option value="autographs">Autographs</option>
+                        <option value="books">Books</option>
+                        <option value="caps">Bottle Caps</option>
+                        <option value="cans">Cans</option>
+                        <option value="charms">Charms</option>
+                        <option value="coins">Coins</option>
+                        <option value="figures">Figures</option>
+                        <option value="jewelry">Jewelry</option>
+                        <option value="magnets">Magnets</option>
+                        <option value="minerals">Minerals</option>
+                        <option value="perfume">Perfume</option>
+                        <option value="plates">Plates</option>
+                        <option value="cards">Playing Cards</option>
+                        <option value="plushies">Plushies</option>
+                        <option value="prints">Prints</option>
+                        <option value="stamps">Stamps</option>
+                        <option value="tickets">Tickets</option>
+                        <option value="games">Video Games</option>
+                        <option value="vinyls">Vinyls</option>
+                        <option value="other">Other</option>
+
+
+                    </select>
+
+                    <label for="sfw">SFW</label>
+                    <input type="radio" name="sfwToggle" value="SFW">
+
+                    <label for="nsfw">NSFW</label>
+                    <input type="radio" name="sfwToggle" value="NSFW">
+                </div>
+
+                <div id="postItem4">
+                    <img src="img/sendArrow.png" class="comIcons" alt="Post Bounty">
+                </div>
+
             </div>
-            <br>
 
 
 
+            <!--Community and friend tab
 
+        why do we even have a friends tab
 
-            <div id="homeGridItem3">
-                <a href="categories.html">
-                    <h3 class="homeTabLinks">See Categories</h3>
-                </a>
+        Novatnik pressured us into making a social media feature and we folded very easily -carter
+        -->
+
+            <div id="comGridItem3">
+                <ol class="comFriendsHeader">
+
+                    <li>
+                        <h2>Community</h2>
+                    </li>
+
+                    <li>
+                        <h2>Friends</h2>
+                    </li>
+
+                </ol>
             </div>
 
-            <div id="homeGridItem4">
+            <!--Maybe they look the same but they're two different pages???
+            or is this DOM?
 
-                <a href="signIn.html">
-                    <h3 class="homeTabLinks">Create an Account</h3>
-                </a>
 
+            -->
+
+
+
+
+            <div id="comGridItem4">
+                <!--Post section-->
+                <!--This is PHP-->
             </div>
-
-            <br>
-
-
-
-
-            <div id="homeGridItem5">
-                <img src="img/homePennies.png" alt="image of pennies in a pile" class="homeImg">
-            </div>
-            <div id="homeGridItem6">
-                <img src="img/turtle.png" alt="turtle charm" class="homeImg">
-            </div>
-
-
 
 
 
         </div>
     </div>
-
-    <br>
-
 
 
     <footer>
