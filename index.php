@@ -28,6 +28,7 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 That weird database thing was called phpMyAdmin!!
 
 http://localhost/phpmyadmin/
+//needs vpn
 
 took me way too long to find that
 
