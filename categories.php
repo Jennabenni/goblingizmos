@@ -37,32 +37,32 @@
                     <nav>
                         <ol>
                             <li>
-                                <a class="titleLink" href="index.html">Home</a>
+                                <a class="titleLink" href="index.php">Home</a>
                             </li>
                             <li>
                                 <p>|</p>
                             </li>
                             <li>
-                                <a class="titleLink" href="community.html">Community</a>
+                                <a class="titleLink" href="community.php">Community</a>
                             </li>
                             <li>
                                 <p>|</p>
                             </li>
                             <li>
-                                <a class="titleLink" href="search.html">Search</a>
+                                <a class="titleLink" href="search.php">Search</a>
                             </li>
                             <li>
                                 <p>|</p>
                             </li>
                             <li>
-                                <a class="titleLink" href="categories.html">Categories</a>
+                                <a class="titleLink" href="categories.php">Categories</a>
                             </li>
                         </ol>
                     </nav>
                 </div>
                 <div class="headerGridItem">
 
-                    <a href="userProfile.html"> <img src="img/PFP.png"></a>
+                    <a href="userProfile.php"> <img src="img/PFP.png"></a>
                     <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
                 </div>
 
@@ -76,7 +76,7 @@
             <!--Big DIV, for grid-->
 
             <div class="categoryGridItem">
-                <a href="categories/autographsCategory.html">
+                <a href="categories/autographsCategory.php">
                     <div>
                         <h3>Autographs</h3>
                         <img src="img/autographs.png" alt="a signature">
@@ -86,7 +86,7 @@
 
 
             <div class="categoryGridItem">
-                <a href="categories/booksCategories.html">
+                <a href="categories/booksCategories.php">
                     <div>
                         <h3>Books</h3>
                         <img src="img/books.png" alt="books">
@@ -98,7 +98,7 @@
 
 
             <div class="categoryGridItem">
-                <a href="categories/bottleCapsCategories.html">
+                <a href="categories/bottleCapsCategories.php">
                     <div>
                         <h3>Bottle Caps</h3>
                         <img src="img/caps.png" alt="bottle caps">
@@ -110,7 +110,7 @@
 
             <div class="categoryGridItem">
 
-                <a href="categories/cansCategories.html">
+                <a href="categories/cansCategories.php">
                     <div>
                         <h3>Cans</h3>
                         <img src="img/cans.png" alt="a wall of cans">
@@ -122,7 +122,7 @@
 
             <div class="categoryGridItem">
 
-                <a href="categories/charmsCategories.html">
+                <a href="categories/charmsCategories.php">
                     <div>
                         <h3>Charms</h3>
                         <img src="img/charms.png" alt="keychains shaped like game controllers">
@@ -132,7 +132,7 @@
 
             </div>
             <div class="categoryGridItem">
-                <a href="categories/coinsCategories.html">
+                <a href="categories/coinsCategories.php">
                     <div>
                         <h3>Coins</h3>
                         <img src="img/coins.png" alt="coins">
@@ -141,7 +141,7 @@
             </div>
 
             <div class="categoryGridItem">
-                <a href="categories/figuresCategories.html">
+                <a href="categories/figuresCategories.php">
                     <div>
                         <h3>Figures</h3>
                         <img src="img/figures.png" alt="a figurine of Goku">
@@ -150,7 +150,7 @@
 
             </div>
             <div class="categoryGridItem">
-                <a href="categories/jewelryCategories.html">
+                <a href="categories/jewelryCategories.php">
                     <div>
                         <h3>Jewelry</h3>
                         <img src="img/jewelry.png" alt="three rings in a pile">
@@ -159,7 +159,7 @@
             </div>
             <div class="categoryGridItem">
 
-                <a href="categories/magnetsCategories.html">
+                <a href="categories/magnetsCategories.php">
                     <div>
                         <h3>Magnets</h3>
                         <img src="img/magnets.png" alt="a collection of fun magnets">
@@ -168,7 +168,7 @@
             </div>
             <div class="categoryGridItem">
 
-                <a href="categories/mineralsCategories.html">
+                <a href="categories/mineralsCategories.php">
                     <div>
                         <h3>Minerals</h3>
                         <img src="img/minerals.png" alt="rocks in a row">
@@ -177,7 +177,7 @@
             </div>
             <div class="categoryGridItem">
 
-                <a href="categories/perfumeCategories.html">
+                <a href="categories/perfumeCategories.php">
                     <div>
                         <h3>Perfume</h3>
                         <img src="img/perfume.png" alt="perfume bottle">
@@ -187,7 +187,7 @@
             </div>
             <div class="categoryGridItem">
 
-                <a href="categories/platesCategories.html">
+                <a href="categories/platesCategories.php">
                     <div>
                         <h3>Plates</h3>
                         <img src="img/plates.png" alt="plates and dishes in a cupboard">
@@ -197,7 +197,7 @@
             </div>
             <div class="categoryGridItem">
 
-                <a href="categories/cardsCategories.html">
+                <a href="categories/cardsCategories.php">
                     <div>
                         <h3>Playing Cards</h3>
                         <img src="img/playingCards.png" alt="playing cards">
@@ -206,7 +206,7 @@
             </div>
             <div class="categoryGridItem">
 
-                <a href="categories/plushiesCategories.html">
+                <a href="categories/plushiesCategories.php">
                     <div>
                         <h3>Plushies</h3>
                         <img src="img/plushies.png" alt="three cat plushies">
@@ -216,7 +216,7 @@
             <div class="categoryGridItem">
 
 
-                <a href="categories/printsCategories.html">
+                <a href="categories/printsCategories.php">
                     <div>
                         <h3>Prints</h3>
                         <img src="img/prints.png" alt="photographs on a wall">
@@ -226,7 +226,7 @@
             </div>
             <div class="categoryGridItem">
 
-                <a href="categories/stampsCategories.html">
+                <a href="categories/stampsCategories.php">
                     <div>
                         <h3>Stamps</h3>
                         <img src="img/stamps.png" alt="stamps">
@@ -237,7 +237,7 @@
             <div class="categoryGridItem">
 
 
-                <a href="categories/ticketsCategories.html">
+                <a href="categories/ticketsCategories.php">
                     <div>
                         <h3>Tickets</h3>
                         <img src="img/tickets.png" alt="tickets">
@@ -247,7 +247,7 @@
             </div>
             <div class="categoryGridItem">
 
-                <a href="categories/videoGamesCategories.html">
+                <a href="categories/videoGamesCategories.php">
                     <div>
                         <h3>Video Games</h3>
                         <img src="img/videoGames.png" alt="a gameboy">
@@ -257,7 +257,7 @@
             </div>
             <div class="categoryGridItem">
 
-                <a href="categories/vinylsCategories.html">
+                <a href="categories/vinylsCategories.php">
                     <div>
                         <h3>Vinyls</h3>
                         <img src="img/vinyls.png" alt="Vinyl records">
@@ -267,7 +267,7 @@
             <div class="categoryGridItem">
 
 
-                <a href="categories/otherCategories.html">
+                <a href="categories/otherCategories.php">
                     <div>
                         <h3>Other</h3>
                         <img src="img/other.png" alt="small statue of a house">
@@ -299,13 +299,13 @@
                             <ol>
 
                                 <li>
-                                    <a href="support.html" class="titleLink">Support</a>
+                                    <a href="support.php" class="titleLink">Support</a>
                                 </li>
                                 <li>
                                     <p class="titleLink"> |</p>
                                 </li>
                                 <li>
-                                    <a href="tos.html" class="titleLink">Terms of Service</a>
+                                    <a href="tos.php" class="titleLink">Terms of Service</a>
                                 </li>
                             </ol>
 

@@ -1,3 +1,84 @@
+<?php
+
+//http://localhost/goblingizmos/index.php
+//this is what you copy and paste to open up the server
+//does NOT need to be out of a comment
+
+
+
+//require("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+
+//change location for when on the server
+
+
+session_start();
+//make sure to have the closer at the end of html
+
+
+/*DO NOT DELETE THESE */
+
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//this is remote, change on upload
+
+include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//this is local, change upon upload
+
+
+/*
+That weird database thing was called phpMyAdmin!!
+
+http://localhost/phpmyadmin/
+
+took me way too long to find that
+
+is the local version the one without the vpn? I remember we had to
+
+*/
+
+
+/*
+Things that need tables
+
+- user profiles (admin, user, nonuser)
+- Posts/bounties (category specific)
+- Reports (simple form that goes to a page for admins) (Lower priority)
+
+
+
+I will be back
+
+
+*/
+
+
+
+
+
+
+
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,33 +127,32 @@ Three columns, three rows
                     <nav>
                         <ol>
                             <li>
-                                <a class="titleLink" href="index.html">Home</a>
+                                <a class="titleLink" href="index.php">Home</a>
                             </li>
                             <li>
                                 <p>|</p>
                             </li>
                             <li>
-                                <a class="titleLink" href="community.html">Community</a>
+                                <a class="titleLink" href="community.php">Community</a>
                             </li>
                             <li>
                                 <p>|</p>
                             </li>
                             <li>
-                                <a class="titleLink" href="search.html">Search</a>
+                                <a class="titleLink" href="search.php">Search</a>
                             </li>
                             <li>
                                 <p>|</p>
                             </li>
                             <li>
-                                <a class="titleLink" href="categories.html">Categories</a>
+                                <a class="titleLink" href="categories.php">Categories</a>
                             </li>
                         </ol>
                     </nav>
                 </div>
                 <div class="headerGridItem" id="userIconGridItem">
 
-                    <a href="userProfile.html"> <img src="img/PFP.png" class="userIconImageForSmaller"
-                            alt="Profile"></a>
+                    <a href="userProfile.php"> <img src="img/PFP.png" class="userIconImageForSmaller" alt="Profile"></a>
                     <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
                 </div>
 
@@ -135,14 +215,14 @@ Three columns, three rows
 
 
             <div id="homeGridItem3">
-                <a href="categories.html">
+                <a href="categories.php">
                     <h3 class="homeTabLinks">See Categories</h3>
                 </a>
             </div>
 
             <div id="homeGridItem4">
 
-                <a href="signIn.html">
+                <a href="signIn.php">
                     <h3 class="homeTabLinks">Create an Account</h3>
                 </a>
 
@@ -189,13 +269,13 @@ Three columns, three rows
                             <ol>
 
                                 <li>
-                                    <a href="support.html" class="titleLink">Support</a>
+                                    <a href="support.php" class="titleLink">Support</a>
                                 </li>
                                 <li>
                                     <p class="titleLink"> |</p>
                                 </li>
                                 <li>
-                                    <a href="tos.html" class="titleLink">Terms of Service</a>
+                                    <a href="tos.php" class="titleLink">Terms of Service</a>
                                 </li>
                             </ol>
 
@@ -233,3 +313,6 @@ Three columns, three rows
 </body>
 
 </html>
+<?php
+$mysqli->close();
+?>

@@ -52,32 +52,32 @@ I also need to make the filter a drop down, but....... I could nix it
                     <nav>
                         <ol>
                             <li>
-                                <a class="titleLink" href="index.html">Home</a>
+                                <a class="titleLink" href="index.php">Home</a>
                             </li>
                             <li>
                                 <p>|</p>
                             </li>
                             <li>
-                                <a class="titleLink" href="community.html">Community</a>
+                                <a class="titleLink" href="community.php">Community</a>
                             </li>
                             <li>
                                 <p>|</p>
                             </li>
                             <li>
-                                <a class="titleLink" href="search.html">Search</a>
+                                <a class="titleLink" href="search.php">Search</a>
                             </li>
                             <li>
                                 <p>|</p>
                             </li>
                             <li>
-                                <a class="titleLink" href="categories.html">Categories</a>
+                                <a class="titleLink" href="categories.php">Categories</a>
                             </li>
                         </ol>
                     </nav>
                 </div>
                 <div class="headerGridItem">
 
-                    <a href="userProfile.html"> <img src="img/PFP.png" alt="Profile Picture"></a>
+                    <a href="userProfile.php"> <img src="img/PFP.png" alt="Profile Picture"></a>
                     <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
                 </div>
 
@@ -171,7 +171,7 @@ I also need to make the filter a drop down, but....... I could nix it
 
 
 
-            <div id="searchGridItem3"><a href="makePost.html">
+            <div id="searchGridItem3"><a href="makePost.php">
                     <button type="button" class="goblinButtons">Create a Bounty</a></button>
             </div>
             <!--I think <button>'s cannot contain or be contained by <a>'s, no issue currently, works as intended, but if issues arise later check here, I'm not 100% sure myself-->
@@ -202,13 +202,13 @@ I also need to make the filter a drop down, but....... I could nix it
                             <ol>
 
                                 <li>
-                                    <a href="support.html" class="titleLink">Support</a>
+                                    <a href="support.php" class="titleLink">Support</a>
                                 </li>
                                 <li>
                                     <p class="titleLink"> |</p>
                                 </li>
                                 <li>
-                                    <a href="tos.html" class="titleLink">Terms of Service</a>
+                                    <a href="tos.php" class="titleLink">Terms of Service</a>
                                 </li>
                             </ol>
 

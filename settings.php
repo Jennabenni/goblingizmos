@@ -37,32 +37,32 @@
                     <nav>
                         <ol>
                             <li>
-                                <a class="titleLink" href="index.html">Home</a>
+                                <a class="titleLink" href="index.php">Home</a>
                             </li>
                             <li>
                                 <p>|</p>
                             </li>
                             <li>
-                                <a class="titleLink" href="community.html">Community</a>
+                                <a class="titleLink" href="community.php">Community</a>
                             </li>
                             <li>
                                 <p>|</p>
                             </li>
                             <li>
-                                <a class="titleLink" href="search.html">Search</a>
+                                <a class="titleLink" href="search.php">Search</a>
                             </li>
                             <li>
                                 <p>|</p>
                             </li>
                             <li>
-                                <a class="titleLink" href="categories.html">Categories</a>
+                                <a class="titleLink" href="categories.php">Categories</a>
                             </li>
                         </ol>
                     </nav>
                 </div>
                 <div class="headerGridItem">
 
-                    <a href="userProfile.html"> <img src="img/PFP.png" alt="Profile Picture"></a>
+                    <a href="userProfile.php"> <img src="img/PFP.png" alt="Profile Picture"></a>
                     <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
                 </div>
 
@@ -73,7 +73,7 @@
 
         <!--THIS NEEDS TO BE PHP EVENTUALLY-->
 
-        <a href="userProfile.html">
+        <a href="userProfile.php">
             <img src="img/backbutton.png" class="iconImg" alt="back button">
         </a>
         <h2 class="accountInfo">Account Information</h2>
@@ -153,13 +153,13 @@
                             <ol>
 
                                 <li>
-                                    <a href="support.html" class="titleLink">Support</a>
+                                    <a href="support.php" class="titleLink">Support</a>
                                 </li>
                                 <li>
                                     <p class="titleLink"> |</p>
                                 </li>
                                 <li>
-                                    <a href="tos.html" class="titleLink">Terms of Service</a>
+                                    <a href="tos.php" class="titleLink">Terms of Service</a>
                                 </li>
                             </ol>
 
