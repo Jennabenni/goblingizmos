@@ -150,7 +150,7 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
                 <!--
             <a href="accessibility.php" class="goblinButtons">Accessibility</a>
             -->
-                <a href="signIn.php" class="goblinButtons">Log Out</a>
+                <a href="logOut.php" class="goblinButtons">Log Out</a>
 
 
             </div>

@@ -14,8 +14,10 @@ it's filed away into
 3. Account info that user sets (we also need regex for account setup)
 
 
-So we'll need five data tables, I can get the format from them
+So we'll need four to five data tables, I can get the format from them
 should the main SQL stuff be on the login page despite users coming here first?
+
+
 
 
 
@@ -24,15 +26,8 @@ should the main SQL stuff be on the login page despite users coming here first?
 New start point: log in page
 (I will keep some of the stuff here though)
 
-
-
-
-
-
-
-
-
 -->
+
 
 <?php
 
