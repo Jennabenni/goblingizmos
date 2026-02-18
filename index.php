@@ -1,3 +1,39 @@
+<!--
+Hello goblins, I'm gonna put my notes here to stay on track
+You will be seeing a lot of these
+
+---------------------------- ******
+Main SQL priorities
+
+1. Accounts (admin, user, nobody) (I will make admin accounts for all of us + novatnak)
+
+2. Making posts (bounties + posts) (community) (reports)
+Bounties and posts are together, and one of the checkboxes determines which one
+it's filed away into
+
+3. Account info that user sets (we also need regex for account setup)
+
+
+So we'll need five data tables, I can get the format from them
+should the main SQL stuff be on the login page despite users coming here first?
+
+
+
+
+
+New start point: log in page
+(I will keep some of the stuff here though)
+
+
+
+
+
+
+
+
+
+-->
+
 <?php
 
 //http://localhost/goblingizmos/index.php
@@ -6,10 +42,6 @@
 
 
 
-//require("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
-
-//change location for when on the server
-
 
 session_start();
 //make sure to have the closer at the end of html
@@ -17,11 +49,18 @@ session_start();
 
 /*DO NOT DELETE THESE */
 
-//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
-//this is remote, change on upload
-
+//include("../db-connect.php");
 include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
-//this is local, change upon upload
+//WAIT THIS ONE WORKED??
+//local
+
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//remote
+
+
+//change location for when on the server, these are my (Jenna's) credentials
+//and this is the LOCAL copy to start, and then we dump the table into here
+
 
 
 /*
@@ -30,52 +69,11 @@ That weird database thing was called phpMyAdmin!!
 http://localhost/phpmyadmin/
 //needs vpn
 
-took me way too long to find that
-
-is the local version the one without the vpn? I remember we had to
 
 */
-
-
-/*
-Things that need tables
-
-- user profiles (admin, user, nonuser)
-- Posts/bounties (category specific)
-- Reports (simple form that goes to a page for admins) (Lower priority)
-
-
-
-I will be back
-
-
-*/
-
-
-
-
-
-
 
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -194,6 +192,10 @@ Three columns, three rows
             <div id="homeGridItem2">
                 <div class="biggerHomeBox">
                     <h2>Welcome to Goblin Gizmos!</h2>
+
+                    <?php if (isset($_SESSION['logged_in'])) {
+                        print "<p>HOLY SHIT YO ASS IS LOGGED IN</p>";
+                    } ?>
 
                     <div id="infoBoxHome">
                         <p>Welcome to Goblin Gizmos! Whether you're a novice, experienced, or an expert in collecting

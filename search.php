@@ -246,3 +246,6 @@ I also need to make the filter a drop down, but....... I could nix it
 </body>
 
 </html>
+<?php
+$mysqli->close();
+?>
