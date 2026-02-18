@@ -1,3 +1,25 @@
+<?php
+session_start();
+//make sure to have the closer at the end of html
+
+
+/*DO NOT DELETE THESE */
+
+//include("../db-connect.php");
+include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//WAIT THIS ONE WORKED??
+//local
+
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//remote
+
+
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
