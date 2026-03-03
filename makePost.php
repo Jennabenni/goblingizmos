@@ -304,6 +304,109 @@ if (!isset($_SESSION['logged_in'])) {
             $mysqli->query($insert_post_query);
 
 
+            //this should already send it..... so i shouldnt have to check for isset post submit
+
+            if (($postCategoryOptionSelected == 'autographs') && ($postBountyOptionSelected == 'post')) {
+                //so this is saying that if its a category and also an autograph, itll take you
+                //straight to it
+
+                header("Location: categories/autographsCategory.php");
+                //okay this works and still submits
+                //yay
+            } else if (($postCategoryOptionSelected == 'books') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/booksCategory.php");
+            } else if (($postCategoryOptionSelected == 'caps') && ($postBountyOptionSelected == 'post')) {
+
+                header("Location: categories/bottleCapsCategory.php");
+            } else if (($postCategoryOptionSelected == 'cans') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/cansCategory.php");
+            } else if (($postCategoryOptionSelected == 'charms') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/charmsCategory.php");
+            } else if (($postCategoryOptionSelected == 'coins') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/coinsCategory.php");
+            } else if (($postCategoryOptionSelected == 'figures') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/figuresCategory.php");
+            } else if (($postCategoryOptionSelected == 'jewelry') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/jewelryCategory.php");
+            } else if (($postCategoryOptionSelected == 'magnets') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/magnetsCategory.php");
+            } else if (($postCategoryOptionSelected == 'minerals') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/mineralsCategory.php");
+            } else if (($postCategoryOptionSelected == 'perfume') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/perfumeCategory.php");
+            } else if (($postCategoryOptionSelected == 'plates') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/platesCategory.php");
+            } else if (($postCategoryOptionSelected == 'cards') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/cardsCategory.php");
+            } else if (($postCategoryOptionSelected == 'plushies') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/plushiesCategory.php");
+            } else if (($postCategoryOptionSelected == 'prints') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/printsCategory.php");
+            } else if (($postCategoryOptionSelected == 'stamps') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/stampsCategory.php");
+            } else if (($postCategoryOptionSelected == 'tickets') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/ticketsCategory.php");
+            } else if (($postCategoryOptionSelected == 'games') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/videoGamesCategory.php");
+            } else if (($postCategoryOptionSelected == 'vinyls') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/vinylsCategory.php");
+            } else if (($postCategoryOptionSelected == 'other') && ($postBountyOptionSelected == 'post')) {
+
+
+                header("Location: categories/otherCategory.php");
+            } else if ($postBountyOptionSelected == 'bounty') {
+
+
+                header("Location: search.php");
+
+                //all bounties lead to search
+                //get it? like all drains lead to the ocean?
+                //or all roads lead to Rome??
+                //guys please laugh
+            }
+
+
+
+
+
+
+
+
+
         } else if ((isset($_POST['submit'])) && empty($_POST['post_or_bounty']) || empty($_POST['post_category']) || empty($_POST['post_description'])) {
 
             print "<p>Please make sure that the 'post or bounty' box, the 'post category' box, and the 'post desctiption' box are filled out.  </p>";

@@ -1,0 +1,38 @@
+Engineer notes hell yeah
+
+
+
+- Making post [done]
+- Posting to correct category
+- being able to view post
+- being able to view account info of someone else (will need to edit previous DB)
+- REGULAR EXPRESSIONS NEEDED
+
+
+- Bounties to search tab
+- search bar
+
+
+- Community posts
+- heart system
+- Friending??
+
+- MAKING an account
+    - Username
+    - first name
+    - last name
+    - email for funsies
+    - needs to set a password
+    - Bio
+    - This may have to be a form in persons profile as well, that they can edit (brother.)
+
+
+
+    - Reports
+    - post to admin only section
+
+
+
+    dont forget to do smth that blurs the pass when theyre typing it
+    (and we were taught not to do it the browser way because then we're letting the browser make decisions for us!)
+    (I can do CSS)
