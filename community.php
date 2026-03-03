@@ -14,6 +14,16 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //remote
 
 
+/*WHY DO THESE ALL HAVE BUTTONS FUCK */
+
+
+
+
+
+
+
+
+
 
 
 ?>

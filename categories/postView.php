@@ -13,55 +13,10 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
-if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) {
 
-    if (isset($_POST['post_category']) && ($_POST['post_category']) == "autographs") {
-        $query_all = "SELECT user_id, post_or_bounty, post_category, post_price, post_description, post_img, post_sfw_nsfw, DATE_FORMAT(post_creation_date, '%M %d, %Y %h:%I%p') AS post_creation_date FROM goblingizmos_postbounties";
-
-
-        $queryUserInfo = "SELECT user_id, username FROM goblingizmos_users";
-
-
-    }
-
-    /*WILL NEED USER IMG */
-
-
-} else if (isset($_SESSION['access_level']) && ($_SESSION['acess_level']) == "user" || !isset($_SESSION)) {
-
-    if (isset($_POST['post_category']) && ($_POST['post_category']) == "autographs") {
-        $query_users_and_others = "SELECT post_catgeory, post_price, post_description, post_img, post_sfw,nsfw, DATE_FORMAT(u.post_creation_date, '%M %d, %Y') AS post_creation_date FROM goblingizmos_postbounties";
-
-        $query_user_info_user_view = "SELECT username FROM goblingizmos_users";
-
-        $result = $mysqli->query($query_reviewer);
-        if ($mysqli->error) {
-            print "Query failed: " . $mysqli->error;
-        }
-    }
-
-}
-
-
-
-/*All IDS in table
-            post_id
-            user_id
-            post_or_bounty
-            post_category
-            post_condition
-            post_boxCondition
-            post_price
-            post_location
-            post_description
-            post_img
-            post_sfw_nsfw
-            post_creation_date
-            */
 
 
 ?>
-
 
 
 <!DOCTYPE html>
@@ -70,7 +25,7 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goblin Gizmos - Autographs</title>
+    <title>Goblin Gizmos - Minerals</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <script src="../js/goblinScript.js"></script>
 </head>
@@ -137,8 +92,7 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
         <div class="specificCategoryLayoutGrid">
 
             <div class="specificCatItem1">
-                <aside class="bountiesSection">
-                    <h3>Bounties</h3>
+                <aside class="bountiesSection">Bounties
                     <div></div>
                 </aside>
 
@@ -149,10 +103,13 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
 
 
-            <div class="specificCatItem2"> <a href="../makePost.php">
+            <div class="specificCatItem2">
+                <a href="../makePost.php">
+
 
                     <button type="button" class="goblinButtons">Make a Post</button>
                 </a>
+
             </div>
 
 
@@ -160,24 +117,17 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
             <div class="specificCatItem3">
 
                 <div>
-                    <img src="../img/autographs.png" alt="image of a signed paper">
+                    <img src="../img/minerals.png" alt="different minerals">
                 </div>
                 <div class="grayBoxInInfo">
 
 
-                    <h2>Autographs</h2>
-                    <p>Autographs are a signature or dedication that usually is written by a celebrity that individuals
-                        sell
-                        or
-                        collect due to sentimental value to the celebrity's work. An autograph increases in value
-                        depending
-                        on
-                        who
-                        signed it, how easily available it is to acquire the autograph, how legible the photograph is,
-                        and
-                        if
-                        the
-                        celebrity is popular on social media.
+                    <h2>Minerals</h2>
+                    <p>Minerals, also referred to as 'rocks' or 'crystals' refers to inorganic materials that are
+                        naturally
+                        occurring. These objects are generally collected for appearance, for the healing or restorative
+                        properties they are said to provide, or as resources to be made into other objects.
+
                     </p>
                 </div>
 
@@ -197,62 +147,13 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
             <div class="specificCatItem5">
                 <div>
+                    <!--STUFF GOES HERE-->
 
-                    <?php
+                    <!--
+                <img src="../img/placeholder.png">
+                <img src="../img/placeholder.png">
 
-                    if (isset($_SESSION['access_level']) && ($_SESSION['access_level']) == "admin") {
-
-                        print "<div>";
-                        //big div (I would do a table but its not the vibe im goin for)
-                    
-                        /*
-                        SFW/NSFW
-                        post category
-                        user picture (will be needed at a later date)
-                        username user ID
-                        post date
-                        desc
-                        img
-                        price if one
-
-
-                        admin extras: userId
-
-
-                        */
-
-
-
-
-
-                        print "</div>";
-
-                    }
-
-
-
-
-                    ?>
-
-
-                    <div>
-
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-
-
-                    </div>
-
-
-
-
+            -->
 
                 </div>
 
@@ -261,8 +162,8 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
             <!--Bottom div for grid for reference-->
         </div>
-
     </div>
+
 
 
     <footer>
