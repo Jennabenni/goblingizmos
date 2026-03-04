@@ -2045,6 +2045,137 @@ img {
     }
 
 
+
+    /*THE POSTS THEMSELVES*/
+
+
+    .specificCatItem5 {
+        /*  background-color: red;*/
+        display: grid;
+        grid-template-columns: auto auto;
+        /*grid-template-rows: max-content;*/
+    }
+
+    .boxesForEachPost {
+        background-color: white;
+        border: solid 1px black;
+        box-shadow: 5px 5px 5px gray;
+        padding: 10px;
+        width: 320px;
+
+        row-gap: 50px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 25px;
+        margin-top: 25px;
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        font-family: rubik, Arial;
+        grid-template-rows: auto auto auto auto auto;
+
+
+    }
+
+
+    .gridItemForPostBox1 {
+        /*post id*/
+        grid-row-start: 5;
+        margin-left: auto;
+        margin-right: auto;
+        grid-column-start: 1;
+    }
+
+    .gridItemForPostBox2 {
+        /*user id*/
+        grid-row-start: 5;
+        margin-left: auto;
+        margin-right: auto;
+        grid-column-start: 3;
+    }
+
+    .gridItemForPostBox3 {
+        /*username*/
+        grid-column: 2 span 2;
+        margin-left: auto;
+        margin-right: auto;
+        font-weight: 500;
+    }
+
+    .gridItemForPostBox4 {
+        /*user pfp*/
+        grid-column-start: 1;
+        grid-row-start: 1;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .gridItemForPostBox5 {
+        /*post or bounty*/
+
+    }
+
+    .gridItemForPostBox6 {
+        /*post category*/
+    }
+
+    .gridItemForPostBox7 {
+        /*condition*/
+    }
+
+    .gridItemForPostBox8 {
+        /*box condition*/
+    }
+
+    .gridItemForPostBox9 {
+        /*price*/
+    }
+
+    .gridItemForPostBox10 {
+        /*location*/
+    }
+
+    .gridItemForPostBox11 {
+        /*desc*/
+        grid-column: 1 span 4;
+        grid-row-start: 3;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .gridItemForPostBox12 {
+        /*post img*/
+        grid-row-start: 4;
+        grid-column: 1 span 4;
+        margin-left: auto;
+        margin-right: auto;
+
+    }
+
+    .gridItemForPostBox12 img {
+        width: 270px;
+
+    }
+
+    .gridItemForPostBox13 {
+        /*csfw nsfw*/
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .gridItemForPostBox14 {
+        /*post date*/
+        grid-row-start: 2;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+
+
+
+
+
+
     /*Community Tab*/
 
     .communityGridContainer {
