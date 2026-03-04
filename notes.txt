@@ -11,6 +11,7 @@ Engineer notes hell yeah
 
 - Bounties to search tab
 - search bar
+- Bounty COLUMN in each category (Most recent 3)
 
 
 - Community posts
@@ -25,6 +26,8 @@ Engineer notes hell yeah
     - needs to set a password
     - Bio
     - This may have to be a form in persons profile as well, that they can edit (brother.)
+    - User profile img (how do accounts get it to be a circle???)
+        Do I hear square pfps?? Anyone??
 
 
 
@@ -36,3 +39,14 @@ Engineer notes hell yeah
     dont forget to do smth that blurs the pass when theyre typing it
     (and we were taught not to do it the browser way because then we're letting the browser make decisions for us!)
     (I can do CSS)
+
+
+
+    - So non users can see posts, but maybe they cant do the larger view unless they make an account, nor can they
+    view the persons account (gotta have some privacy)
+
+
+    - DONT FORGET TO TEST ON THE SERVER!!! REMOTE!!
+    - Also keep your comments in mind on the client side
+    it may give a bad impression if people saw me say fuck multiple times
+    if they hit inspect

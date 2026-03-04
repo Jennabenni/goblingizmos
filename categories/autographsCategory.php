@@ -3,6 +3,9 @@ session_start();
 //make sure to have the closer at the end of html
 
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 /*DO NOT DELETE THESE */
 
 //include("../db-connect.php");
@@ -13,34 +16,6 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
-if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) {
-
-    if (isset($_POST['post_category']) && ($_POST['post_category']) == "autographs") {
-        $query_all = "SELECT user_id, post_or_bounty, post_category, post_price, post_description, post_img, post_sfw_nsfw, DATE_FORMAT(post_creation_date, '%M %d, %Y %h:%I%p') AS post_creation_date FROM goblingizmos_postbounties";
-
-
-        $queryUserInfo = "SELECT user_id, username FROM goblingizmos_users";
-
-
-    }
-
-    /*WILL NEED USER IMG */
-
-
-} else if (isset($_SESSION['access_level']) && ($_SESSION['acess_level']) == "user" || !isset($_SESSION)) {
-
-    if (isset($_POST['post_category']) && ($_POST['post_category']) == "autographs") {
-        $query_users_and_others = "SELECT post_catgeory, post_price, post_description, post_img, post_sfw,nsfw, DATE_FORMAT(u.post_creation_date, '%M %d, %Y') AS post_creation_date FROM goblingizmos_postbounties";
-
-        $query_user_info_user_view = "SELECT username FROM goblingizmos_users";
-
-        $result = $mysqli->query($query_reviewer);
-        if ($mysqli->error) {
-            print "Query failed: " . $mysqli->error;
-        }
-    }
-
-}
 
 
 
@@ -57,7 +32,42 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
             post_img
             post_sfw_nsfw
             post_creation_date
+
+
+
+
+
+            so, I wanted to filter by autograph first, but I'll try dumping everything
             */
+
+
+if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) {
+    $query_all = "SELECT post_id, goblingizmos_postsbounties.user_id, post_or_bounty, post_category, post_condition, post_boxCondition, post_price, post_location, post_description, post_img, post_sfw_nsfw, post_creation_date, goblingizmos_users.username FROM `goblingizmos_postsbounties` INNER JOIN goblingizmos_users ON goblingizmos_postsbounties.user_id=goblingizmos_users.user_id ORDER BY post_id DESC";
+
+    //NOBODY MOVE DONT TOUCH THIS
+
+    //Date format broke it??
+    //Do we need times honestly
+
+    $result = $mysqli->query($query_all);
+    //This was hiding in my other code
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 ?>
@@ -78,6 +88,7 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 <body>
 
     <div class="page-wrap">
+
 
         <header>
 
@@ -183,11 +194,6 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
             </div>
 
-            <!-- <div>
-
-            <h3>Bounties</h3>
-        </div>-->
-
 
 
             <div class="specificCatItem4">
@@ -196,27 +202,38 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
 
             <div class="specificCatItem5">
-                <div>
 
-                    <?php
 
-                    if (isset($_SESSION['access_level']) && ($_SESSION['access_level']) == "admin") {
 
-                        print "<div>";
-                        //big div (I would do a table but its not the vibe im goin for)
-                    
+
+
+
+
+                <?php
+
+                if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) {
+                    while (($row = $result->fetch_array(MYSQLI_ASSOC))) {
+                        //for admins
+                
+
+
                         /*
-                        SFW/NSFW
-                        post category
-                        user picture (will be needed at a later date)
-                        username user ID
-                        post date
-                        desc
-                        img
-                        price if one
+                        What is visible in posts (BEFORE CLICKING)
+- username
+- user pfp
+- date posted
+- desc
+- post img
+- price (if one)
+- sfw nsfw status
 
 
-                        admin extras: userId
+Additional admin things
+- user ID
+- post ID
+
+
+
 
 
                         */
@@ -225,45 +242,112 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
 
 
-                        print "</div>";
+
+
+
+
+                        if (($row['post_category'] == 'autographs') && ($row['post_or_bounty'] == 'post')) {
+                            //IT'S THAT EASY???
+                            //Look how much thinking sleep can get ya
+                            // who would've thought
+                
+
+                            print "<div class=\"boxesForEachPost\">";
+
+                            print "<div class=\"gridItemForPostBox1\">" . $row['post_id'] . "</div>";
+                            print "<div class=\"gridItemForPostBox2\">" . $row['user_id'] . "</div>";
+                            print "<div class=\"gridItemForPostBox3\">" . $row['username'] . "</div>";
+                            //print "<div class=\"gridItemForPostBox4\">" . $row['user_pfp'] . "</div>";
+                            //Will need the pfp
+                
+
+
+
+                            // print "<div class=\"gridItemForPostBox5\">" . $row['post_or_bounty'] . "</div>";
+                
+
+
+                            // print "<div class=\"gridItemForPostBox6\">" . $row['post_category'] . "</div>";
+                
+                            if (!empty($row['post_condition'])) {
+                                print "<div class=\"gridItemForPostBox7\">" . $row['post_condition'] . "</div>";
+                                //doesn't always exist
+                            }
+
+                            if (!empty($row['post_boxCondition'])) {
+                                print "<div class=\"gridItemForPostBox8\">" . $row['post_boxCondition'] . "</div>";
+                                //doesn't always exist
+                            }
+
+                            if (!empty($row['post_price'])) {
+                                print "<div class=\"gridItemForPostBox9\">" . $row['post_price'] . "</div>";
+                                //doesn't always exist
+                            }
+
+                            if (!empty($row['post_location'])) {
+                                print "<div class=\"gridItemForPostBox10\">" . $row['post_location'] . "</div>";
+                                //doesn't always exist
+                            }
+
+
+
+                            print "<div class=\"gridItemForPostBox11\">" . $row['post_description'] . "</div>";
+                            //this always exists
+                
+
+
+
+                            if (!empty($row['post_img'])) {
+                                print "<div class=\"gridItemForPostBox12\">" . "<img src=\"../" . $row['post_img'] . "\">" . "</div>";
+                                //doesn't always exist
+                            }
+
+                            if (!empty($row['post_sfw_nsfw'])) {
+                                print "<div class=\"gridItemForPostBox13\">" . $row['post_sfw_nsfw'] . "</div>";
+                                //doesn't always exist
+                            }
+
+
+                            print "<div class=\"gridItemForPostBox14\">" . $row['post_creation_date'] . "</div>";
+                            //always exists
+                
+
+                            print "</div>";
+
+
+
+                        }
+
 
                     }
 
-
-
-
-                    ?>
-
-
-                    <div>
-
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-
-
-                    </div>
+                }
 
 
 
 
 
-                </div>
+                ?>
+
+
+
+
+
+
 
             </div>
-
-
-            <!--Bottom div for grid for reference-->
         </div>
-
     </div>
 
+
+
+
+
+
+    <!--Something weird happened to footer; investigate later
+    fixed
+
+    when in doubt, add divs-->
 
     <footer>
 
@@ -323,6 +407,7 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
         </div>
 
     </footer>
+
 
 </body>
 

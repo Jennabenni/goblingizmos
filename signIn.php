@@ -254,113 +254,90 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
 
 
 
-            <form action="signIn.php" class="signUpForms">
-                <div class="signInForm">
-                    <div>
-                        <h2>Sign Up</h2>
-                    </div>
 
-                    <!--
-            <div>
+            <div class="signInForm">
 
-                <label for=" email">Email</label>
-            </div>
-            -->
 
-                    <div>
-                        <input type="text" id="email" name="email" placeholder="Email" class="inputBoxes">
-                    </div>
+                <div>
+                    <h2 class="goblinButtons">Sign Up</h2>
 
-                    <!--
-            <div>
-                <label for="password">Password</label>
-            </div>
-            -->
-                    <div>
-                        <input type="text" id="password" name="password" placeholder="Password" class="inputBoxes">
-                    </div>
-
-                    <!-- <div>
-                        <input type="submit" value="Create Account" class="goblinButtons">
-                    </div>-->
-                    <!--This one would push it-->
 
                 </div>
-            </form>
 
 
-        </div>
-
-
-
-    </div> <!--when you do php, keep this div after it, it's for the footer staying sticky-->
-
-
-
-
-
-
-
-
-
-    <footer>
-
-
-
-
-        <img src="img/goblinLogo.png" id="bottomLogo" alt="a goblin face in a coin; the logo">
-        <!--PLACEHOLDER!! REPLACE LATER: LOGO-->
-
-        <div>
-            <div class="footerFlex">
-                <!--Bottom left-->
-                <nav>
-                    <div class="footerGrid">
-                        <div class="footerGridItem1">
-
-                            <ol>
-
-                                <li>
-                                    <a href="support.php" class="titleLink">Support</a>
-                                </li>
-                                <li>
-                                    <p class="titleLink"> |</p>
-                                </li>
-                                <li>
-                                    <a href="tos.php" class="titleLink">Terms of Service</a>
-                                </li>
-                            </ol>
-
-                        </div>
-
-                        <div class="footerGridItem2">
-                            <ol>
-
-
-                                <li><a href="https://x.com/"> <img src="img/TwitterLogo.png" class="iconImg"
-                                            alt="X logo"></a></li>
-
-                                <li><a href="https://www.instagram.com/"> <img src="img/instagram.png" class="iconImg"
-                                            alt="Instagram logo"></a>
-                                </li>
-
-                                <li> <a href="https://www.facebook.com/"> <img src="img/facebook.png" class="iconImg"
-                                            alt="Facebook logo"></a>
-                                </li>
-
-                                <!--This works, and now I'm too scared to touch it-->
-
-                            </ol>
-
-                        </div>
-                    </div>
-                </nav>
 
             </div>
 
-        </div>
 
-    </footer>
+
+        </div> <!--when you do php, keep this div after it, it's for the footer staying sticky-->
+
+
+
+
+
+
+
+
+
+        <footer>
+
+
+
+
+            <img src="img/goblinLogo.png" id="bottomLogo" alt="a goblin face in a coin; the logo">
+            <!--PLACEHOLDER!! REPLACE LATER: LOGO-->
+
+            <div>
+                <div class="footerFlex">
+                    <!--Bottom left-->
+                    <nav>
+                        <div class="footerGrid">
+                            <div class="footerGridItem1">
+
+                                <ol>
+
+                                    <li>
+                                        <a href="support.php" class="titleLink">Support</a>
+                                    </li>
+                                    <li>
+                                        <p class="titleLink"> |</p>
+                                    </li>
+                                    <li>
+                                        <a href="tos.php" class="titleLink">Terms of Service</a>
+                                    </li>
+                                </ol>
+
+                            </div>
+
+                            <div class="footerGridItem2">
+                                <ol>
+
+
+                                    <li><a href="https://x.com/"> <img src="img/TwitterLogo.png" class="iconImg"
+                                                alt="X logo"></a></li>
+
+                                    <li><a href="https://www.instagram.com/"> <img src="img/instagram.png"
+                                                class="iconImg" alt="Instagram logo"></a>
+                                    </li>
+
+                                    <li> <a href="https://www.facebook.com/"> <img src="img/facebook.png"
+                                                class="iconImg" alt="Facebook logo"></a>
+                                    </li>
+
+                                    <!--This works, and now I'm too scared to touch it-->
+
+                                </ol>
+
+                            </div>
+                        </div>
+                    </nav>
+
+                </div>
+
+            </div>
+
+        </footer>
 
 </body>
 
