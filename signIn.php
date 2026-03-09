@@ -289,10 +289,12 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
 
 
             </div>
+        </div>
 
 
 
-        </div> <!--when you do php, keep this div after it, it's for the footer staying sticky-->
+    </div> <!--when you do php, keep this div after it, it's for the footer staying sticky-->
+    </div> <!--when you do php, keep this div after it, it's for the footer staying sticky-->
 
 
 
@@ -302,11 +304,14 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
 
 
 
+    <footer>
         <footer>
 
 
 
 
+            <img src="img/goblinLogo.png" id="bottomLogo" alt="a goblin face in a coin; the logo">
+            <!--PLACEHOLDER!! REPLACE LATER: LOGO-->
             <img src="img/goblinLogo.png" id="bottomLogo" alt="a goblin face in a coin; the logo">
             <!--PLACEHOLDER!! REPLACE LATER: LOGO-->
 
@@ -316,50 +321,90 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
                     <nav>
                         <div class="footerGrid">
                             <div class="footerGridItem1">
+                                <div>
+                                    <div class="footerFlex">
+                                        <!--Bottom left-->
+                                        <nav>
+                                            <div class="footerGrid">
+                                                <div class="footerGridItem1">
 
-                                <ol>
+                                                    <ol>
+                                                        <ol>
 
-                                    <li>
-                                        <a href="support.php" class="titleLink">Support</a>
-                                    </li>
-                                    <li>
-                                        <p class="titleLink"> |</p>
-                                    </li>
-                                    <li>
-                                        <a href="tos.php" class="titleLink">Terms of Service</a>
-                                    </li>
-                                </ol>
+                                                            <li>
+                                                                <a href="support.php" class="titleLink">Support</a>
+                                                            </li>
+                                                            <li>
+                                                                <p class="titleLink"> |</p>
+                                                            </li>
+                                                            <li>
+                                                                <a href="tos.php" class="titleLink">Terms of Service</a>
+                                                            </li>
+                                                        </ol>
+                                                        <li>
+                                                            <a href="support.php" class="titleLink">Support</a>
+                                                        </li>
+                                                        <li>
+                                                            <p class="titleLink"> |</p>
+                                                        </li>
+                                                        <li>
+                                                            <a href="tos.php" class="titleLink">Terms of Service</a>
+                                                        </li>
+                                                    </ol>
 
-                            </div>
+                                                </div>
+                                            </div>
 
-                            <div class="footerGridItem2">
-                                <ol>
+                                            <div class="footerGridItem2">
+                                                <ol>
+                                                    <div class="footerGridItem2">
+                                                        <ol>
 
 
-                                    <li><a href="https://x.com/"> <img src="img/TwitterLogo.png" class="iconImg"
-                                                alt="X logo"></a></li>
+                                                            <li><a href="https://x.com/"> <img src="img/TwitterLogo.png"
+                                                                        class="iconImg" alt="X logo"></a></li>
+                                                            <li><a href="https://x.com/"> <img src="img/TwitterLogo.png"
+                                                                        class="iconImg" alt="X logo"></a></li>
 
-                                    <li><a href="https://www.instagram.com/"> <img src="img/instagram.png"
-                                                class="iconImg" alt="Instagram logo"></a>
-                                    </li>
+                                                            <li><a href="https://www.instagram.com/"> <img
+                                                                        src="img/instagram.png" class="iconImg"
+                                                                        alt="Instagram logo"></a>
+                                                            </li>
+                                                            <li><a href="https://www.instagram.com/"> <img
+                                                                        src="img/instagram.png" class="iconImg"
+                                                                        alt="Instagram logo"></a>
+                                                            </li>
 
-                                    <li> <a href="https://www.facebook.com/"> <img src="img/facebook.png"
-                                                class="iconImg" alt="Facebook logo"></a>
-                                    </li>
+                                                            <li> <a href="https://www.facebook.com/"> <img
+                                                                        src="img/facebook.png" class="iconImg"
+                                                                        alt="Facebook logo"></a>
+                                                            </li>
+                                                            <li> <a href="https://www.facebook.com/"> <img
+                                                                        src="img/facebook.png" class="iconImg"
+                                                                        alt="Facebook logo"></a>
+                                                            </li>
 
-                                    <!--This works, and now I'm too scared to touch it-->
+                                                            <!--This works, and now I'm too scared to touch it-->
+                                                            <!--This works, and now I'm too scared to touch it-->
 
-                                </ol>
+                                                        </ol>
+                                                </ol>
 
-                            </div>
-                        </div>
+                                            </div>
+                                    </div>
                     </nav>
-
                 </div>
+            </div>
+            </nav>
 
+            </div>
+            </div>
+
+            </div>
             </div>
 
         </footer>
+    </footer>
 
 </body>
 

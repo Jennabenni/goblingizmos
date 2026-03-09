@@ -6,6 +6,9 @@ session_start();
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 /*DO NOT DELETE THESE */
 
 //include("../db-connect.php");
@@ -111,6 +114,7 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 <body>
 
     <div class="page-wrap">
+
 
 
         <header>
@@ -259,18 +263,19 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
 
                 <?php
+                <?php
 
                 if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) {
                     while (($row = $result->fetch_array(MYSQLI_ASSOC))) {
                         //for admins
-                
+
 
 
                         if (($row['post_category'] == 'autographs') && ($row['post_or_bounty'] == 'post')) {
                             //IT'S THAT EASY???
                             //Look how much thinking sleep can get ya
                             // who would've thought
-                
+
 
                             print "<div class=\"boxesForEachPost\">";
 
@@ -284,7 +289,7 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
 
                             // print "<div class=\"gridItemForPostBox5\">" . $row['post_or_bounty'] . "</div>";
-                
+
 
 
                             // print "<div class=\"gridItemForPostBox6\">" . $row['post_category'] . "</div>";
@@ -313,7 +318,7 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
                             print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row['post_description'] . "</p>" . "</div>";
                             //this always exists
-                
+
 
 
 
@@ -330,7 +335,7 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
                             print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row['post_creation_date'] . "</p>" . "</div>";
                             //always exists
-                
+
 
                             print "</div>";
 
@@ -352,7 +357,7 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
                             //print "<div class=\"gridItemForPostBox1\">" . $row2['post_id'] . "</div>";
                             //print "<div class=\"gridItemForPostBox2\">" . $row2['user_id'] . "</div>";
-                
+
 
 
                             print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row2['username'] . "</p>" . "</div>";
@@ -367,11 +372,11 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
 
                             // print "<div class=\"gridItemForPostBox5\">" . $row['post_or_bounty'] . "</div>";
-                
+
 
 
                             // print "<div class=\"gridItemForPostBox6\">" . $row['post_category'] . "</div>";
-                
+
                             /* if (!empty($row2['post_condition'])) {
                                  print "<div class=\"gridItemForPostBox7\">" . $row2['post_condition'] . "</div>";
                                  //doesn't always exist
@@ -385,10 +390,10 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
                             if (!empty($row2['post_price'])) {
                                 print "<div class=\"gridItemForPostBox9\">" . "<p>$" . $row2['post_price'] . "</p>" . "</div>";
                                 //doesn't always exist
-                
+
                                 //I made it in $ because I do NOT have the time to code in a whole other currency section
                                 //Hate to be like that but oh well
-                
+
 
 
                             }
@@ -402,7 +407,7 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
                             print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2['post_description'] . "</p>" . "</div>";
                             //this always exists
-                
+
 
 
 
@@ -420,8 +425,9 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
                             print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row2['post_creation_date'] . "</p>" . "</div>";
                             //always exists
-                
 
+
+                            print "</div>";
                             print "</div>";
 
                         }
@@ -444,9 +450,19 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
 
             </div>
+            </div>
         </div>
     </div>
 
+
+
+
+
+
+    <!--Something weird happened to footer; investigate later
+    fixed
+
+    when in doubt, add divs-->
 
 
 
@@ -515,6 +531,7 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
         </div>
 
     </footer>
+
 
 
 </body>

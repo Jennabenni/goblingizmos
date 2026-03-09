@@ -28,6 +28,7 @@ they dont submit with apostrophes
 - Bounties to search tab
 - search bar
 - Bounty COLUMN in each category (Most recent 3)
+- Bounty COLUMN in each category (Most recent 3)
 
 
 - Community posts
@@ -55,6 +56,17 @@ they dont submit with apostrophes
     dont forget to do smth that blurs the pass when theyre typing it
     (and we were taught not to do it the browser way because then we're letting the browser make decisions for us!)
     (I can do CSS)
+
+
+
+    - So non users can see posts, but maybe they cant do the larger view unless they make an account, nor can they
+    view the persons account (gotta have some privacy)
+
+
+    - DONT FORGET TO TEST ON THE SERVER!!! REMOTE!!
+    - Also keep your comments in mind on the client side
+    it may give a bad impression if people saw me say fuck multiple times
+    if they hit inspect
 
 
 
