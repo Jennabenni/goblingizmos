@@ -56,27 +56,55 @@ Regex ideas:
 session_start();
 //need this on everything, dont forget closing tag at bottom under html
 
+
+/*
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+*/
+
 //include("../db-connect.php");
 include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
+
 
 //include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
 //following my old code
 
+
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+
+
+if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
+
+    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
+
+
+    //honestly all of this could be used
+
+    $result = $mysqli->query($query_user_info_on_pages);
+
+
+
+}
+
+
+
+
+
+
 if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
-    $select_query = "SELECT * FROM goblingizmos_users";
+    $select_query = "SELECT * FROM `goblingizmos_users`";
 
 
 
     $select_result = $mysqli->query($select_query);
-    /*if ($mysqli->error) {
-        print "BAD BAD WRONG WOMP WOMP.  Message: " . $mysqli->error;
 
-        This is always an error hence why it's a comment
-    }*/
 
     while ($row = $select_result->fetch_object()) {
         if ((($_POST['uname']) == ($row->username)) && (md5($_POST['password']) == ($row->password))) {
@@ -101,28 +129,12 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
 
 
 
-
-
-
-
 //ill be back
 
 
 
 
-
-
-
-
-
-
 ?>
-
-
-
-
-
-
 
 
 
@@ -190,8 +202,37 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
                 </div>
                 <div class="headerGridItem">
 
-                    <a href="userProfile.php"> <img src="img/PFP.png" alt="Profile Picture"></a>
-                    <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
+
+
+                    <?php
+
+
+                    if (isset($_SESSION['logged_in'])) {
+                        $row = $result->fetch_array(MYSQLI_ASSOC);
+
+                        if ($row['user_pfp'] != '') {
+                            print "<a href=\"userProfile.php\"><img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
+                        } else if ($row['user_pfp'] == '') {
+                            print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                        }
+                    }
+
+
+                    if (!isset($_SESSION['logged_in'])) {
+                        print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                    }
+
+
+
+
+
+
+
+
+                    ?>
+
+
+
                 </div>
 
             </div>
@@ -208,22 +249,10 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
                         <h2>Sign In</h2>
                     </div>
 
-                    <!--
-            <div>
-                <label for="uname">Username</label>
-            </div>
-            -->
 
                     <div>
-                        <input type="text" id="uname" name="uname" placeholder="Username/Email" class="inputBoxes">
+                        <input type="text" id="uname" name="uname" placeholder="Username" class="inputBoxes">
                     </div>
-
-                    <!--
-            <div>
-                <label for="password">Password</label>
-            </div>
-
-            -->
 
 
                     <div>
@@ -252,18 +281,11 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
 
 
 
-
-
-
-            <div class="signInForm">
-
+            <div>
 
                 <div>
-                    <h2 class="goblinButtons">Sign Up</h2>
-
-
+                    <h2 class="goblinButtons"><a href="makeAccount.php">Sign Up</a></h2>
                 </div>
-
 
 
             </div>

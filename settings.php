@@ -14,6 +14,24 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //remote
 
 
+/*
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+*/
+
+if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
+
+
+    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
+
+
+    //honestly all of this could be used
+
+    $resultPFP = $mysqli->query($query_user_info_on_pages);
+
+
+
+}
 
 
 ?>
@@ -83,8 +101,33 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
                 </div>
                 <div class="headerGridItem">
 
-                    <a href="userProfile.php"> <img src="img/PFP.png" alt="Profile Picture"></a>
-                    <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
+
+                    <?php
+
+
+                    if (isset($_SESSION['logged_in'])) {
+                        $row = $resultPFP->fetch_array(MYSQLI_ASSOC);
+
+                        if ($row['user_pfp'] != '') {
+                            print "<a href=\"userProfile.php\"><img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
+                        } else if ($row['user_pfp'] == '') {
+                            print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                        }
+                    }
+
+
+                    if (!isset($_SESSION['logged_in'])) {
+                        print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                    }
+
+
+
+
+
+
+
+                    ?>
+
                 </div>
 
             </div>
@@ -92,68 +135,85 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 
 
 
-        <!--THIS NEEDS TO BE PHP EVENTUALLY-->
+        <!--
 
         <a href="userProfile.php">
             <img src="img/backbutton.png" class="iconImg" alt="back button">
         </a>
+
         <h2 class="accountInfo">Account Information</h2>
 
-        <div class="FAQ">
+-->
+        <?php
+        /*
+
+        if (isset($_SESSION['logged_in'])) {
 
 
-            <div class="infoInAccountSettings">
-
-                <div class="smallerLabelProfile">
-                    <h3>Change Password</h3>
-                </div>
-                <div class="evenSmallerProfileBox">
-                    <input type="text" name="password">
-                    <img src="img/pencilAndPaper.png" class="iconImg">
-                </div>
+            print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . "\">";
 
 
-                <div class="smallerLabelProfile">
-                    <h3>Change Email</h3>
-                </div>
-                <div class="evenSmallerProfileBox">
-                    <input type="text" name="email">
-                    <img src="img/pencilAndPaper.png" class="iconImg">
-                </div>
+            print "<div class=\"FAQ\">";
 
 
-            </div>
-            <!--
+            print " <div class=\"infoInAccountSettings\">";
 
+            print "<div class=\"smallerLabelProfile\">";
+            print " <h3>Change Password</h3>";
+            print "</div>";
+            print " <div class=\"evenSmallerProfileBox\">";
 
-        I have to prioritize certain things over others.
-        <div>
-
-
-            <p>SFW/NSFW Toggle</p>
+            /*
+Here's the thing.  Editing your password is a good customization step, HOWEVER, if they forget it, we have no way of knowing what it was, nor do we have a 'forget password' system.
 
 
 
-            <p>Controls the content you can see on your feed. The toggle is switched off, which means you will see
-                content that is potentially 'not safe for work' (NSFW)</p>
+                        //print " <input type=\"text\" name=\"password\" value=\"" . $row['password'] . "\">";
+                        print "<input type=\"text\" name=\"updatePassword\" placeholder=\"Please enter your old password first\">";
+                        print " <button type=\"submit\" class=\"goblinButtons\" id=\"holdingSpace\" name=\"enter\">Enter</button>";
+
+                        if (isset($_POST['enter']) && (md5($_POST['password']) == ($row->password))) {
+                            print "<input type=\"text\" name=\"password\" placeholder=\"Please enter your old password first\">";
+                        }
+            */
+
+        /*
+print "<img src=\"img/pencilAndPaper.png\" class=\"iconImg\">";
+print "</div>";
+
+
+print "<div class=\"smallerLabelProfile\">";
+print "<h3>Change Email</h3>";
+print "</div>";
+print "<div class=\"evenSmallerProfileBox\">";
+print "<input type=\"text\" name=\"user_email\" value=\"" . $row['user_email'] . "\">";
+print "<img src=\"img/pencilAndPaper.png\" class=\"iconImg\">";
+print "</div>";
+
+
+print "</div>";
 
 
 
+print "</form>";
+
+}*/
+
+        ?>
+        <!--
+
+
+        <div id="deleteButtonSpecifically">
+            <button type="button" class="deleteButton">Delete Account</button>
         </div>
-        -->
 
-
-            <div id="deleteButtonSpecifically">
-                <button type="button" class="deleteButton">Delete Account</button>
-            </div>
-
-
-
-        </div>
 
 
     </div>
+-->
 
+
+    </div>
 
 
     <footer>

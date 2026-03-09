@@ -16,6 +16,23 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 
 
 
+if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
+
+
+    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
+
+
+    //honestly all of this could be used
+
+    $resultPFP = $mysqli->query($query_user_info_on_pages);
+
+
+
+}
+
+
+
+
 ?>
 
 
@@ -80,8 +97,38 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
                 </div>
                 <div class="headerGridItem">
 
-                    <a href="../userProfile.php"> <img src="../img/PFP.png" alt="Profile Picture"></a>
-                    <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
+
+                    <?php
+
+
+
+                    if (isset($_SESSION['logged_in'])) {
+                        $row = $resultPFP->fetch_array(MYSQLI_ASSOC);
+
+                        if ($row['user_pfp'] != '') {
+                            print "<a href=\"../userProfile.php\"><img src=\"../" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
+                        } else if ($row['user_pfp'] == '') {
+                            print "<a href=\"../userProfile.php\"> <img src=\"../img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                        }
+                    }
+
+
+                    if (!isset($_SESSION['logged_in'])) {
+                        print "<a href=\"../userProfile.php\"> <img src=\"../img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+                    ?>
                 </div>
 
             </div>

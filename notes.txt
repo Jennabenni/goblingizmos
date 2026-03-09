@@ -3,10 +3,26 @@ Engineer notes hell yeah
 
 
 - Making post [done]
-- Posting to correct category
+- Posting to correct category [done]
 - being able to view post
 - being able to view account info of someone else (will need to edit previous DB)
 - REGULAR EXPRESSIONS NEEDED
+
+
+
+***************
+***************
+***************
+
+- I need to turn things in textarea and other input boxes to regular words
+they dont submit with apostrophes
+
+***************
+***************
+***************
+
+
+
 
 
 - Bounties to search tab
@@ -18,7 +34,7 @@ Engineer notes hell yeah
 - heart system
 - Friending??
 
-- MAKING an account
+- MAKING an account [DONE] - user has to log in after tho
     - Username
     - first name
     - last name
@@ -27,7 +43,7 @@ Engineer notes hell yeah
     - Bio
     - This may have to be a form in persons profile as well, that they can edit (brother.)
     - User profile img (how do accounts get it to be a circle???)
-        Do I hear square pfps?? Anyone??
+
 
 
 

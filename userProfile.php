@@ -3,6 +3,19 @@ session_start();
 //make sure to have the closer at the end of html
 
 
+/*
+Okay so php not handling apostrophes in strings is common
+
+if ' or " replace with \' or \"
+that should be a simple enough fix
+*/
+
+
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+
 /*DO NOT DELETE THESE */
 
 //include("../db-connect.php");
@@ -14,6 +27,125 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //remote
 
 
+
+
+
+if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
+
+
+    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
+
+
+    //honestly all of this could be used
+
+    $resultPFP = $mysqli->query($query_user_info_on_pages);
+
+
+
+}
+
+
+
+if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin" || "user")) {
+    $query_all = "SELECT post_id, goblingizmos_postsbounties.user_id, post_or_bounty, post_category, post_condition, post_boxCondition, post_price, post_location, post_description, post_img, post_sfw_nsfw, post_creation_date, goblingizmos_users.username FROM `goblingizmos_postsbounties` INNER JOIN goblingizmos_users ON goblingizmos_postsbounties.user_id=goblingizmos_users.user_id WHERE goblingizmos_postsbounties.user_id = '" . $_SESSION['user_id'] . "' ORDER BY post_creation_date DESC";
+
+    //this is showing the posts for each person
+
+    $result = $mysqli->query($query_all);
+
+
+
+
+
+}
+
+if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin" || "user"))) {
+    //this is the submit button for updating the user's profile
+
+
+
+
+    //$target_file = NULL;
+    //I dont think this can be NULL here since the user may have smth already
+    /*
+    if (!empty($_FILES['user_pfp']) && $_FILES['user_pfp']['error'] === UPLOAD_ERR_OK) {
+        $target_dir = "uploads/";
+        $target_file = $target_dir . basename(str_replace(' ', '_', $_FILES['user_pfp']["name"]));
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+
+
+        //checks if file is an image or if its fake (whatever that means)
+        if (!empty($_FILES['user_pfp'])) {
+            $check = getimagesize($_FILES["user_pfp"]["tmp_name"]);
+            if ($check !== false) {
+                echo "File is an image - " . $check["mime"] . ".";
+                $uploadOk = 1;
+            } else {
+                echo "File is not an image.";
+                $uploadOk = 0;
+            }
+        }
+        if ($_FILES['user_pfp']["size"] > 800000) {
+            echo "Your file is too large.";
+            $uploadOk = 0;
+        }
+
+        if (file_exists($target_file)) {
+            echo "This file already exists";
+            $uploadOk = 0;
+        }
+
+
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+            echo "Please choose an image that is either JPG, JPEG, or a PNG file.";
+            $uploadOk = 0;
+        }
+
+        if ($uploadOk == 0) {
+            echo "There was an issue with your file";
+        } else {
+            if (move_uploaded_file($_FILES['user_pfp']["tmp_name"], $target_file)) {
+                echo "The file was uploaded.";
+
+            }
+        }
+
+
+    }
+*/
+
+
+    $usersNewUsername = $_POST['uname'];
+    $usersNewBio = $_POST['bio'];
+    $usersNewEmail = $_POST['user_email'];
+
+
+    if ((($target_file != NULL) && ($uploadOk == 1)) || $target_file == NULL) {
+
+        $updateInfoOnProfile = "UPDATE `goblingizmos_users` SET `username`= '$usersNewUsername',`user_email`= '$usersNewEmail', `user_bio`=  '$usersNewBio' WHERE user_id='" . $_SESSION['user_id'] . "'";
+
+        /* $updateInfoOnProfile = "UPDATE `goblingizmos_users` SET `username`= '$usersNewUsername',`user_pfp`='$target_file', `user_bio`=  '$usersNewBio' WHERE user_id='" . $_SESSION['user_id'] . "'";*/
+
+
+
+        $resultUpdate = $mysqli->query($updateInfoOnProfile);
+        header("Location: userProfile.php");
+
+        //this acts as a reload
+    }
+
+
+}
+
+
+
+
+
+/*
+ UPDATE `goblingizmos_users` SET `user_id`='[value-1]',`first_name`='[value-2]',`last_name`='[value-3]',`username`='[value-4]',`password`='[value-5]',`access_level`='[value-6]',`user_email`='[value-7]',`user_pfp`='[value-8]',`user_bio`='[value-9]' WHERE 1
+ */
 
 
 ?>
@@ -30,7 +162,9 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
 
-    <script src="js/goblinScript.js"></script>
+    <script src="js/goblinScript.js">
+
+    </script>
 </head>
 
 <body>
@@ -83,88 +217,255 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
                 </div>
                 <div class="headerGridItem">
 
-                    <a href="userProfile.php"> <img src="img/PFP.png" alt="Profile Picture"></a>
-                    <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
+                    <?php
+
+                    if (isset($_SESSION['logged_in'])) {
+                        $row = $resultPFP->fetch_array(MYSQLI_ASSOC);
+
+                        if ($row['user_pfp'] != '') {
+                            print "<a href=\"userProfile.php\"><img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
+                        } else if ($row['user_pfp'] == '') {
+                            print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                        }
+                    }
+
+
+                    if (!isset($_SESSION['logged_in'])) {
+                        print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                    }
+
+
+
+
+
+
+
+                    ?>
+
                 </div>
 
             </div>
         </header>
 
 
-        <!--THIS NEEDS TO BE PHP EVENTUALLY-->
-
-
-        <div class="entireAreaUserProfile">
 
 
 
 
-            <div>
-                <img src="img/PFP.png">
-                <!--User's profile image-->
+        <?php
 
-            </div>
+        if (isset($_SESSION['logged_in'])) {
 
-            <div class="smallerProfileBox">
+            print "<div class=\"entireAreaUserProfile\">";
 
-                <div class="smallerLabelProfile">
-                    <label for="uname">
-                        <h3>Username</h3>
-                    </label>
-                </div>
-                <div class="evenSmallerProfileBox">
-                    <input type="text" id="uname" name="uname">
-                    <!--This just makes it look like it works, this'll need to be php-->
-                    <img src="img/pencilAndPaper.png" class="iconImg">
-                </div>
+            print "<div>";
 
 
 
-                <div class="smallerLabelProfile">
-                    <label for="bio">
-                        <h3>Bio</h3>
-                    </label>
-                </div>
-                <div class="evenSmallerProfileBox">
-                    <input type="text" id="bio" name="bio">
-                    <!--This just makes it look like it works, this'll need to be php-->
-                    <img src="img/pencilAndPaper.png" class="iconImg">
-                </div>
+
+            //User's profile image
+        
+            "</div>";
+
+            print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . "\" enctype=\"multipart/form-data\">";
+
+            //start of form
+        
+            if (isset($_SESSION['logged_in'])) {
+
+                if ($row['user_pfp'] != '') {
+                    print "<img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\">";
+                } else if ($row['user_pfp'] == '') {
+                    print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                }
+            }
+
+
+            if (!isset($_SESSION['logged_in'])) {
+                print "<img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\">";
+            }
 
 
 
-                <div class="smallerLabelProfile">
-                    <h3>Top Categories</h3>
+            /*
+                        print "<div class='addBoxPost'>";
+                        print "<img src=\"img/image.png\" class=\"iconImg\" alt=\"small picture box icon\"> ";
+                        print "<label for=\"imagePost\">Change Profile Image</label>";
+                        print "<input type=\"file\" id=\"imagePost\" name='post_img'>";
+                        print " </div>";
 
-                    <!--Oh god will this need JS to add the categories UGHHH-->
-
-                </div>
-                <div class="evenSmallerProfileBox"></div>
-
-            </div>
-
-            <div>
-
-                <a href="settings.php" class="goblinButtons">Settings</a>
-
-                <!--
-            <a href="accessibility.php" class="goblinButtons">Accessibility</a>
-            -->
-                <a href="logOut.php" class="goblinButtons">Log Out</a>
+            */
 
 
-            </div>
 
-            <div>
+            print "<div class=\"smallerProfileBox\">";
 
-                <h3>Posts/Bounties</h3>
-            </div>
+            print "<div class=\"smallerLabelProfile\">";
+            print "<label for=\"uname\">";
 
-            <div>
-                <!--Space for posts-->
-            </div>
+            print " <h3>Username</h3>";
 
-        </div>
+            print " </label>";
+            print " </div>";
+
+
+            print " <div class=\"evenSmallerProfileBox\">";
+            print "<input type=\"text\" id=\"uname\" name=\"uname\" value=\"" . $row['username'] . "\">";
+
+
+            print "<img src=\"img/pencilAndPaper.png\" class=\"iconImg\">";
+            print "</div>";
+
+            print "<div class=\"smallerLabelProfile\">";
+            print "<h3>Change Email</h3>";
+            print "</div>";
+            print "<div class=\"evenSmallerProfileBox\">";
+            print "<input type=\"text\" name=\"user_email\" value=\"" . $row['user_email'] . "\">";
+            print "<img src=\"img/pencilAndPaper.png\" class=\"iconImg\">";
+            print "</div>";
+
+
+
+
+            print "<div class=\"smallerLabelProfile\">";
+            print " <label for=\"bio\">";
+            print " <h3>Bio</h3>";
+            print " </label>";
+            print " </div>";
+            print "<div class=\"evenSmallerProfileBox\">";
+
+            print " <input type=\"text\" id=\"bio\" name=\"bio\" value=\"" . $row['user_bio'] . "\">";
+
+
+            print " <img src=\"img/pencilAndPaper.png\" class=\"iconImg\">";
+            print " </div>";
+
+
+
+            print "<div class=\"smallerLabelProfile\">";
+            print "<h3>Top Categories</h3>";
+            //top categories
+        
+
+            //A submit button is needed
+            print " <button type=\"submit\" class=\"goblinButtons\" id=\"holdingSpace\" name=\"submit\">Update</button>";
+
+            //Update user profile
+        
+
+
+
+
+            print "</form>";
+            //Oh god will this need JS to add the categories UGHHH-->
+        
+            print "  </div>";
+            print " <div class=\"evenSmallerProfileBox\"></div>";
+
+            print "  </div>";
+
+            print " <div>";
+
+            //  print " <a href=\"settings.php\" class=\"goblinButtons\">Settings</a>";
+        
+            /* <!--
+         <a href="accessibility.php" class="goblinButtons">Accessibility</a>
+         -->*/
+            print " <a href=\"logOut.php\" class=\"goblinButtons\">Log Out</a>";
+
+
+            print "</div>";
+
+            print " <div>";
+
+            print " <h3>Posts/Bounties</h3>";
+            print "</div>";
+
+            print "<div class=\"specificCatItem5\">";
+
+            if (($row['user_id'] == $_SESSION['user_id'])) {
+
+                while (($row = $result->fetch_array(MYSQLI_ASSOC))) {
+
+
+
+                    print "<div class=\"boxesForEachPost\">";
+
+                    //print "<div class=\"gridItemForPostBox1\">" . $row2['post_id'] . "</div>";
+                    //print "<div class=\"gridItemForPostBox2\">" . $row2['user_id'] . "</div>";
+        
+
+
+                    print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row['username'] . "</p>" . "</div>";
+
+
+
+
+                    print "<div class=\"gridItemForPostBox5\">" . $row['post_or_bounty'] . "</div>";
+
+
+
+                    // print "<div class=\"gridItemForPostBox6\">" . $row['post_category'] . "</div>";
+        
+
+                    if (!empty($row['post_price'])) {
+                        print "<div class=\"gridItemForPostBox9\">" . "<p>$" . $row['post_price'] . "</p>" . "</div>";
+                    }
+
+                    if (!empty($row['post_location'])) {
+                        print "<div class=\"gridItemForPostBox10\">" . $row['post_location'] . "</div>";
+                        //doesn't always exist
+                    }
+
+
+                    print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row['post_description'] . "</p>" . "</div>";
+                    //this always exists
+        
+
+                    if (!empty($row['post_img'])) {
+                        print "<div class=\"gridItemForPostBox12\">" . "<img src=\"" . $row['post_img'] . "\">" . "</div>";
+                        //doesn't always exist
+                    }
+
+                    if (!empty($row['post_sfw_nsfw'])) {
+                        print "<div class=\"gridItemForPostBox13\">" . "<p>" . $row['post_sfw_nsfw'] . "</p>" .
+                            "</div>";
+                        //doesn't always exist
+                    }
+
+
+                    print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row['post_creation_date'] . "</p>" . "</div>";
+                    //always exists
+        
+
+                    print "</div>";
+
+
+
+                }
+
+
+            }
+
+
+
+            print " </div>";
+
+            print " </div>";
+
+        } else {
+
+            print "<div>";
+            print "<p>Please log in to see account information.</p>";
+            print "<a href=\"signIn.php\">Sign In</a>";
+            print "</div>";
+        }
+
+
+        ?>
+
+
+
     </div>
 
 

@@ -3,6 +3,11 @@ session_start();
 //make sure to have the closer at the end of html
 
 
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+
 /*DO NOT DELETE THESE */
 
 //include("../db-connect.php");
@@ -15,10 +20,108 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 
 
 
+//Will need to ask some stuff from Amy since I couldn't merge the same as usual
+
+
+
+
+
+//pfp stuff
+
+if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
+
+    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
+
+
+    //honestly all of this could be used
+
+    $result = $mysqli->query($query_user_info_on_pages);
+
+
+
+}
+
+
+
+// working search... perchance
+
+
+//Howdy (this is Jenna) so I'm not sure what 'search' is so I'll leave it
+
+
+$results = [];
+$search_made = false;
+
+// detects if a search was made
+if (isset($_GET['search']) || isset($_GET['post_category'])) {
+    $search_made = true;
+
+    $search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
+    $category = isset($_GET['post_category']) ? trim($_GET['post_category']) : '';
+    $sort_by = isset($_GET['sort']) ? trim($_GET['sort']) : 'newest';
+
+    // base query, selects from database
+    // all of these are placeholders names for database stuff; btw, description is named like that cuz php already uses description for other stuff
+    // im also assuming each bounty will have an id. most of this is placeholder stuff anyways so most of it may get changed
+    $sql = "SELECT
+    id,
+    title,
+    bountydescription,
+    category,
+    price,
+    username,
+    image_url
+    FROM bounties
+    WHERE 1=1";
+    // 1=1 is so the query doesn't kill itself. nothingburger code that's loadbearing so the AND clause works in sql
+
+    // $mysqli is a placeholder and should be replaced with the actual db connection
+
+    // searches for query in title OR desc of bounty
+    if (!empty($search_query)) {
+        // prevents sql attacks
+        $safe_query = $mysqli->real_escape_string($search_query);
+        // 'title' is whatever the title for the bounties will be called in the database, and same with bountydescription for bounties
+        $sql .= " AND (title LIKE '%$safe_query%' OR bountydescription LIKE '%$safe_query%')";
+    }
+
+    // category filter
+    if (!empty($category)) {
+        $safe_category = $mysqli->real_escape_string($category);
+        // 'category' is whatever the category for the bounties will be called in the database
+        $sql .= " AND category = '$safe_category'";
+    }
+
+    // sort by filter
+    switch ($sort_by) {
+        // date_posted, price, and title are placeholders for whatever they will be called in the database. in this instance, I'm assuming ordering it by the newest bounty will be the default
+        case 'oldest':
+            $sql .= " ORDER BY date_posted ASC";
+            break;
+        case 'price_high':
+            $sql .= " ORDER BY price DESC";
+            break;
+        case 'price_low':
+            $sql .= " ORDER BY price ASC";
+            break;
+        case 'a_z':
+            $sql .= " ORDER BY title ASC";
+            break;
+        case 'z_a':
+            $sql .= " ORDER BY title DESC";
+            break;
+        default:
+            $sql .= " ORDER BY date_posted DESC";
+    }
+
+    // sends query to db and stores it
+    $query = $mysqli->query($sql);
+    while ($row = $query->fetch_assoc()) {
+        $results[] = $row;
+    }
+}
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,20 +136,6 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 </head>
 
 
-<!--So, the back to top arrow, should it be fixed on the page?? Display: fixed
-
-
-Note to self: don't forget to add header and footer to each document
-
-
-
-
-Search note from Jenna: I need to fix the gray box inside the white box, but I'm gonna leave it for now
-
-I also need to make the filter a drop down, but....... I could nix it
-
-
--->
 
 
 <body>
@@ -98,9 +187,26 @@ I also need to make the filter a drop down, but....... I could nix it
                     </nav>
                 </div>
                 <div class="headerGridItem">
+                    <?php
 
-                    <a href="userProfile.php"> <img src="img/PFP.png" alt="Profile Picture"></a>
-                    <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
+                    if (isset($_SESSION['logged_in'])) {
+                        $row = $result->fetch_array(MYSQLI_ASSOC);
+
+                        if ($row['user_pfp'] != '') {
+                            print "<a href=\"userProfile.php\"><img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
+                        } else if ($row['user_pfp'] == '') {
+                            print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                        }
+                    }
+
+
+                    if (!isset($_SESSION['logged_in'])) {
+                        print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                    }
+
+                    ?>
+
+
                 </div>
 
             </div>
@@ -132,63 +238,93 @@ I also need to make the filter a drop down, but....... I could nix it
             <div id="searchGridItem2">
                 <!--Search bar-->
 
+                <!-- This is the form to make the search work I hope -->
+                <form method="GET" action="search.php" id="searchForm">
+                    <div class="searchBar">
 
-                <div class="searchBar">
+                        <div>
+                            <img src="img/magGlass.png" class="comIcons">
+                        </div>
 
-                    <div>
-                        <img src="img/magGlass.png" class="comIcons">
+                        <!--Input-->
+                        <div>
+                            <label for="search" class="searchOnly"></label>
+                            <!-- Reorganized this so it's easier to read and added protection against attacks -->
+                            <input type="text" name="search" placeholder="Search Bounties..." class="searchBarItems"
+                                id="borderForSearch"
+                                value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
+                                autocomplete="off">
+                        </div>
+
+
+
+                        <div>
+                            <!--Category drop down-->
+                            <!-- + persistent filter -->
+                            <select name="category" id="category" class="searchBarItems">
+
+                                <option value="autographs" <?php echo (isset($_GET['category']) && $_GET['category'] === 'autographs') ? 'selected' : ''; ?>>Autographs</option>
+
+                                <option value="books" <?php echo (isset($_GET['category']) && $_GET['category'] === 'books') ? 'selected' : ''; ?>>Books</option>
+
+                                <option value="caps" <?php echo (isset($_GET['category']) && $_GET['category'] === 'caps') ? 'selected' : ''; ?>>Bottle Caps</option>
+
+                                <option value="cans" <?php echo (isset($_GET['category']) && $_GET['category'] === 'cans') ? 'selected' : ''; ?>>Cans</option>
+
+                                <option value="charms" <?php echo (isset($_GET['category']) && $_GET['category'] === 'charms') ? 'selected' : ''; ?>>Charms</option>
+
+                                <option value="coins" <?php echo (isset($_GET['category']) && $_GET['category'] === 'coins') ? 'selected' : ''; ?>>Coins</option>
+
+                                <option value="figures" <?php echo (isset($_GET['category']) && $_GET['category'] === 'figures') ? 'selected' : ''; ?>>Figures</option>
+
+                                <option value="jewelry" <?php echo (isset($_GET['category']) && $_GET['category'] === 'jewelry') ? 'selected' : ''; ?>>Jewelry</option>
+
+                                <option value="magnets" <?php echo (isset($_GET['category']) && $_GET['category'] === 'magnets') ? 'selected' : ''; ?>>Magnets</option>
+
+                                <option value="minerals" <?php echo (isset($_GET['category']) && $_GET['category'] === 'minerals') ? 'selected' : ''; ?>>Minerals</option>
+
+                                <option value="perfume" <?php echo (isset($_GET['category']) && $_GET['category'] === 'perfume') ? 'selected' : ''; ?>>Perfume</option>
+
+                                <option value="plates" <?php echo (isset($_GET['category']) && $_GET['category'] === 'plates') ? 'selected' : ''; ?>>Plates</option>
+
+                                <option value="cards" <?php echo (isset($_GET['category']) && $_GET['category'] === 'cards') ? 'selected' : ''; ?>>Playing Cards</option>
+
+                                <option value="plushies" <?php echo (isset($_GET['category']) && $_GET['category'] === 'plushies') ? 'selected' : ''; ?>>Plushies</option>
+
+                                <option value="prints" <?php echo (isset($_GET['category']) && $_GET['category'] === 'prints') ? 'selected' : ''; ?>>Prints</option>
+
+                                <option value="stamps" <?php echo (isset($_GET['category']) && $_GET['category'] === 'stamps') ? 'selected' : ''; ?>>Stamps</option>
+
+                                <option value="tickets" <?php echo (isset($_GET['category']) && $_GET['category'] === 'tickets') ? 'selected' : ''; ?>>Tickets</option>
+
+                                <option value="games" <?php echo (isset($_GET['category']) && $_GET['category'] === 'games') ? 'selected' : ''; ?>>Video Games</option>
+
+                                <option value="vinyls" <?php echo (isset($_GET['category']) && $_GET['category'] === 'vinyls') ? 'selected' : ''; ?>>Vinyls</option>
+
+                                <option value="other" <?php echo (isset($_GET['category']) && $_GET['category'] === 'other') ? 'selected' : ''; ?>>Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Yay, more filters! I have no idea how to attach dropdowns to an image though.. maybe the filter button can be there for funsies to let people know there's a filter? Also persistent filter -->
+                        <div>
+                            <img src="img/filter.png" class="comIcons">
+                            <select name="sort" id="sort" class="searchBarItems">
+
+                                <option value="newest" <?php echo (!isset($_GET['sort']) || $_GET['sort'] === 'newest') ? 'selected' : ''; ?>>Newest</option>
+
+                                <option value="oldest" <?php echo (isset($_GET['sort']) && $_GET['sort'] === 'oldest') ? 'selected' : ''; ?>>Oldest</option>
+
+                                <option value="price_high" <?php echo (isset($_GET['sort']) && $_GET['sort'] === 'price_high') ? 'selected' : ''; ?>>Price: High to Low</option>
+
+                                <option value="price_low" <?php echo (isset($_GET['sort']) && $_GET['sort'] === 'price_low') ? 'selected' : ''; ?>>Price: Low to High</option>
+
+                                <option value="a_z" <?php echo (isset($_GET['sort']) && $_GET['sort'] === 'a_z') ? 'selected' : ''; ?>>A-Z</option>
+
+                                <option value="z_a" <?php echo (isset($_GET['sort']) && $_GET['sort'] === 'z_a') ? 'selected' : ''; ?>>Z-A</option>
+                            </select>
+                        </div>
                     </div>
-
-                    <div>
-                        <label for="search"></label>
-                        <input type="text" name="search" placeholder="Search Bounties..." class="searchBarItems"
-                            id="borderForSearch">
-                    </div>
-
-
-
-                    <div>
-                        <!--Category drop down-->
-                        <label for="category">Categories:</label>
-                        <select name="category" id="category" class="searchBarItems">
-                            <option value="autographs">Autographs</option>
-                            <option value="books">Books</option>
-                            <option value="caps">Bottle Caps</option>
-                            <option value="cans">Cans</option>
-                            <option value="charms">Charms</option>
-                            <option value="coins">Coins</option>
-                            <option value="figures">Figures</option>
-                            <option value="jewelry">Jewelry</option>
-                            <option value="magnets">Magnets</option>
-                            <option value="minerals">Minerals</option>
-                            <option value="perfume">Perfume</option>
-                            <option value="plates">Plates</option>
-                            <option value="cards">Playing Cards</option>
-                            <option value="plushies">Plushies</option>
-                            <option value="prints">Prints</option>
-                            <option value="stamps">Stamps</option>
-                            <option value="tickets">Tickets</option>
-                            <option value="games">Video Games</option>
-                            <option value="vinyls">Vinyls</option>
-                            <option value="other">Other</option>
-
-
-                        </select>
-                    </div>
-                    <div>
-
-                        <img src="img/filter.png" class="comIcons">
-
-
-
-
-
-                        <!--Oh damn it this has to be a drop down-->
-                    </div>
-                </div>
-
-
-
+                </form>
             </div>
 
 
@@ -268,6 +404,7 @@ I also need to make the filter a drop down, but....... I could nix it
 </body>
 
 </html>
+
 <?php
 $mysqli->close();
 ?>

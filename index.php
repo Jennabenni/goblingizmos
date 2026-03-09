@@ -42,6 +42,8 @@ session_start();
 //make sure to have the closer at the end of html
 
 
+
+
 /*DO NOT DELETE THESE */
 
 //include("../db-connect.php");
@@ -49,8 +51,12 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
+
 //include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 
 //change location for when on the server, these are my (Jenna's) credentials
@@ -66,6 +72,25 @@ http://localhost/phpmyadmin/
 
 
 */
+
+
+
+
+if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
+
+
+    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
+
+    //honestly all of this could be used
+
+    $result = $mysqli->query($query_user_info_on_pages);
+
+
+
+}
+
+
+
 
 
 ?>
@@ -146,7 +171,29 @@ Three columns, three rows
                 </div>
                 <div class="headerGridItem" id="userIconGridItem">
 
-                    <a href="userProfile.php"> <img src="img/PFP.png" class="userIconImageForSmaller" alt="Profile"></a>
+
+
+                    <?php
+                    if (isset($_SESSION['logged_in'])) {
+                        $row = $result->fetch_array(MYSQLI_ASSOC);
+
+                        if ($row['user_pfp'] != '') {
+                            print "<a href=\"userProfile.php\"><img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
+                        } else if ($row['user_pfp'] == '') {
+                            print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                        }
+                    }
+
+
+                    if (!isset($_SESSION['logged_in'])) {
+                        print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                    }
+
+                    ?>
+
+
+
+
                     <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
                 </div>
 
@@ -189,7 +236,7 @@ Three columns, three rows
                     <h2>Welcome to Goblin Gizmos!</h2>
 
                     <?php if (isset($_SESSION['logged_in'])) {
-                        print "<p>HOLY SHIT YO ASS IS LOGGED IN</p>";
+                        print "<p>You have successfully logged in</p>";
                     } ?>
 
                     <div id="infoBoxHome">

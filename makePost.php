@@ -10,6 +10,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 */
 
+
 /*DO NOT DELETE THESE */
 
 //include("../db-connect.php");
@@ -211,37 +212,14 @@ if (!isset($_SESSION['logged_in'])) {
 
 
 
-            //FILES.  HELL ON EARTH
+
+            //$target_dir = "/home/ad/je686804/public_html/goblingizmos/uploads/";
+            //uhhh remote??
+
 
             $target_file = NULL;
-            //copilots code, mine is underneath
-            if (isset($_FILES['post_img']) && $_FILES['post_img']['error'] === UPLOAD_ERR_OK) {
-                $tmp = $_FILES['post_img']['tmp_name'];
-                $name = basename(str_replace(' ', '_', $_FILES['post_img']['name']));
-                $target_dir = __DIR__ . '/uploads/';
-                $target_file = 'uploads/' . $name;
-                $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-                $check = getimagesize($tmp);
-                if ($check === false) {
-                    $target_file = NULL;
-                } elseif ($_FILES['post_img']['size'] > 800000) {
-                    $target_file = NULL;
-                } elseif (!in_array($imageFileType, ['jpg', 'jpeg', 'png'])) {
-                    $target_file = NULL;
-                } else {
-                    if (!move_uploaded_file($tmp, $target_file)) {
-                        $target_file = NULL;
-                    }
-                }
-            }
-
-
-            /*
-            if (!empty($_FILES['post_img'])) {
+            if (!empty($_FILES['post_img']) && $_FILES['post_img']['error'] === UPLOAD_ERR_OK) {
                 $target_dir = "uploads/";
-                //$target_dir = "/home/ad/je686804/public_html/goblingizmos/uploads/";
-                //uhhh remote??
                 $target_file = $target_dir . basename(str_replace(' ', '_', $_FILES['post_img']["name"]));
                 $uploadOk = 1;
                 $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -269,6 +247,7 @@ if (!isset($_SESSION['logged_in'])) {
                     $uploadOk = 0;
                 }
 
+
                 if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
                     echo "Please choose an image that is either JPG, JPEG, or a PNG file.";
                     $uploadOk = 0;
@@ -284,123 +263,128 @@ if (!isset($_SESSION['logged_in'])) {
                 }
 
 
-            } else {
-                $target_file = NULL;
-            }
-*/
-
-
-
-            $insert_post_query = "INSERT INTO `goblingizmos_postsbounties` (`post_id`, `user_id`, `post_or_bounty`, `post_category`, `post_condition`, `post_boxCondition`, `post_price`, `post_location`, `post_description`,`post_img`, `post_sfw_nsfw`, `post_creation_date`) VALUES (NULL, '" . $_SESSION['user_id'] . "', '$postBountyOptionSelected', '$postCategoryOptionSelected','$postConditionOptionSelected', '$postBoxConditionOptionSelected',$postPriceSQL,'" . $_POST['post_location'] . "', '" . $_POST['post_description'] . "','" . $target_file . "', '$postSfwNsfwOptionSelected', CURRENT_TIMESTAMP)";
-
-            /*The usual problem children:
-
-            - post price (NUMBER it doesnt like strings)
-            - file upload
-            - Any of the radio buttons that are NOT postBounty,
-
-            */
-
-            $mysqli->query($insert_post_query);
-
-
-            //this should already send it..... so i shouldnt have to check for isset post submit
-
-            if (($postCategoryOptionSelected == 'autographs') && ($postBountyOptionSelected == 'post')) {
-                //so this is saying that if its a category and also an autograph, itll take you
-                //straight to it
-
-                header("Location: categories/autographsCategory.php");
-                //okay this works and still submits
-                //yay
-            } else if (($postCategoryOptionSelected == 'books') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/booksCategory.php");
-            } else if (($postCategoryOptionSelected == 'caps') && ($postBountyOptionSelected == 'post')) {
-
-                header("Location: categories/bottleCapsCategory.php");
-            } else if (($postCategoryOptionSelected == 'cans') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/cansCategory.php");
-            } else if (($postCategoryOptionSelected == 'charms') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/charmsCategory.php");
-            } else if (($postCategoryOptionSelected == 'coins') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/coinsCategory.php");
-            } else if (($postCategoryOptionSelected == 'figures') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/figuresCategory.php");
-            } else if (($postCategoryOptionSelected == 'jewelry') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/jewelryCategory.php");
-            } else if (($postCategoryOptionSelected == 'magnets') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/magnetsCategory.php");
-            } else if (($postCategoryOptionSelected == 'minerals') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/mineralsCategory.php");
-            } else if (($postCategoryOptionSelected == 'perfume') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/perfumeCategory.php");
-            } else if (($postCategoryOptionSelected == 'plates') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/platesCategory.php");
-            } else if (($postCategoryOptionSelected == 'cards') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/cardsCategory.php");
-            } else if (($postCategoryOptionSelected == 'plushies') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/plushiesCategory.php");
-            } else if (($postCategoryOptionSelected == 'prints') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/printsCategory.php");
-            } else if (($postCategoryOptionSelected == 'stamps') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/stampsCategory.php");
-            } else if (($postCategoryOptionSelected == 'tickets') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/ticketsCategory.php");
-            } else if (($postCategoryOptionSelected == 'games') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/videoGamesCategory.php");
-            } else if (($postCategoryOptionSelected == 'vinyls') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/vinylsCategory.php");
-            } else if (($postCategoryOptionSelected == 'other') && ($postBountyOptionSelected == 'post')) {
-
-
-                header("Location: categories/otherCategory.php");
-            } else if ($postBountyOptionSelected == 'bounty') {
-
-
-                header("Location: search.php");
-
-                //all bounties lead to search
-                //get it? like all drains lead to the ocean?
-                //or all roads lead to Rome??
-                //guys please laugh
             }
 
 
+            if ((($target_file != NULL) && ($uploadOk == 1)) || $target_file == NULL) {
 
+                //IT WORKS
+                //IMG IS OPTIONAL! IF THERES AN ISSUE IT DOESNT SUBMIT! LETS FUCKIN GO
+                //Pardon my language
+
+                $insert_post_query = "INSERT INTO `goblingizmos_postsbounties` (`post_id`, `user_id`, `post_or_bounty`, `post_category`, `post_condition`, `post_boxCondition`, `post_price`, `post_location`, `post_description`,`post_img`, `post_sfw_nsfw`, `post_creation_date`) VALUES (NULL, '" . $_SESSION['user_id'] . "', '$postBountyOptionSelected', '$postCategoryOptionSelected','$postConditionOptionSelected', '$postBoxConditionOptionSelected',$postPriceSQL,'" . $_POST['post_location'] . "', '" . $_POST['post_description'] . "'," . ($target_file !== NULL ? "'" . $target_file . "'" : "NULL") . ", '$postSfwNsfwOptionSelected', CURRENT_TIMESTAMP)";
+
+                /*The usual problem children:
+
+                - post price (NUMBER it doesnt like strings)
+                - file upload
+                - Any of the radio buttons that are NOT postBounty,
+
+                */
+
+                $mysqli->query($insert_post_query);
+
+
+                //this should already send it..... so i shouldnt have to check for isset post submit
+
+
+
+
+                if (($postCategoryOptionSelected == 'autographs') && ($postBountyOptionSelected == 'post')) {
+                    //so this is saying that if its a category and also an autograph, itll take you
+                    //straight to it
+
+                    header("Location: categories/autographsCategory.php");
+                    //okay this works and still submits
+                    //yay
+                } else if (($postCategoryOptionSelected == 'books') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/booksCategories.php");
+                } else if (($postCategoryOptionSelected == 'caps') && ($postBountyOptionSelected == 'post')) {
+
+                    header("Location: categories/bottleCapsCategory.php");
+                } else if (($postCategoryOptionSelected == 'cans') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/cansCategories.php");
+                } else if (($postCategoryOptionSelected == 'charms') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/charmsCategories.php");
+                } else if (($postCategoryOptionSelected == 'coins') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/coinsCategories.php");
+                } else if (($postCategoryOptionSelected == 'figures') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/figuresCategories.php");
+                } else if (($postCategoryOptionSelected == 'jewelry') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/jewelryCategories.php");
+                } else if (($postCategoryOptionSelected == 'magnets') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/magnetsCategories.php");
+                } else if (($postCategoryOptionSelected == 'minerals') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/mineralsCategories.php");
+                } else if (($postCategoryOptionSelected == 'perfume') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/perfumeCategories.php");
+                } else if (($postCategoryOptionSelected == 'plates') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/platesCategories.php");
+                } else if (($postCategoryOptionSelected == 'cards') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/cardsCategories.php");
+                } else if (($postCategoryOptionSelected == 'plushies') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/plushiesCategories.php");
+                } else if (($postCategoryOptionSelected == 'prints') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/printsCategories.php");
+                } else if (($postCategoryOptionSelected == 'stamps') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/stampsCategories.php");
+                } else if (($postCategoryOptionSelected == 'tickets') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/ticketsCategories.php");
+                } else if (($postCategoryOptionSelected == 'games') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/videoGamesCategories.php");
+                } else if (($postCategoryOptionSelected == 'vinyls') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/vinylsCategories.php");
+                } else if (($postCategoryOptionSelected == 'other') && ($postBountyOptionSelected == 'post')) {
+
+
+                    header("Location: categories/otherCategories.php");
+                } else if ($postBountyOptionSelected == 'bounty') {
+
+
+                    header("Location: search.php");
+
+                    //all bounties lead to search
+                    //get it? like all drains lead to the ocean?
+                    //or all roads lead to Rome??
+                    //guys please laugh
+                }
+            } else if ($uploadOk == 0) {
+                //nothin.
+            }
 
 
 
@@ -517,8 +501,24 @@ if (!isset($_SESSION['logged_in'])) {
                 </div>
                 <div class="headerGridItem">
 
-                    <a href="userProfile.php"> <img src="img/PFP.png" alt="Profile Picture"></a>
-                    <!--PLACEHOLDER!! REPLACE LATER:  USER ICON-->
+                    <?php
+                    /*
+                    if (isset($_SESSION['logged_in'])) {
+                        $row = $result->fetch_array(MYSQLI_ASSOC);
+
+                        if ($row['user_pfp'] != '') {
+                            print "<a href=\"userProfile.php\"><img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
+                        } else if ($row['user_pfp'] == '') {
+                            print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                        }
+                    }
+
+
+                    if (!isset($_SESSION['logged_in'])) {
+                        print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                    }*/
+                    ?>
+
                 </div>
 
             </div>

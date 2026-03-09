@@ -133,6 +133,11 @@ img {
 /*Phone*/
 @media (max-width:600px) {
 
+    /*USER PROFILE IMG*/
+    .userIconImageForSmaller {
+        width: 100px;
+        border-radius: 50%;
+    }
 
 
     /*Home Page
@@ -616,6 +621,7 @@ img {
         height: 35px;
         border: none;
         background-color: #B4BEC9;
+
         color: black;
         font-weight: 700;
     }
@@ -962,6 +968,11 @@ img {
 @media (min-width: 600px) and (max-width: 1000px) {
 
 
+    /*USER PROFILE IMG*/
+    .userIconImageForSmaller {
+        width: 75px;
+        border-radius: 50%;
+    }
 
     /*Home Page
     */
@@ -1767,6 +1778,18 @@ img {
 @media (min-width:1000px) {
 
 
+    /*USER PROFILE IMG*/
+    .userIconImageForSmaller {
+        width: 100px;
+        height: auto;
+
+        border-radius: 50%;
+    }
+
+
+
+
+
 
     /*Home Page
     */
@@ -2054,6 +2077,8 @@ img {
         display: grid;
         grid-template-columns: auto auto;
         /*grid-template-rows: max-content;*/
+
+
     }
 
     .boxesForEachPost {
@@ -2061,52 +2086,71 @@ img {
         border: solid 1px black;
         box-shadow: 5px 5px 5px gray;
         padding: 10px;
-        width: 320px;
+        width: 330px;
 
-        row-gap: 50px;
+
+        row-gap: 10px;
         margin-left: auto;
         margin-right: auto;
         margin-bottom: 25px;
         margin-top: 25px;
         display: grid;
-        grid-template-columns: auto auto auto auto;
+        grid-template-columns: 10% auto;
         font-family: rubik, Arial;
-        grid-template-rows: auto auto auto auto auto;
-
+        grid-template-rows: 100px 50px auto auto auto auto auto;
+        border: solid 2px red;
 
     }
 
 
     .gridItemForPostBox1 {
         /*post id*/
-        grid-row-start: 5;
+        grid-row-start: 7;
         margin-left: auto;
         margin-right: auto;
-        grid-column-start: 1;
+        grid-column-start: 2;
+        border: solid 2px red;
     }
 
     .gridItemForPostBox2 {
         /*user id*/
-        grid-row-start: 5;
+        grid-row-start: 6;
         margin-left: auto;
         margin-right: auto;
-        grid-column-start: 3;
+        grid-column-start: 2;
+        border: solid 2px red;
     }
 
     .gridItemForPostBox3 {
         /*username*/
-        grid-column: 2 span 2;
+        grid-column-start: 2;
+        grid-row-start: 1;
         margin-left: auto;
         margin-right: auto;
         font-weight: 500;
+        display: block;
+        margin-top: 0px;
+        border: solid 2px red;
+        justify-content: left;
+
     }
 
     .gridItemForPostBox4 {
         /*user pfp*/
         grid-column-start: 1;
         grid-row-start: 1;
-        margin-left: auto;
-        margin-right: auto;
+        justify-content: left;
+        display: block;
+        border: solid 2px red;
+        width: 100px;
+
+
+    }
+
+
+
+    .gridItemForPostBox4 img {
+        border-radius: 50%;
     }
 
     .gridItemForPostBox5 {
@@ -2128,6 +2172,9 @@ img {
 
     .gridItemForPostBox9 {
         /*price*/
+        grid-column-start: 1;
+        grid-row-start: 6;
+        border: solid 2px red;
     }
 
     .gridItemForPostBox10 {
@@ -2136,18 +2183,25 @@ img {
 
     .gridItemForPostBox11 {
         /*desc*/
-        grid-column: 1 span 4;
-        grid-row-start: 3;
+        grid-column: 3 span 2;
+        grid-row-start: 4;
         margin-left: auto;
         margin-right: auto;
+        display: block;
+        width: 300px;
+        border: solid 2px red;
     }
 
     .gridItemForPostBox12 {
         /*post img*/
-        grid-row-start: 4;
-        grid-column: 1 span 4;
+        grid-row-start: 5;
+        grid-column: 1 span 2;
+        align-self: center;
         margin-left: auto;
         margin-right: auto;
+        border: solid 2px red;
+
+
 
     }
 
@@ -2167,6 +2221,8 @@ img {
         grid-row-start: 2;
         margin-left: auto;
         margin-right: auto;
+        width: 300px;
+        border: solid 2px red;
     }
 
 
