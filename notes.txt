@@ -1,6 +1,35 @@
 Engineer notes hell yeah
 
 
+Dummy Accounts:
+
+(All User, not admin)
+
+
+JohnMan
+john
+
+
+TaliaLovesTrinkets
+talia
+
+Cynthia"Bob
+bob
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - Making post [done]
 - Posting to correct category [done]
