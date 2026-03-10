@@ -674,6 +674,7 @@ img {
 
 
 
+
     }
 
     #comGridItem1 {
@@ -2749,6 +2750,7 @@ img {
         grid-template-columns: auto auto auto;
 
 
+
     }
 
     #comGridItem1 {
@@ -2763,6 +2765,7 @@ img {
         grid-row-start: 1;
         justify-self: center;
         background-color: white;
+        height: 250px;
 
     }
 
