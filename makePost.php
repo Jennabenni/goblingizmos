@@ -334,7 +334,7 @@ if (!isset($_SESSION['logged_in'])) {
                     header("Location: categories/booksCategories.php");
                 } else if (($postCategoryOptionSelected == 'caps') && ($postBountyOptionSelected == 'post')) {
 
-                    header("Location: categories/bottleCapsCategory.php");
+                    header("Location: categories/bottleCapsCategories.php");
                 } else if (($postCategoryOptionSelected == 'cans') && ($postBountyOptionSelected == 'post')) {
 
 

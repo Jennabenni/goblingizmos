@@ -634,7 +634,7 @@ img {
     .boxesForEachBounty {
         /*Side view on categories*/
         background-color: white;
-        width: 100px;
+
         height: auto;
         grid-row-start: 2;
         justify-content: center;
@@ -2881,6 +2881,8 @@ img {
         /*Posts*/
         grid-column: 1 / span 2;
         grid-row: 2 / span 2;
+        display: grid;
+        grid-template-columns: auto auto;
     }
 
     .searchBar {

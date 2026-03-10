@@ -43,9 +43,48 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 
 
 
+if (isset($_SESSION['logged_in'])) {
+
+
+
+    $query_bounties = "SELECT post_id, goblingizmos_postsbounties.user_id, post_or_bounty, post_category, post_condition, post_boxCondition, post_price, post_location, post_description, post_img, post_sfw_nsfw, post_creation_date, goblingizmos_users.username, goblingizmos_users.user_pfp FROM `goblingizmos_postsbounties` INNER JOIN goblingizmos_users ON goblingizmos_postsbounties.user_id=goblingizmos_users.user_id ORDER BY post_id DESC";
+
+
+    $resultBounties = $mysqli->query($query_bounties);
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // working search... perchance
-
-
 
 
 
@@ -63,15 +102,35 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
     // base query, selects from database
     // all of these are placeholders names for database stuff; btw, description is named like that cuz php already uses description for other stuff
     // im also assuming each bounty will have an id. most of this is placeholder stuff anyways so most of it may get changed
+
+    //Not sure what to make 'Title'
+
+    /*All IDS in table
+                post_id
+                user_id
+                post_or_bounty
+                post_category
+                post_condition
+                post_boxCondition
+                post_price
+                post_location
+                post_description
+                post_img
+                post_sfw_nsfw
+                post_creation_date */
+
+
+
+
     $sql = "SELECT
-    id,
+    post_id,
     title,
-    bountydescription,
-    category,
-    price,
-    username,
-    image_url
-    FROM bounties
+    post_description,
+    post_category,
+    post_price,
+    user_id,
+    post_img
+    FROM `goblingizmos_postsbounties`
     WHERE 1=1";
     // 1=1 is so the query doesn't kill itself. nothingburger code that's loadbearing so the AND clause works in sql
 
@@ -82,27 +141,27 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
         // prevents sql attacks
         $safe_query = $mysqli->real_escape_string($search_query);
         // 'title' is whatever the title for the bounties will be called in the database, and same with bountydescription for bounties
-        $sql .= " AND (title LIKE '%$safe_query%' OR bountydescription LIKE '%$safe_query%')";
+        $sql .= " AND (title LIKE '%$safe_query%' OR post_description LIKE '%$safe_query%')";
     }
 
     // category filter
     if (!empty($category)) {
         $safe_category = $mysqli->real_escape_string($category);
         // 'category' is whatever the category for the bounties will be called in the database
-        $sql .= " AND category = '$safe_category'";
+        $sql .= " AND post_category = '$safe_category'";
     }
 
     // sort by filter
     switch ($sort_by) {
         // date_posted, price, and title are placeholders for whatever they will be called in the database. in this instance, I'm assuming ordering it by the newest bounty will be the default
         case 'oldest':
-            $sql .= " ORDER BY date_posted ASC";
+            $sql .= " ORDER BY post_creation_date ASC";
             break;
         case 'price_high':
-            $sql .= " ORDER BY price DESC";
+            $sql .= " ORDER BY post_price DESC";
             break;
         case 'price_low':
-            $sql .= " ORDER BY price ASC";
+            $sql .= " ORDER BY post_price ASC";
             break;
         case 'a_z':
             $sql .= " ORDER BY title ASC";
@@ -111,7 +170,7 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
             $sql .= " ORDER BY title DESC";
             break;
         default:
-            $sql .= " ORDER BY date_posted DESC";
+            $sql .= " ORDER BY post_creation_date DESC";
     }
 
     // sends query to db and stores it
@@ -263,45 +322,45 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
                             <!-- + persistent filter -->
                             <select name="category" id="category" class="searchBarItems">
 
-                                <option value="autographs" <?php echo (isset($_GET['category']) && $_GET['category'] === 'autographs') ? 'selected' : ''; ?>>Autographs</option>
+                                <option value="autographs" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'autographs') ? 'selected' : ''; ?>>Autographs</option>
 
-                                <option value="books" <?php echo (isset($_GET['category']) && $_GET['category'] === 'books') ? 'selected' : ''; ?>>Books</option>
+                                <option value="books" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'books') ? 'selected' : ''; ?>>Books</option>
 
-                                <option value="caps" <?php echo (isset($_GET['category']) && $_GET['category'] === 'caps') ? 'selected' : ''; ?>>Bottle Caps</option>
+                                <option value="caps" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'caps') ? 'selected' : ''; ?>>Bottle Caps</option>
 
-                                <option value="cans" <?php echo (isset($_GET['category']) && $_GET['category'] === 'cans') ? 'selected' : ''; ?>>Cans</option>
+                                <option value="cans" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'cans') ? 'selected' : ''; ?>>Cans</option>
 
-                                <option value="charms" <?php echo (isset($_GET['category']) && $_GET['category'] === 'charms') ? 'selected' : ''; ?>>Charms</option>
+                                <option value="charms" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'charms') ? 'selected' : ''; ?>>Charms</option>
 
-                                <option value="coins" <?php echo (isset($_GET['category']) && $_GET['category'] === 'coins') ? 'selected' : ''; ?>>Coins</option>
+                                <option value="coins" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'coins') ? 'selected' : ''; ?>>Coins</option>
 
-                                <option value="figures" <?php echo (isset($_GET['category']) && $_GET['category'] === 'figures') ? 'selected' : ''; ?>>Figures</option>
+                                <option value="figures" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'figures') ? 'selected' : ''; ?>>Figures</option>
 
-                                <option value="jewelry" <?php echo (isset($_GET['category']) && $_GET['category'] === 'jewelry') ? 'selected' : ''; ?>>Jewelry</option>
+                                <option value="jewelry" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'jewelry') ? 'selected' : ''; ?>>Jewelry</option>
 
-                                <option value="magnets" <?php echo (isset($_GET['category']) && $_GET['category'] === 'magnets') ? 'selected' : ''; ?>>Magnets</option>
+                                <option value="magnets" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'magnets') ? 'selected' : ''; ?>>Magnets</option>
 
-                                <option value="minerals" <?php echo (isset($_GET['category']) && $_GET['category'] === 'minerals') ? 'selected' : ''; ?>>Minerals</option>
+                                <option value="minerals" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'minerals') ? 'selected' : ''; ?>>Minerals</option>
 
-                                <option value="perfume" <?php echo (isset($_GET['category']) && $_GET['category'] === 'perfume') ? 'selected' : ''; ?>>Perfume</option>
+                                <option value="perfume" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'perfume') ? 'selected' : ''; ?>>Perfume</option>
 
-                                <option value="plates" <?php echo (isset($_GET['category']) && $_GET['category'] === 'plates') ? 'selected' : ''; ?>>Plates</option>
+                                <option value="plates" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'plates') ? 'selected' : ''; ?>>Plates</option>
 
-                                <option value="cards" <?php echo (isset($_GET['category']) && $_GET['category'] === 'cards') ? 'selected' : ''; ?>>Playing Cards</option>
+                                <option value="cards" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'cards') ? 'selected' : ''; ?>>Playing Cards</option>
 
-                                <option value="plushies" <?php echo (isset($_GET['category']) && $_GET['category'] === 'plushies') ? 'selected' : ''; ?>>Plushies</option>
+                                <option value="plushies" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'plushies') ? 'selected' : ''; ?>>Plushies</option>
 
-                                <option value="prints" <?php echo (isset($_GET['category']) && $_GET['category'] === 'prints') ? 'selected' : ''; ?>>Prints</option>
+                                <option value="prints" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'prints') ? 'selected' : ''; ?>>Prints</option>
 
-                                <option value="stamps" <?php echo (isset($_GET['category']) && $_GET['category'] === 'stamps') ? 'selected' : ''; ?>>Stamps</option>
+                                <option value="stamps" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'stamps') ? 'selected' : ''; ?>>Stamps</option>
 
-                                <option value="tickets" <?php echo (isset($_GET['category']) && $_GET['category'] === 'tickets') ? 'selected' : ''; ?>>Tickets</option>
+                                <option value="tickets" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'tickets') ? 'selected' : ''; ?>>Tickets</option>
 
-                                <option value="games" <?php echo (isset($_GET['category']) && $_GET['category'] === 'games') ? 'selected' : ''; ?>>Video Games</option>
+                                <option value="games" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'games') ? 'selected' : ''; ?>>Video Games</option>
 
-                                <option value="vinyls" <?php echo (isset($_GET['category']) && $_GET['category'] === 'vinyls') ? 'selected' : ''; ?>>Vinyls</option>
+                                <option value="vinyls" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'vinyls') ? 'selected' : ''; ?>>Vinyls</option>
 
-                                <option value="other" <?php echo (isset($_GET['category']) && $_GET['category'] === 'other') ? 'selected' : ''; ?>>Other</option>
+                                <option value="other" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'other') ? 'selected' : ''; ?>>Other</option>
                             </select>
                         </div>
 
@@ -335,7 +394,57 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
             <!--I think <button>'s cannot contain or be contained by <a>'s, no issue currently, works as intended, but if issues arise later check here, I'm not 100% sure myself-->
 
             <div id="searchGridItem4">
-                <!--Posts go here-->
+                <?php
+                if (isset($_SESSION['access_level'])) {
+
+                    while (($row2 = $resultBounties->fetch_array(MYSQLI_ASSOC))) {
+                        if (($row2['post_or_bounty'] == 'bounty')) {
+
+                            print "<div class=\"boxesForEachPost\">";
+                            print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row2['username'] . "</p>" . "</div>";
+                            print "<div class=\"gridItemForPostBox4\">";
+                            print "<a href=\"userProfileView.php?user_id=" . $row2['user_id'] . "\">";
+                            print "<img src=\"" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
+                            print "</a>";
+                            print "</div>";
+                            if (!empty($row2['post_price'])) {
+                                print "<div class=\"gridItemForPostBox9\">" . "<p>$" . $row2['post_price'] . "</p>" . "</div>";
+
+                            }
+                            print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2['post_description'] . "</p>" . "</div>";
+                            //this always exists
+                
+                            if (!empty($row2['post_img'])) {
+                                print "<div class=\"gridItemForPostBox12\">" . "<img src=\"" . $row2['post_img'] . "\">" . "</div>";
+                                //doesn't always exist
+                            }
+
+                            if (!empty($row2['post_sfw_nsfw'])) {
+                                print "<div class=\"gridItemForPostBox13\">" . "<p>" . $row2['post_sfw_nsfw'] . "</p>" .
+                                    "</div>";
+                                //doesn't always exist
+                            }
+
+                            print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row2['post_creation_date'] . "</p>" . "</div>";
+
+                            //always exists
+                
+
+                            print "<div class=\"gridItemForPostBoxViewPost\">";
+                            print "<a href=\"categories/postView.php?post_id=" . $row2['post_id'] . "\"\">View Post</a>";
+                            print "</div>";
+
+                            print "</div>";
+
+                        }
+
+                    }
+
+
+
+
+                }
+                ?>
             </div>
 
         </div>
