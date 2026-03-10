@@ -144,7 +144,7 @@ if (isset($_GET['user_id'])) {
         <?php
         if ($resultUser) {
             while ($row2 = $resultUser->fetch_array(MYSQLI_ASSOC)) {
-                print "<div class=\"entireAreaUserProfile\">";
+                print "<div class=\"signUpForms\">";
 
 
                 print "<div>" . "<p>" . $row2['username'] . "</p>" . "</div>";
