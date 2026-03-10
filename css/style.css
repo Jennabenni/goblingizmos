@@ -437,6 +437,170 @@ img {
     }
 
 
+
+    .specificCatItem5 {
+        /*  background-color: red;*/
+        display: grid;
+        grid-template-columns: auto;
+        /*grid-template-rows: max-content;*/
+
+
+    }
+
+    .boxesForEachPost {
+        background-color: white;
+        border: solid 1px black;
+        box-shadow: 5px 5px 5px gray;
+        padding: 10px;
+        width: 330px;
+
+
+        row-gap: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 25px;
+        margin-top: 25px;
+        display: grid;
+        grid-template-columns: 10% auto;
+        font-family: rubik, Arial;
+        grid-template-rows: 100px 50px auto auto auto auto auto;
+
+
+    }
+
+
+    .gridItemForPostBox1 {
+        /*post id*/
+        grid-row-start: 7;
+        margin-left: auto;
+        margin-right: auto;
+        grid-column-start: 2;
+
+    }
+
+    .gridItemForPostBox2 {
+        /*user id*/
+        grid-row-start: 6;
+        margin-left: auto;
+        margin-right: auto;
+        grid-column-start: 2;
+
+    }
+
+    .gridItemForPostBox3 {
+        /*username*/
+        grid-column-start: 2;
+        grid-row-start: 1;
+        margin-left: auto;
+        margin-right: auto;
+        font-weight: 500;
+        display: block;
+        margin-top: 0px;
+
+        justify-content: left;
+
+    }
+
+    .gridItemForPostBox4 {
+        /*user pfp*/
+        grid-column-start: 1;
+        grid-row-start: 1;
+        justify-content: left;
+        display: block;
+
+        width: 100px;
+
+
+    }
+
+
+
+    .gridItemForPostBox4 img {
+        border-radius: 50%;
+    }
+
+
+
+    .gridItemForPostBox9 {
+        /*price*/
+        grid-column-start: 1;
+        grid-row-start: 6;
+
+    }
+
+    .gridItemForPostBox10 {
+        /*location*/
+    }
+
+    .gridItemForPostBox11 {
+        /*desc*/
+        grid-column: 3 span 2;
+        grid-row-start: 4;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        width: 300px;
+
+    }
+
+    .gridItemForPostBox12 {
+        /*post img*/
+        grid-row-start: 5;
+        grid-column: 1 span 2;
+        align-self: center;
+        margin-left: auto;
+        margin-right: auto;
+
+
+
+
+    }
+
+    .gridItemForPostBox12 img {
+        width: 270px;
+
+    }
+
+    .gridItemForPostBox13 {
+        /*csfw nsfw*/
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .gridItemForPostBox14 {
+        /*post date*/
+        grid-row-start: 2;
+        margin-left: auto;
+        margin-right: auto;
+        width: 300px;
+
+    }
+
+
+    .gridItemForPostBoxViewPost {
+        /*The link*/
+
+        grid-row-start: 7;
+        grid-column-start: 1;
+
+        width: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+        text-align: center;
+
+    }
+
+    .gridItemForPostBoxViewPost a {
+        color: #232C33;
+        text-decoration: underline;
+        font-weight: 700;
+    }
+
+
+
+
     /*Community Tab*/
 
     .communityGridContainer {
@@ -569,7 +733,6 @@ img {
         /*aside*/
         grid-column-start: 1;
         grid-row-start: 3;
-
         justify-self: center;
 
 
@@ -611,19 +774,23 @@ img {
         justify-content: center;
         column-gap: 7px;
         border-radius: 5px;
+        box-shadow: 0 2px 6px;
 
 
 
     }
 
     .searchBarItems {
-        width: 150px;
+        width: 125px;
         height: 35px;
         border: none;
         background-color: #B4BEC9;
-
         color: black;
         font-weight: 700;
+    }
+
+    .comIcons {
+        vertical-align: middle;
     }
 
     #borderForSearch {
@@ -1264,6 +1431,174 @@ img {
     }
 
 
+    /*THE POSTS*/
+
+
+
+    .specificCatItem5 {
+        /*  background-color: red;*/
+        display: grid;
+        grid-template-columns: auto;
+        /*grid-template-rows: max-content;*/
+
+
+    }
+
+    .boxesForEachPost {
+        background-color: white;
+        border: solid 1px black;
+        box-shadow: 5px 5px 5px gray;
+        padding: 10px;
+        width: 330px;
+
+
+        row-gap: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 25px;
+        margin-top: 25px;
+        display: grid;
+        grid-template-columns: 10% auto;
+        font-family: rubik, Arial;
+        grid-template-rows: 100px 50px auto auto auto auto auto;
+
+
+
+    }
+
+
+    .gridItemForPostBox1 {
+        /*post id*/
+        grid-row-start: 7;
+        margin-left: auto;
+        margin-right: auto;
+        grid-column-start: 2;
+
+    }
+
+    .gridItemForPostBox2 {
+        /*user id*/
+        grid-row-start: 6;
+        margin-left: auto;
+        margin-right: auto;
+        grid-column-start: 2;
+
+    }
+
+    .gridItemForPostBox3 {
+        /*username*/
+        grid-column-start: 2;
+        grid-row-start: 1;
+        margin-left: auto;
+        margin-right: auto;
+        font-weight: 500;
+        display: block;
+        margin-top: 0px;
+
+        justify-content: left;
+
+    }
+
+    .gridItemForPostBox4 {
+        /*user pfp*/
+        grid-column-start: 1;
+        grid-row-start: 1;
+        justify-content: left;
+        display: block;
+
+        width: 100px;
+
+
+    }
+
+
+
+    .gridItemForPostBox4 img {
+        border-radius: 50%;
+    }
+
+
+
+    .gridItemForPostBox9 {
+        /*price*/
+        grid-column-start: 1;
+        grid-row-start: 6;
+
+    }
+
+    .gridItemForPostBox10 {
+        /*location*/
+    }
+
+    .gridItemForPostBox11 {
+        /*desc*/
+        grid-column: 3 span 2;
+        grid-row-start: 4;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        width: 300px;
+
+    }
+
+    .gridItemForPostBox12 {
+        /*post img*/
+        grid-row-start: 5;
+        grid-column: 1 span 2;
+        align-self: center;
+        margin-left: auto;
+        margin-right: auto;
+
+
+
+
+    }
+
+    .gridItemForPostBox12 img {
+        width: 270px;
+
+    }
+
+    .gridItemForPostBox13 {
+        /*csfw nsfw*/
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .gridItemForPostBox14 {
+        /*post date*/
+        grid-row-start: 2;
+        margin-left: auto;
+        margin-right: auto;
+        width: 300px;
+
+    }
+
+
+    .gridItemForPostBoxViewPost {
+        /*The link*/
+
+        grid-row-start: 7;
+        grid-column-start: 1;
+
+        width: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+        text-align: center;
+
+    }
+
+    .gridItemForPostBoxViewPost a {
+        color: #232C33;
+        text-decoration: underline;
+        font-weight: 700;
+    }
+
+
+
+
     /*Community Tab*/
 
     .communityGridContainer {
@@ -1411,10 +1746,12 @@ img {
         margin-right: auto;
         /*width: 500px;*/
         box-shadow: 5px 5px 5px gray;
+
     }
 
     #searchGridItem3 {
         /*Bounty button*/
+
 
         grid-row-start: 2;
         padding: 10px;
@@ -1451,10 +1788,15 @@ img {
         font-weight: 700;
     }
 
+    .comIcons {
+        vertical-align: middle;
+    }
+
     #borderForSearch {
         border-right: solid black 3px;
         height: 40px;
     }
+
 
 
     /*Buttons (Perhaps this can be used later)*/
@@ -2098,7 +2440,7 @@ img {
         grid-template-columns: 10% auto;
         font-family: rubik, Arial;
         grid-template-rows: 100px 50px auto auto auto auto auto;
-        border: solid 2px red;
+
 
     }
 
@@ -2109,7 +2451,7 @@ img {
         margin-left: auto;
         margin-right: auto;
         grid-column-start: 2;
-        border: solid 2px red;
+
     }
 
     .gridItemForPostBox2 {
@@ -2118,7 +2460,7 @@ img {
         margin-left: auto;
         margin-right: auto;
         grid-column-start: 2;
-        border: solid 2px red;
+
     }
 
     .gridItemForPostBox3 {
@@ -2130,7 +2472,7 @@ img {
         font-weight: 500;
         display: block;
         margin-top: 0px;
-        border: solid 2px red;
+
         justify-content: left;
 
     }
@@ -2141,7 +2483,7 @@ img {
         grid-row-start: 1;
         justify-content: left;
         display: block;
-        border: solid 2px red;
+
         width: 100px;
 
 
@@ -2153,28 +2495,13 @@ img {
         border-radius: 50%;
     }
 
-    .gridItemForPostBox5 {
-        /*post or bounty*/
 
-    }
-
-    .gridItemForPostBox6 {
-        /*post category*/
-    }
-
-    .gridItemForPostBox7 {
-        /*condition*/
-    }
-
-    .gridItemForPostBox8 {
-        /*box condition*/
-    }
 
     .gridItemForPostBox9 {
         /*price*/
         grid-column-start: 1;
         grid-row-start: 6;
-        border: solid 2px red;
+
     }
 
     .gridItemForPostBox10 {
@@ -2189,7 +2516,7 @@ img {
         margin-right: auto;
         display: block;
         width: 300px;
-        border: solid 2px red;
+
     }
 
     .gridItemForPostBox12 {
@@ -2199,7 +2526,7 @@ img {
         align-self: center;
         margin-left: auto;
         margin-right: auto;
-        border: solid 2px red;
+
 
 
 
@@ -2222,12 +2549,30 @@ img {
         margin-left: auto;
         margin-right: auto;
         width: 300px;
-        border: solid 2px red;
+
     }
 
 
+    .gridItemForPostBoxViewPost {
+        /*The link*/
 
+        grid-row-start: 7;
+        grid-column-start: 1;
 
+        width: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+        text-align: center;
+
+    }
+
+    .gridItemForPostBoxViewPost a {
+        color: #232C33;
+        text-decoration: underline;
+        font-weight: 700;
+    }
 
 
 
@@ -2335,7 +2680,6 @@ img {
         grid-template-rows: auto auto;
         margin-top: 25px;
 
-
     }
 
     #searchGridItem1 {
@@ -2379,10 +2723,11 @@ img {
         display: grid;
         grid-template-columns: auto auto auto auto;
         background-color: #B4BEC9;
-        padding: 10px;
-        justify-content: center;
+        padding: 20px;
         column-gap: 7px;
         border-radius: 5px;
+        align-items: center;
+
 
 
 
@@ -2395,6 +2740,10 @@ img {
         background-color: #B4BEC9;
         color: black;
         font-weight: 700;
+    }
+
+    .comIcons {
+        vertical-align: middle;
     }
 
     #borderForSearch {

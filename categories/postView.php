@@ -31,6 +31,20 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 }
 
 
+if (isset($_GET['post_id'])) {
+    $query_some = "SELECT post_id, goblingizmos_postsbounties.user_id, post_or_bounty, post_category, post_condition, post_boxCondition, post_price, post_location, post_description, post_img, post_sfw_nsfw, post_creation_date, goblingizmos_users.username, goblingizmos_users.user_pfp FROM `goblingizmos_postsbounties` INNER JOIN goblingizmos_users ON goblingizmos_postsbounties.user_id=goblingizmos_users.user_id WHERE post_id = '" . $_GET['post_id'] . "'";
+
+    //yaaaay
+
+
+    $resultUser = $mysqli->query($query_some);
+
+
+
+
+}
+
+
 
 
 ?>
@@ -42,7 +56,7 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goblin Gizmos - Minerals</title>
+    <title>Goblin Gizmos - Post</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <script src="../js/goblinScript.js"></script>
 </head>
@@ -120,11 +134,6 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 
 
 
-
-
-
-
-
                     ?>
                 </div>
 
@@ -132,83 +141,102 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
         </header>
 
 
-
-        <div class="specificCategoryLayoutGrid">
-
-            <div class="specificCatItem1">
-                <aside class="bountiesSection">Bounties
-                    <div></div>
-                </aside>
-
-            </div>
+        <?php
+        if ($resultUser) {
+            while ($row2 = $resultUser->fetch_array(MYSQLI_ASSOC)) {
 
 
 
 
+                print "<div class=\"boxesForEachPost\">";
+                print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row2['username'] . "</p>" . "</div>";
+                print "<div class=\"gridItemForPostBox4\">";
+                print "<img src=\"../" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
+                print "</div>";
+                if (!empty($row2['post_price'])) {
+                    print "<div class=\"gridItemForPostBox9\">" . "<p>$" . $row2['post_price'] . "</p>" . "</div>";
+                }
+
+                print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2['post_description'] . "</p>" . "</div>";
+                //this always exists
+        
+                if (!empty($row2['post_img'])) {
+                    print "<div class=\"gridItemForPostBox12\">" . "<img src=\"../" . $row2['post_img'] . "\">" . "</div>";
+                    //doesn't always exist
+                }
+
+                if (!empty($row2['post_sfw_nsfw'])) {
+                    print "<div class=\"gridItemForPostBox13\">" . "<p>" . $row2['post_sfw_nsfw'] . "</p>" .
+                        "</div>";
+                    //doesn't always exist
+                }
 
 
-            <div class="specificCatItem2">
-                <a href="../makePost.php">
+                print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row2['post_creation_date'] . "</p>" . "</div>";
+                //always exists
+        
 
-
-                    <button type="button" class="goblinButtons">Make a Post</button>
-                </a>
-
-            </div>
-
-
-
-            <div class="specificCatItem3">
-
-                <div>
-                    <img src="../img/minerals.png" alt="different minerals">
-                </div>
-                <div class="grayBoxInInfo">
-
-
-                    <h2>Minerals</h2>
-                    <p>Minerals, also referred to as 'rocks' or 'crystals' refers to inorganic materials that are
-                        naturally
-                        occurring. These objects are generally collected for appearance, for the healing or restorative
-                        properties they are said to provide, or as resources to be made into other objects.
-
-                    </p>
-                </div>
-
-            </div>
-
-            <!-- <div>
-
-            <h3>Bounties</h3>
-        </div>-->
+                print "</div>";
 
 
 
-            <div class="specificCatItem4">
-                <h3>Posts</h3>
-            </div>
+
+                //post cond, box con, location,
+        
+                if (!empty($row2['post_condition'])) {
+                    print "<div class=\"FAQ\">";
+                    print "<div class=\"gridItemForPostBox7\">" . "<p>Condition: " . $row2['gridItemForPostBox13'] . "</p>" .
+                        "</div>";
+                    //doesn't always exist
+                    print "</div>";
+                }
 
 
-            <div class="specificCatItem5">
-                <div>
-                    <!--STUFF GOES HERE-->
-
-                    <!--
-                <img src="../img/placeholder.png">
-                <img src="../img/placeholder.png">
-
-            -->
-
-                </div>
-
-            </div>
 
 
-            <!--Bottom div for grid for reference-->
-        </div>
+                if (!empty($row2['post_boxCondition'])) {
+                    print "<div class=\"FAQ\">";
+                    print "<div class=\"gridItemForPostBox8\">" . "<p>Box Condition: " . $row2['post_boxCondition'] . "</p>" .
+                        "</div>";
+                    //doesn't always exist
+                    print "</div>";
+                }
+
+
+
+                if (!empty($row2['post_location'])) {
+                    print "<div class=\"FAQ\">";
+                    print "<div class=\"gridItemForPostBox10\">" . "<p>Post Location: " . $row2['post_location'] . "</p>" .
+                        "</div>";
+                    //doesn't always exist
+                    print "</div>";
+                }
+
+
+                print "</div>";
+
+
+
+            }
+        } else if (!isset($_SESSION['access_level'])) {
+            print "<p>Log in to see more details about this post</p>";
+        }
+
+
+
+
+
+
+        ?>
+
+
+
+
+
+
+
+
     </div>
-
-
 
     <footer>
 

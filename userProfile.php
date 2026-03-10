@@ -30,11 +30,14 @@ include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 
 
 
+
+
 if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 
 
     $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
 
+    //it was the apostrophe
 
     //honestly all of this could be used
 
@@ -64,77 +67,69 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
 
 
 
-
-    //$target_file = NULL;
-    //I dont think this can be NULL here since the user may have smth already
-    /*
-    if (!empty($_FILES['user_pfp']) && $_FILES['user_pfp']['error'] === UPLOAD_ERR_OK) {
-        $target_dir = "uploads/";
-        $target_file = $target_dir . basename(str_replace(' ', '_', $_FILES['user_pfp']["name"]));
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-
-
-        //checks if file is an image or if its fake (whatever that means)
-        if (!empty($_FILES['user_pfp'])) {
-            $check = getimagesize($_FILES["user_pfp"]["tmp_name"]);
-            if ($check !== false) {
-                echo "File is an image - " . $check["mime"] . ".";
-                $uploadOk = 1;
-            } else {
-                echo "File is not an image.";
-                $uploadOk = 0;
-            }
-        }
-        if ($_FILES['user_pfp']["size"] > 800000) {
-            echo "Your file is too large.";
-            $uploadOk = 0;
-        }
-
-        if (file_exists($target_file)) {
-            echo "This file already exists";
-            $uploadOk = 0;
-        }
-
-
-        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-            echo "Please choose an image that is either JPG, JPEG, or a PNG file.";
-            $uploadOk = 0;
-        }
-
-        if ($uploadOk == 0) {
-            echo "There was an issue with your file";
-        } else {
-            if (move_uploaded_file($_FILES['user_pfp']["tmp_name"], $target_file)) {
-                echo "The file was uploaded.";
-
-            }
-        }
-
-
-    }
-*/
-
+    //I won't take credit for this:
 
     $usersNewUsername = $_POST['uname'];
     $usersNewBio = $_POST['bio'];
     $usersNewEmail = $_POST['user_email'];
+    $userId = $_SESSION['user_id'];
 
+    // Use a prepared statement
+    $updateInfoOnProfile = "UPDATE `goblingizmos_users` SET `username`= ?, `user_email`= ?, `user_bio`= ? WHERE user_id=?";
 
-    if ((($target_file != NULL) && ($uploadOk == 1)) || $target_file == NULL) {
+    // Prepare the statement
+    $stmt = $mysqli->prepare($updateInfoOnProfile);
 
-        $updateInfoOnProfile = "UPDATE `goblingizmos_users` SET `username`= '$usersNewUsername',`user_email`= '$usersNewEmail', `user_bio`=  '$usersNewBio' WHERE user_id='" . $_SESSION['user_id'] . "'";
+    // Bind the parameters - "ssss" means 4 string parameters
+// The values are passed separately, not concatenated into the query
+    $stmt->bind_param("ssss", $usersNewUsername, $usersNewEmail, $usersNewBio, $userId);
 
-        /* $updateInfoOnProfile = "UPDATE `goblingizmos_users` SET `username`= '$usersNewUsername',`user_pfp`='$target_file', `user_bio`=  '$usersNewBio' WHERE user_id='" . $_SESSION['user_id'] . "'";*/
-
-
-
-        $resultUpdate = $mysqli->query($updateInfoOnProfile);
+    // Execute the query
+    if ($stmt->execute()) {
         header("Location: userProfile.php");
-
-        //this acts as a reload
+    } else {
+        echo "Error updating profile: " . $stmt->error;
     }
+
+    $stmt->close();
+
+    //this was copilots doing
+    //I needed it because apostrophes were a problem
+
+
+    /*
+
+
+    From a website
+
+    $inputname = "O'Brien";
+    $res = $mysqli->prepare("SELECT whatever from table1 where lastname = ? ";
+    $res->bind->param("s", $inputname);
+    $res->execute();
+
+
+
+
+
+    */
+
+
+
+
+
+
+
+    /* $updateInfoOnProfile = "UPDATE `goblingizmos_users` SET `username`= '$usersNewUsername',`user_pfp`='$target_file', `user_bio`=  '$usersNewBio' WHERE user_id='" . $_SESSION['user_id'] . "'";*/
+
+
+
+    $resultUpdate = $mysqli->query($updateInfoOnProfile);
+
+
+    header("Location: userProfile.php");
+
+    //this acts as a reload
+
 
 
 }
@@ -259,10 +254,6 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
             print "<div class=\"entireAreaUserProfile\">";
 
             print "<div>";
-
-
-
-
             //User's profile image
         
             "</div>";
@@ -310,7 +301,7 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
 
 
             print " <div class=\"evenSmallerProfileBox\">";
-            print "<input type=\"text\" id=\"uname\" name=\"uname\" value=\"" . $row['username'] . "\">";
+            print "<input type=\"text\" id=\"uname\" name=\"uname\" value=\"" . htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8') . "\">";
 
 
             print "<img src=\"img/pencilAndPaper.png\" class=\"iconImg\">";
@@ -455,7 +446,7 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
 
         } else {
 
-            print "<div>";
+            print "<div  class=\"signUpForms\">";
             print "<p>Please log in to see account information.</p>";
             print "<a href=\"signIn.php\">Sign In</a>";
             print "</div>";

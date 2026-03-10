@@ -46,7 +46,7 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 // working search... perchance
 
 
-//Howdy (this is Jenna) so I'm not sure what 'search' is so I'll leave it
+
 
 
 $results = [];

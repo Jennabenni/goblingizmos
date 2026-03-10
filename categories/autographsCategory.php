@@ -284,41 +284,30 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
                             print "<div class=\"boxesForEachPost\">";
 
+
+
                             print "<div class=\"gridItemForPostBox1\">" . "<p> Post Id:" . $row['post_id'] . "</p>" . "</div>";
                             print "<div class=\"gridItemForPostBox2\">" . "<p>User Id:" . $row['user_id'] . "</p>" . "</div>";
                             print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row['username'] . "</p>" . "</div>";
                             print "<div class=\"gridItemForPostBox4\">";
+
+                            print "<a href=\"../userProfileView.php?user_id=" . $row['user_id'] . "\">";
                             print "<img src=\"../" . $row['user_pfp'] . "\" alt=\"profile image of user\">";
+                            print "</a>";
+
+
                             print "</div>";
 
 
 
-                            // print "<div class=\"gridItemForPostBox5\">" . $row['post_or_bounty'] . "</div>";
-                
 
 
-                            // print "<div class=\"gridItemForPostBox6\">" . $row['post_category'] . "</div>";
-                            /*
-                                        if (!empty($row['post_condition'])) {
-                                            print "<div class=\"gridItemForPostBox7\">" . $row['post_condition'] . "</div>";
-                                            //doesn't always exist
-                                        }
 
-                                        if (!empty($row['post_boxCondition'])) {
-                                            print "<div class=\"gridItemForPostBox8\">" . $row['post_boxCondition'] . "</div>";
-                                            //doesn't always exist
-                                        }
-            */
+
                             if (!empty($row['post_price'])) {
                                 print "<div class=\"gridItemForPostBox9\">" . "<p>$" . $row['post_price'] . "</p>" . "</div>";
                                 //doesn't always exist
                             }
-                            /*
-                             if (!empty($row['post_location'])) {
-                                print "<div class=\"gridItemForPostBox10\">" . $row['post_location'] . "</div>";
-                                                            //doesn't always exist
-                                                        }
-                            */
 
 
                             print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row['post_description'] . "</p>" . "</div>";
@@ -342,6 +331,16 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
                             //always exists
                 
 
+                            // print "<a href=\"../categories/postView.php?post_id=" . $row['post_id'] . "\"\">View Post</a>";
+                
+
+
+                            print "<div class=\"gridItemForPostBoxViewPost\">";
+                            print "<a href=\"../categories/postView.php?post_id=" . $row['post_id'] . "\"\">View Post</a>";
+                            print "</div>";
+
+
+
                             print "</div>";
 
 
@@ -360,38 +359,22 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
                             print "<div class=\"boxesForEachPost\">";
 
-                            //print "<div class=\"gridItemForPostBox1\">" . $row2['post_id'] . "</div>";
-                            //print "<div class=\"gridItemForPostBox2\">" . $row2['user_id'] . "</div>";
-                
 
 
                             print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row2['username'] . "</p>" . "</div>";
                             print "<div class=\"gridItemForPostBox4\">";
+
+
+                            print "<a href=\"../userProfileView.php?user_id=" . $row2['user_id'] . "\">";
                             print "<img src=\"../" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
+                            print "</a>";
+
+
 
                             print "</div>";
 
 
 
-
-
-
-                            // print "<div class=\"gridItemForPostBox5\">" . $row['post_or_bounty'] . "</div>";
-                
-
-
-                            // print "<div class=\"gridItemForPostBox6\">" . $row['post_category'] . "</div>";
-                
-                            /* if (!empty($row2['post_condition'])) {
-                                 print "<div class=\"gridItemForPostBox7\">" . $row2['post_condition'] . "</div>";
-                                 //doesn't always exist
-                             }*
-
-                             if (!empty($row2['post_boxCondition'])) {
-                                 print "<div class=\"gridItemForPostBox8\">" . $row2['post_boxCondition'] . "</div>";
-                                 //doesn't always exist
-                             }
- */
                             if (!empty($row2['post_price'])) {
                                 print "<div class=\"gridItemForPostBox9\">" . "<p>$" . $row2['post_price'] . "</p>" . "</div>";
                                 //doesn't always exist
@@ -402,13 +385,7 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
 
                             }
-                            /*
-                                      if (!empty($row2['post_location'])) {
-                         print "<div class=\"gridItemForPostBox10\">" . $row2['post_location'] . "</div>";
-                         //doesn't always exist
-                                                        }
 
-                            */
 
                             print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2['post_description'] . "</p>" . "</div>";
                             //this always exists
@@ -429,8 +406,13 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
 
                             print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row2['post_creation_date'] . "</p>" . "</div>";
+
                             //always exists
                 
+
+                            print "<div class=\"gridItemForPostBoxViewPost\">";
+                            print "<a href=\"../categories/postView.php?post_id=" . $row2['post_id'] . "\"\">View Post</a>";
+                            print "</div>";
 
                             print "</div>";
 

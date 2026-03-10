@@ -1,141 +1,53 @@
 <?php
-
-/*Log in page, referenced assignment 5 from server side */
-
-//http://localhost/goblingizmos/index.php
-//http://localhost/goblingizmos/signIn.php
-//this is what you copy and paste to open up the server
-//does NOT need to be out of a comment
-
-
-/* So I need to code for people logging in and creating a new account
-
-I may change the sign up stuff to be
-First name
-Last name
-Username
-Email (do we need an email for anything??)
-Password
-
-
-Log in is just
-assigned username (one that you pick) (and is visible)
-pass
-
-
-For the assignment 5, it had
-- user ID (primary)
-- username
-- password
-- first_name
-- last_name
-- access_level
-
-now to have people make their own, they need to be able to push it to this table, similar to a post?
-will need regex for this, safety!! aha
-
-I can start with admins tho
-MD5 is for hiding passwords
-
-
-Regex ideas:
-
-- only letters and numbers and specific special characters if we do emails (@)
-- prevent user from putting code injections GET POST
-
-
-
-
-
-*/
-
-
-
-
-
 session_start();
-//need this on everything, dont forget closing tag at bottom under html
+//make sure to have the closer at the end of html
 
 
-/*
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-*/
+/*DO NOT DELETE THESE */
 
-//include("../db-connect.php");
+//include("db-connect.php");
 include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
-
 //include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
-//following my old code
-
-
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 
 
 
 if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
+
 
     $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
 
 
     //honestly all of this could be used
 
-    $result = $mysqli->query($query_user_info_on_pages);
+    $resultPFP = $mysqli->query($query_user_info_on_pages);
 
 
 
 }
 
 
+if (isset($_GET['user_id'])) {
+    $query_some = "SELECT `username`,`user_pfp`,`user_bio`,`user_email` FROM `goblingizmos_users` WHERE user_id = '" . $_GET['user_id'] . "'";
+
+    //yaaaay
 
 
+    $resultUser = $mysqli->query($query_some);
 
 
-if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
-    $select_query = "SELECT * FROM `goblingizmos_users`";
-
-
-
-    $select_result = $mysqli->query($select_query);
-
-
-    while ($row = $select_result->fetch_object()) {
-        if ((($_POST['uname']) == ($row->username)) && (md5($_POST['password']) == ($row->password))) {
-            $_SESSION['logged_in'] = true;
-            $_SESSION['user_logged_in'] = $row->username;
-            $_SESSION['user_id'] = $row->user_id;
-            $_SESSION['access_level'] = $row->access_level;
-            $_SESSION['first_name'] = $row->first_name;
-            $_SESSION['last_name'] = $row->last_name;
-        } else {
-            //You messed with the wrong house fool
-        }
-    }
-    if (isset($_SESSION['logged_in'])) {
-        header("Location: index.php");
-    }
-
-    //OMG I HAD .html... BROTHER
 
 
 }
-
-
-
-//ill be back
 
 
 
 
 ?>
-
 
 
 <!DOCTYPE html>
@@ -144,11 +56,8 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goblin Gizmos - Sign In</title>
-
+    <title>Goblin Gizmos - User profile</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-
-
     <script src="js/goblinScript.js"></script>
 </head>
 
@@ -202,13 +111,11 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
                 </div>
                 <div class="headerGridItem">
 
-
-
                     <?php
 
 
                     if (isset($_SESSION['logged_in'])) {
-                        $row = $result->fetch_array(MYSQLI_ASSOC);
+                        $row = $resultPFP->fetch_array(MYSQLI_ASSOC);
 
                         if ($row['user_pfp'] != '') {
                             print "<a href=\"userProfile.php\"><img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
@@ -227,50 +134,35 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
 
 
 
-
-
                     ?>
-
-
-
                 </div>
 
             </div>
         </header>
 
-        <div class="signUpForms">
-            <p>If you have been brought to this page after creating an account, please sign in below.</p>
-        </div>
 
-        <div class="signUpGap">
-
-            <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" class="signUpForms">
-                <div class="signInForm">
-                    <div>
-                        <h2>Sign In</h2>
-                    </div>
+        <?php
+        if ($resultUser) {
+            while ($row2 = $resultUser->fetch_array(MYSQLI_ASSOC)) {
+                print "<div class=\"entireAreaUserProfile\">";
 
 
-                    <div>
-                        <input type="text" id="uname" name="uname" placeholder="Username" class="inputBoxes">
-                    </div>
+                print "<div>" . "<p>" . $row2['username'] . "</p>" . "</div>";
 
 
-                    <div>
+                print "<div>";
 
-                        <input type="text" id="password" name="password" placeholder="Password" class="inputBoxes">
-
-                    </div>
-
-                    <a href="signIn.php">Forgot Password?</a>
-
-                    <div>
-                        <input name="submit" type="submit" value="Login" id="submit" class="goblinButtons">
-                    </div>
+                print "<img src=\"" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
 
 
-                </div>
-            </form>
+                print "<p>" . $row2['user_bio'] . "</p>";
+                print "<p>" . $row2['user_email'] . "</p>";
+
+
+                print "</div>";
+
+            }
+        }
 
 
 
@@ -279,33 +171,15 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
 
 
 
-
-
-
-            <div>
-
-                <div class="signUpForms">
-                    <h2 class="goblinButtons"><a href="makeAccount.php">Sign Up</a></h2>
-                </div>
-
-
-            </div>
-        </div>
-
-
-
-    </div> <!--when you do php, keep this div after it, it's for the footer staying sticky-->
+        ?>
 
 
 
 
-
-
-
-
-
+    </div>
 
     <footer>
+
 
 
 
@@ -313,7 +187,6 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
         <!--PLACEHOLDER!! REPLACE LATER: LOGO-->
 
         <div>
-
             <div class="footerFlex">
                 <!--Bottom left-->
                 <nav>
@@ -326,7 +199,7 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
                                     <a href="support.php" class="titleLink">Support</a>
                                 </li>
                                 <li>
-                                    <p class="titleLink"> |</p>
+                                    <p class="/titleLink"> |</p>
                                 </li>
                                 <li>
                                     <a href="tos.php" class="titleLink">Terms of Service</a>
@@ -335,42 +208,32 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
 
                         </div>
 
-
                         <div class="footerGridItem2">
                             <ol>
-
 
 
                                 <li><a href="https://x.com/"> <img src="img/TwitterLogo.png" class="iconImg"
                                             alt="X logo"></a></li>
 
-
                                 <li><a href="https://www.instagram.com/"> <img src="img/instagram.png" class="iconImg"
                                             alt="Instagram logo"></a>
                                 </li>
-
 
                                 <li> <a href="https://www.facebook.com/"> <img src="img/facebook.png" class="iconImg"
                                             alt="Facebook logo"></a>
                                 </li>
 
-
                                 <!--This works, and now I'm too scared to touch it-->
 
-
                             </ol>
-
 
                         </div>
                     </div>
                 </nav>
+
             </div>
-        </div>
-        </nav>
 
         </div>
-        </div>
-
 
     </footer>
 

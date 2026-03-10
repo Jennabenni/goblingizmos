@@ -182,7 +182,7 @@ if (!isset($_SESSION['logged_in'])) {
 
             //POST PRICE.  MY BITCH WIFE
             //THIS WAS THE ISSUE
-            //STUPID ASS INTEGER
+            //STUPID ASS NUMBER
 
             if (isset($_POST['post_price']) && trim($_POST['post_price']) !== '') {
                 $postPrice = (int) $_POST['post_price']; // or (float) / filter_var
@@ -271,7 +271,7 @@ if (!isset($_SESSION['logged_in'])) {
                 //IT WORKS
                 //IMG IS OPTIONAL! IF THERES AN ISSUE IT DOESNT SUBMIT! LETS FUCKIN GO
                 //Pardon my language
-
+/*
                 $insert_post_query = "INSERT INTO `goblingizmos_postsbounties` (`post_id`, `user_id`, `post_or_bounty`, `post_category`, `post_condition`, `post_boxCondition`, `post_price`, `post_location`, `post_description`,`post_img`, `post_sfw_nsfw`, `post_creation_date`) VALUES (NULL, '" . $_SESSION['user_id'] . "', '$postBountyOptionSelected', '$postCategoryOptionSelected','$postConditionOptionSelected', '$postBoxConditionOptionSelected',$postPriceSQL,'" . $_POST['post_location'] . "', '" . $_POST['post_description'] . "'," . ($target_file !== NULL ? "'" . $target_file . "'" : "NULL") . ", '$postSfwNsfwOptionSelected', CURRENT_TIMESTAMP)";
 
                 /*The usual problem children:
@@ -282,10 +282,41 @@ if (!isset($_SESSION['logged_in'])) {
 
                 */
 
-                $mysqli->query($insert_post_query);
+
+                //$mysqli->query($insert_post_query);
 
 
                 //this should already send it..... so i shouldnt have to check for isset post submit
+
+
+                //Previous code is above, adjusted code is below
+//I'm keeping both because Copilot helped me with the stuff below
+//I don't want to go past the point of no return
+
+
+
+                $insert_post_query = "INSERT INTO `goblingizmos_postsbounties` (`post_id`, `user_id`, `post_or_bounty`, `post_category`, `post_condition`, `post_boxCondition`, `post_price`, `post_location`, `post_description`,`post_img`, `post_sfw_nsfw`, `post_creation_date`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+
+                $stmt = $mysqli->prepare($insert_post_query);
+                $stmt->bind_param(
+                    "isssssssss",
+                    $_SESSION['user_id'],
+                    $postBountyOptionSelected,
+                    $postCategoryOptionSelected,
+                    $postConditionOptionSelected,
+                    $postBoxConditionOptionSelected,
+                    $postPriceSQL,
+                    $_POST['post_location'],
+                    $_POST['post_description'],
+                    $target_file,
+                    $postSfwNsfwOptionSelected
+                );
+
+                $stmt->execute();
+                $stmt->close();
+
+
+
 
 
 

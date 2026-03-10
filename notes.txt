@@ -4,9 +4,9 @@ Engineer notes hell yeah
 
 - Making post [done]
 - Posting to correct category [done]
-- being able to view post
-- being able to view account info of someone else (will need to edit previous DB)
-- REGULAR EXPRESSIONS NEEDED
+- being able to view post [done]
+- being able to view account info of someone else (will need to edit previous DB) [done]
+- REGULAR EXPRESSIONS NEEDED [partially done][look below]
 
 
 
@@ -25,7 +25,7 @@ they dont submit with apostrophes
 
 
 
-- Bounties to search tab
+- Bounties to search tab [can be done]
 - search bar
 - Bounty COLUMN in each category (Most recent 3)
 - Bounty COLUMN in each category (Most recent 3)
@@ -45,28 +45,35 @@ they dont submit with apostrophes
     - This may have to be a form in persons profile as well, that they can edit (brother.)
     - User profile img (how do accounts get it to be a circle???)
 
+*********************
+MINOR TASKS (BUT STILL NEEDED)
+
+- Need to copy and paste (and adjust) the posting info for each category (Autographs are blueprint)
+- Make that responsive
+- MAKE DUMMY POSTS (No more than 5 for each (ugh))
+- Community posts DB and connection
+    - user_id
+    - compost_id (...get it? like Community post but compost is also a word) (PRIMARY)
+    - (will grab username and pfp similar to posts (KEEP AN EYE ON PATHING))
+    - compost_img
+    - compost_desc
 
 
 
+
+(may cut)
     - Reports
     - post to admin only section
 
 
-
+CSS EDITS
     dont forget to do smth that blurs the pass when theyre typing it
     (and we were taught not to do it the browser way because then we're letting the browser make decisions for us!)
     (I can do CSS)
 
-
-
-    - So non users can see posts, but maybe they cant do the larger view unless they make an account, nor can they
-    view the persons account (gotta have some privacy)
-
-
-    - DONT FORGET TO TEST ON THE SERVER!!! REMOTE!!
-    - Also keep your comments in mind on the client side
-    it may give a bad impression if people saw me say fuck multiple times
-    if they hit inspect
+    - responsiveness
+    - Css edits on places where they ask you to log in (user profile)
+    - sign in button (just needs to be centered)
 
 
 
@@ -74,7 +81,208 @@ they dont submit with apostrophes
     view the persons account (gotta have some privacy)
 
 
-    - DONT FORGET TO TEST ON THE SERVER!!! REMOTE!!
+    - DONT FORGET TO TEST ON THE SERVER!!! REMOTE!! [need to use setup.php to make Databases]
     - Also keep your comments in mind on the client side
     it may give a bad impression if people saw me say fuck multiple times
     if they hit inspect
+
+***********************
+Removals:
+
+- Reports (most websites just have a contact email)
+- Settings tab, moved emails to main profile area, editing password (especially if the user doesn't remember) can get tricky since I encode it (MD5)
+
+***********************
+
+
+BEFORE WE SUBMIT:
+(After debugging)
+
+- We need a version running on the server for him to peruse
+- Setup.php for all databases
+- Make sure all paths are changed
+- Make accounts fot Goblins + Novatnak (admin and user)
+
+
+
+
+
+
+
+corrected code:
+
+
+if (isset($_POST['submit'])) {
+
+
+    $regExName = "/(\b[A-Z]*[a-z]*[ ]?[']?\b)*/";
+    $regExUsername = "/^.{1,25}$(\b[\w]*[\d]*[ ]?[']*\b)*/";
+    $regExPass = "/^.{1,50}$(\b[\w]*[\d]*[ ]?[']*\b)*/";
+    $regExEmail = "/[a-z@.]+\b(com)|/";
+
+    $regExKillSwitch = "/[#|$|%|^|&|*|(|)|<|>|~|`]/";
+    //if anything has these characters ^^ KILL
+
+    $userAccessLevel = "user";
+
+
+    //I also need to sanitize
+    /*
+
+var emailRegEx = /[a-z@.]+\b(com)|[a-z@.]+\b(edu)/gm
+//EUREKA
+var emailRegExValidate = userEmailValue.match(emailRegEx);
+
+    */
+
+    $validateFirstName = preg_match($regExName, $_POST['first_name']);
+
+    $validateLastName = preg_match($regExName, $_POST['last_name']);
+
+    $validateUsername = preg_match($regExUsername, $_POST['uname']);
+
+    $validatePassword = preg_match($regExPass, $_POST['password']);
+
+    $validateEmail = preg_match($regExEmail, $_POST['user_email']);
+
+    //equals 1 if pattern was in string
+    //these should
+
+
+
+
+    /*If any of these equal one, that's a no no */
+
+    $killFirstName = preg_match($regExKillSwitch, $_POST['first_name']);
+    $killLastName = preg_match($regExKillSwitch, $_POST['last_name']);
+    $killUsername = preg_match($regExKillSwitch, $_POST['uname']);
+    $killPass = preg_match($regExKillSwitch, $_POST['password']);
+    $killEmail = preg_match($regExKillSwitch, $_POST['user_email']);
+    $killBio = preg_match($regExKillSwitch, $_POST['user_bio']);
+
+
+
+
+    if (
+        (isset($_POST['first_name']) && (isset($_POST['last_name']) && (isset($_POST['uname']) && (isset($_POST['password'])) && (isset($_POST['user_email']))))) && (!empty($_POST['first_name'])) &&
+
+        (!empty($_POST['last_name'])) && (!empty($_POST['uname'])) && !empty($_POST['password']) && (!empty($_POST['user_email']))
+
+        && ($validateFirstName == 1) && ($validateLastName == 1) && ($validatePassword == 1) && ($validateEmail == 1) && ($validateUsername == 1) && (($killEmail || $killFirstName || $killLastName || $killPass || $killUsername || $killBio) != 1) && (($regExName || $regExEmail || $regExPass || $regExUsername) != 0)
+
+
+
+        //So I dont think my regexes do anything.
+        //BUT! The kill switch works
+        //that's the most crucial thing
+
+    ) {
+
+
+        //We post it
+        //print "<p>Success</p>";
+
+        $target_file = NULL;
+        if (!empty($_FILES['user_pfp']) && $_FILES['user_pfp']['error'] === UPLOAD_ERR_OK) {
+            $target_dir = "uploads/";
+            $target_file = $target_dir . basename(str_replace(' ', '_', $_FILES['user_pfp']["name"]));
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+
+
+            //checks if file is an image or if its fake (whatever that means)
+            if (!empty($_FILES['user_pfp'])) {
+                $check = getimagesize($_FILES["user_pfp"]["tmp_name"]);
+                if ($check !== false) {
+                    echo "File is an image - " . $check["mime"] . ".";
+                    $uploadOk = 1;
+                } else {
+                    echo "File is not an image.";
+                    $uploadOk = 0;
+                }
+            }
+            if ($_FILES['user_pfp']["size"] > 800000) {
+                echo "Your file is too large.";
+                $uploadOk = 0;
+            }
+
+            if (file_exists($target_file)) {
+                echo "This file already exists";
+                $uploadOk = 0;
+            }
+
+
+            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+                echo "Please choose an image that is either JPG, JPEG, or a PNG file.";
+                $uploadOk = 0;
+            }
+
+            if ($uploadOk == 0) {
+                echo "There was an issue with your file";
+            } else {
+                if (move_uploaded_file($_FILES['user_pfp']["tmp_name"], $target_file)) {
+                    echo "The file was uploaded.";
+
+                }
+            }
+
+
+        }
+
+
+
+
+        if ((($target_file != NULL) && ($uploadOk == 1)) || $target_file == NULL) {
+
+
+            $insert_user_info_query = "INSERT INTO `goblingizmos_users` (`user_id`, `first_name`, `last_name`, `username`, `password`, `access_level`, `user_email`, `user_pfp`, `user_bio`) VALUES (NULL, '" . $_POST['first_name'] . "', '" . $_POST['last_name'] . "', '" . $_POST['uname'] . "', '" . md5($_POST['password']) . "', '" . $userAccessLevel . "', '" . $_POST['user_email'] . "', " . ($target_file !== NULL ? "'" . $target_file . "'" : "NULL") . ", '" . $_POST['user_bio'] . "')";
+
+            //need to sanitize bio to allow for apostrophes
+            //I'm assuming everything else is that way too
+
+            $mysqli->query($insert_user_info_query);
+
+
+
+            header("Location: signIn.php");
+
+
+
+
+        } else if ($uploadOk == 0) {
+            //nothin.  It gives the error message
+        }
+    } else {
+
+        if (($killEmail || $killFirstName || $killLastName || $killPass || $killUsername) == 1) {
+
+            print "<p>No special characters allowed.  Please refrain from using the following symbols: '#$%^&*()[]<>;:/\'</p>";
+
+        }
+
+        if ($regExName == 0) {
+            print "<p>Please insert your first and last name starting with a capital letter</p>";
+        }
+
+        if ($regExPass == 0) {
+            print "<p>Please keep password under 50 characters, and refrain from special characters</p>";
+        }
+
+        if ($regExEmail == 0) {
+            print "<p>Please enter your email in the format: 'email@email.com'</p>";
+        }
+
+        if ($regExUsername == 0) {
+            print "<p>Please make sure your username is under 25 characters and refrains from using special characters.</p>";
+        }
+
+        print "<p>Your first name, last name, username, password, and email cannot be blank.  Please check that  your username is less that 25 characters, the password is less than 50 characters, and no special characters are used.</p>";
+
+    }
+
+
+
+
+
+}
