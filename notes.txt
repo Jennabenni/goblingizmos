@@ -6,7 +6,7 @@ Engineer notes hell yeah
 - Posting to correct category [done]
 - being able to view post [done]
 - being able to view account info of someone else (will need to edit previous DB) [done]
-- REGULAR EXPRESSIONS NEEDED [partially done][look below]
+- REGULAR EXPRESSIONS NEEDED [DONE]
 
 
 
@@ -16,6 +16,8 @@ Engineer notes hell yeah
 
 - I need to turn things in textarea and other input boxes to regular words
 they dont submit with apostrophes
+
+[DONE]
 
 ***************
 ***************
@@ -28,7 +30,7 @@ they dont submit with apostrophes
 - Bounties to search tab [can be done]
 - search bar
 - Bounty COLUMN in each category (Most recent 3)
-- Bounty COLUMN in each category (Most recent 3)
+
 
 
 - Community posts
@@ -49,7 +51,7 @@ they dont submit with apostrophes
 MINOR TASKS (BUT STILL NEEDED)
 
 - Need to copy and paste (and adjust) the posting info for each category (Autographs are blueprint)
-- Make that responsive
+- Make that responsive {done}
 - MAKE DUMMY POSTS (No more than 5 for each (ugh))
 - Community posts DB and connection
     - user_id
@@ -71,9 +73,9 @@ CSS EDITS
     (and we were taught not to do it the browser way because then we're letting the browser make decisions for us!)
     (I can do CSS)
 
-    - responsiveness
-    - Css edits on places where they ask you to log in (user profile)
-    - sign in button (just needs to be centered)
+    - responsiveness [done]
+    - Css edits on places where they ask you to log in (user profile) [done]
+    - sign in button (just needs to be centered) [done]
 
 
 

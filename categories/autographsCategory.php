@@ -82,9 +82,20 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
 
 
+
 }
 
+if (isset($_SESSION['access_level'])) {
 
+    $query_bounties = "SELECT post_id, goblingizmos_postsbounties.user_id, post_or_bounty, post_category, post_condition, post_boxCondition, post_price, post_location, post_description, post_img, post_sfw_nsfw, post_creation_date, goblingizmos_users.username, goblingizmos_users.user_pfp FROM `goblingizmos_postsbounties` INNER JOIN goblingizmos_users ON goblingizmos_postsbounties.user_id=goblingizmos_users.user_id ORDER BY post_id DESC";
+
+
+    $resultUserPartTwo = $mysqli->query($query_bounties);
+
+
+
+
+}
 
 
 
@@ -203,7 +214,48 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
             <div class="specificCatItem1">
                 <aside class="bountiesSection">
                     <h3>Bounties</h3>
-                    <div></div>
+                    <div class="bigBountyOnCat">
+                        <?php
+
+                        if (isset($_SESSION['access_level'])) {
+
+                            $bountyCounter = 0;
+
+                            while (($row3 = $resultUserPartTwo->fetch_array(MYSQLI_ASSOC))) {
+                                if (($row3['post_category'] == 'autographs') && ($row3['post_or_bounty'] == 'bounty')) {
+
+
+
+                                    print "<div class=\"boxesForEachBounty\">";
+                                    print "<a href=\"../search.php\" class=\"bountyClickStyle\">";
+                                    print "<div class=\"gridItemForBountyDisplayBox11\">" . "<p>" . $row3['post_description'] . "</p>" . "</div>";
+                                    //this always exists
+                                    if (!empty($row3['post_img'])) {
+                                        print "<div class=\"gridItemForBountyDisplayBox12\">" . "<img src=\"../" . $row3['post_img'] . "\">" . "</div>";
+                                        //doesn't always exist
+                                    }
+                                    print "</a>";
+                                    print "</div>";
+
+                                    $bountyCounter++;
+                                    if ($bountyCounter == 3) {
+                                        break;
+                                    }
+
+                                }
+
+                            }
+
+
+
+
+
+
+                        }
+
+                        ?>
+
+                    </div>
                 </aside>
 
             </div>
@@ -423,6 +475,13 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
 
 
+                } else if (!isset($_SESSION['logged_in'])) {
+                    print "<div class=\"signUpForms\">";
+                    print "<p>Please create an account with us to view these posts; It's free!</p>";
+
+                    //These were supposed to be available but I'm not sure
+                    //the fastest way to fix it
+                    print "</div>";
                 }
 
 
