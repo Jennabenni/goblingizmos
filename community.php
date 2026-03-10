@@ -419,85 +419,78 @@ $resultCompost = $mysqli->query($query_compost);
 
 
 
-
-
-
-
-
-
-
-
-
-
                     <?php
 
-                    if ($resultCompost) {
-                        while (($row2 = $resultCompost->fetch_array(MYSQLI_ASSOC))) {
+                    if (isset($_SESSION['logged_in'])) {
+                        //I don't have time to delve into this
+                    
+                        if ($resultCompost) {
+                            while (($row2 = $resultCompost->fetch_array(MYSQLI_ASSOC))) {
 
 
 
 
-                            print "<div class=\"boxesForEachPost\">";
+                                print "<div class=\"boxesForEachPost\">";
 
 
 
-                            print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row['username'] . "</p>" . "</div>";
-                            print "<div class=\"gridItemForPostBox4\">";
+                                print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row['username'] . "</p>" . "</div>";
+                                print "<div class=\"gridItemForPostBox4\">";
 
-                            print "<div class=\"gridItemForPostBox5\">" . "<p>" . $row2['compost_category'] . "</p>" . "</div>";
-
-
-                            print "<a href=\"/userProfileView.php?user_id=" . $row2['user_id'] . "\">";
-                            print "<img src=\"" . $row['user_pfp'] . "\" alt=\"profile image of user\">";
-                            print "</a>";
+                                print "<div class=\"gridItemForPostBox5\">" . "<p>" . $row2['compost_category'] . "</p>" . "</div>";
 
 
-
-                            print "</div>";
+                                print "<a href=\"/userProfileView.php?user_id=" . $row2['user_id'] . "\">";
+                                print "<img src=\"" . $row['user_pfp'] . "\" alt=\"profile image of user\">";
+                                print "</a>";
 
 
 
+                                print "</div>";
 
 
-                            print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2['compost_description'] . "</p>" . "</div>";
-                            //this always exists
+
+
+
+                                print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2['compost_description'] . "</p>" . "</div>";
+                                //this always exists
                     
 
 
 
-                            if (!empty($row2['compost_img'])) {
-                                print "<div class=\"gridItemForPostBox12\">" . "<img src=\"" . $row2['compost_img'] . "\">" . "</div>";
-                                //doesn't always exist
-                            }
+                                if (!empty($row2['compost_img'])) {
+                                    print "<div class=\"gridItemForPostBox12\">" . "<img src=\"" . $row2['compost_img'] . "\">" . "</div>";
+                                    //doesn't always exist
+                                }
 
-                            if (!empty($row2['post_sfw_nsfw'])) {
-                                print "<div class=\"gridItemForPostBox13\">" . "<p>" . $row2['compost_sfw_nsfw'] . "</p>" .
-                                    "</div>";
-                                //doesn't always exist
-                            }
+                                if (!empty($row2['post_sfw_nsfw'])) {
+                                    print "<div class=\"gridItemForPostBox13\">" . "<p>" . $row2['compost_sfw_nsfw'] . "</p>" .
+                                        "</div>";
+                                    //doesn't always exist
+                                }
 
 
-                            print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row2['compost_creation_date'] . "</p>" . "</div>";
+                                print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row2['compost_creation_date'] . "</p>" . "</div>";
 
-                            //always exists
+                                //always exists
                     
 
-                            print "<div class=\"gridItemForPostBoxViewPost\">";
-                            //print "<a href=\"../categories/postView.php?compost_id=" . $row2['compost_id'] . "\"\">View Post</a>";
-                            print "</div>";
+                                print "<div class=\"gridItemForPostBoxViewPost\">";
+                                //print "<a href=\"../categories/postView.php?compost_id=" . $row2['compost_id'] . "\"\">View Post</a>";
+                                print "</div>";
 
-                            print "</div>";
+                                print "</div>";
+
+
+
+                            }
+
 
 
 
                         }
 
-
-
-
                     }
-
-
                     ?>
 
 
