@@ -197,6 +197,7 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
             </div>
         </div>
 
+        <!--
         <div class="FAQ">
 
             <div class="FAQHeading">
@@ -262,6 +263,7 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 
 
         </div>
+-->
 
     </div>
 
