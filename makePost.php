@@ -272,7 +272,8 @@ if (!isset($_SESSION['logged_in'])) {
             $target_file = NULL;
             if (!empty($_FILES['post_img']) && $_FILES['post_img']['error'] === UPLOAD_ERR_OK) {
 
-                $target_dir = "/home/ad/je686804/public_html/goblingizmos/uploads/";
+                //$target_dir = "/home/ad/je686804/public_html/goblingizmos/uploads/";
+                $target_dir = "uploads/";
 
 
                 if (!is_dir($target_dir)) {
@@ -774,7 +775,7 @@ if (!isset($_SESSION['logged_in'])) {
                 print "<img src=\"img/image.png\" class=\"iconImg\" alt=\"small picture box icon\"> ";
                 print "<label for=\"imagePost\"></label>";
                 print "<input type=\"file\" id=\"imagePost\" name='post_img'>";
-                print " </div>";
+                print "</div>";
 
                 /*
                                 print "<input type=\"text\" id='post_img' placeholder=\"Temp img placeholder\" name='post_img'>";

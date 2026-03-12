@@ -1205,6 +1205,7 @@ img {
         cursor: pointer;
     }
 
+    /*
     .addBoxPost input[type="file"] {
         display: none;
     }
@@ -1216,7 +1217,7 @@ img {
     #postItem3 input[type="radio"] {
         cursor: pointer;
     }
-
+*/
     #postItem4 .goblinButtons {
         padding-top: 4px;
         padding-bottom: 4px;
@@ -2302,6 +2303,7 @@ img {
         cursor: pointer;
     }
 
+    /*
     .addBoxPost input[type="file"] {
         display: none;
     }
@@ -2312,7 +2314,7 @@ img {
 
     #postItem3 input[type="radio"] {
         cursor: pointer;
-    }
+    }*/
 
     #postItem4 .goblinButtons {
         padding-top: 4px;
@@ -3339,6 +3341,7 @@ img {
         cursor: pointer;
     }
 
+    /*
     .addBoxPost input[type="file"] {
         display: none;
     }
@@ -3350,7 +3353,7 @@ img {
 
     #postItem3 input[type="radio"] {
         cursor: pointer;
-    }
+    }*/
 
     #postItem4 .goblinButtons {
         padding-top: 4px;
