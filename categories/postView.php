@@ -6,11 +6,11 @@ session_start();
 /*DO NOT DELETE THESE */
 
 //include("../db-connect.php");
-include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
-//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
 
@@ -151,7 +151,12 @@ if (isset($_GET['post_id'])) {
                 print "<div class=\"boxesForEachPost\">";
                 print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row2['username'] . "</p>" . "</div>";
                 print "<div class=\"gridItemForPostBox4\">";
-                print "<img src=\"../" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
+                if ($row2['user_pfp'] != NULL) {
+                    print "<img src=\"../" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
+                } else if ($row2['user_pfp'] == NULL) {
+                    print "<img src=\"../uploads/goblin.png\" alt=\"goblin image of user\">";
+
+                }
                 print "</div>";
                 if (!empty($row2['post_price'])) {
                     print "<div class=\"gridItemForPostBox9\">" . "<p>$" . $row2['post_price'] . "</p>" . "</div>";

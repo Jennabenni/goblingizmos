@@ -11,11 +11,11 @@ error_reporting(E_ALL);
 /*DO NOT DELETE THESE */
 
 //include("../db-connect.php");
-include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
-//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
 
@@ -47,7 +47,23 @@ if (isset($_SESSION['logged_in'])) {
 
 
 
-    $query_bounties = "SELECT post_id, goblingizmos_postsbounties.user_id, post_or_bounty, post_category, post_condition, post_boxCondition, post_price, post_location, post_description, post_img, post_sfw_nsfw, post_creation_date, goblingizmos_users.username, goblingizmos_users.user_pfp FROM `goblingizmos_postsbounties` INNER JOIN goblingizmos_users ON goblingizmos_postsbounties.user_id=goblingizmos_users.user_id ORDER BY post_id DESC";
+    $query_bounties = "SELECT post_id,
+    goblingizmos_postsbounties.user_id,
+    post_or_bounty,
+    post_category,
+    post_condition,
+    post_boxCondition,
+    post_price,
+    post_location,
+    post_description,
+    post_img,
+    post_sfw_nsfw,
+    post_creation_date,
+    goblingizmos_users.username,
+    goblingizmos_users.user_pfp FROM `goblingizmos_postsbounties`
+    INNER JOIN goblingizmos_users
+    ON goblingizmos_postsbounties.user_id = goblingizmos_users.user_id
+    ORDER BY post_id DESC";
 
 
     $resultBounties = $mysqli->query($query_bounties);
@@ -100,10 +116,9 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
     $sort_by = isset($_GET['sort']) ? trim($_GET['sort']) : 'newest';
 
     // base query, selects from database
-    // all of these are placeholders names for database stuff; btw, description is named like that cuz php already uses description for other stuff
-    // im also assuming each bounty will have an id. most of this is placeholder stuff anyways so most of it may get changed
 
     //Not sure what to make 'Title'
+    // I realized we had no title section (oops) so I changed them all to post_description
 
     /*All IDS in table
                 post_id
@@ -123,25 +138,32 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
 
 
     $sql = "SELECT
-    post_id,
-    title,
+    goblingizmos_postsbounties.post_id,
+    goblingizmos_postsbounties.user_id,
+    post_or_bounty,
     post_description,
     post_category,
     post_price,
-    user_id,
-    post_img
-    FROM `goblingizmos_postsbounties`
+    post_img,
+    post_sfw_nsfw,
+    post_creation_date,
+    goblingizmos_users.username,
+    goblingizmos_users.user_pfp
+    FROM goblingizmos_postsbounties
+    INNER JOIN goblingizmos_users
+    ON goblingizmos_postsbounties.user_id = goblingizmos_users.user_id
     WHERE 1=1";
     // 1=1 is so the query doesn't kill itself. nothingburger code that's loadbearing so the AND clause works in sql
 
     // $mysqli is a placeholder and should be replaced with the actual db connection
+    // wait i just realized we used the name $mysqli in the db connect file like 2 semesters ago so the $mysqli variable should work fine i think
 
     // searches for query in title OR desc of bounty
     if (!empty($search_query)) {
         // prevents sql attacks
         $safe_query = $mysqli->real_escape_string($search_query);
-        // 'title' is whatever the title for the bounties will be called in the database, and same with bountydescription for bounties
-        $sql .= " AND (title LIKE '%$safe_query%' OR post_description LIKE '%$safe_query%')";
+        // changed 'title' to post_description
+        $sql .= " AND post_description LIKE '%$safe_query%'";
     }
 
     // category filter
@@ -164,10 +186,10 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
             $sql .= " ORDER BY post_price ASC";
             break;
         case 'a_z':
-            $sql .= " ORDER BY title ASC";
+            $sql .= " ORDER BY post_description ASC";
             break;
         case 'z_a':
-            $sql .= " ORDER BY title DESC";
+            $sql .= " ORDER BY post_description DESC";
             break;
         default:
             $sql .= " ORDER BY post_creation_date DESC";
@@ -320,7 +342,7 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
                         <div>
                             <!--Category drop down-->
                             <!-- + persistent filter -->
-                            <select name="category" id="category" class="searchBarItems">
+                            <select name="post_category" id="category" class="searchBarItems">
 
                                 <option value="autographs" <?php echo (isset($_GET['post_category']) && $_GET['post_category'] === 'autographs') ? 'selected' : ''; ?>>Autographs</option>
 
@@ -395,43 +417,65 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
 
             <div id="searchGridItem4">
                 <?php
+
+                $displayRows = [];
+
+                if ($search_made) {
+
+                    $displayRows = $results;
+                } else {
+
+                    if (isset($resultBounties)) {
+                        while ($row2 = $resultBounties->fetch_array(MYSQLI_ASSOC)) {
+
+                            $displayRows[] = $row2;
+                        }
+                    }
+                }
+
                 if (isset($_SESSION['access_level'])) {
 
-                    while (($row2 = $resultBounties->fetch_array(MYSQLI_ASSOC))) {
-                        if (($row2['post_or_bounty'] == 'bounty')) {
+                    if (empty($displayRows) && $search_made) {
+                        print "<p>No bounties found for your search.</p>";
+                    }
+
+                    foreach ($displayRows as $row2) {
+                        if ($row2['post_or_bounty'] == 'bounty') {
 
                             print "<div class=\"boxesForEachPost\">";
                             print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row2['username'] . "</p>" . "</div>";
                             print "<div class=\"gridItemForPostBox4\">";
-                            print "<a href=\"userProfileView.php?user_id=" . $row2['user_id'] . "\">";
-                            print "<img src=\"" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
-                            print "</a>";
-                            print "</div>";
-                            if (!empty($row2['post_price'])) {
-                                print "<div class=\"gridItemForPostBox9\">" . "<p>$" . $row2['post_price'] . "</p>" . "</div>";
+                            if ($row2['user_pfp'] != NULL) {
+                                print "<img src=\"" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
+                            } else if ($row2['user_pfp'] == NULL) {
+                                print "<img src=\"uploads/goblin.png\" alt=\"goblin image of user\">";
 
                             }
-                            print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2['post_description'] . "</p>" . "</div>";
-                            //this always exists
+                            print "</a>";
+                            print "</div>";
+
+                            if (!empty($row2['post_price'])) {
+                                print "<div class=\"gridItemForPostBox9\"><p>$" . $row2['post_price'] . "</p></div>";
+                            }
+
+                            print "<div class=\"gridItemForPostBox11\"><p>" . $row2['post_description'] . "</p></div>";
+                            // this always exists
                 
                             if (!empty($row2['post_img'])) {
-                                print "<div class=\"gridItemForPostBox12\">" . "<img src=\"" . $row2['post_img'] . "\">" . "</div>";
-                                //doesn't always exist
+                                print "<div class=\"gridItemForPostBox12\"><img src=\"" . $row2['post_img'] . "\"></div>";
+                                // doesn't always exist
                             }
 
                             if (!empty($row2['post_sfw_nsfw'])) {
-                                print "<div class=\"gridItemForPostBox13\">" . "<p>" . $row2['post_sfw_nsfw'] . "</p>" .
-                                    "</div>";
-                                //doesn't always exist
+                                print "<div class=\"gridItemForPostBox13\"><p>" . $row2['post_sfw_nsfw'] . "</p></div>";
+                                // doesn't always exist
                             }
 
-                            print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row2['post_creation_date'] . "</p>" . "</div>";
-
-                            //always exists
+                            print "<div class=\"gridItemForPostBox14\"><p>" . $row2['post_creation_date'] . "</p></div>";
+                            // always exists
                 
-
                             print "<div class=\"gridItemForPostBoxViewPost\">";
-                            print "<a href=\"categories/postView.php?post_id=" . $row2['post_id'] . "\"\">View Post</a>";
+                            print "<a href=\"categories/postView.php?post_id=" . $row2['post_id'] . "\">View Post</a>";
                             print "</div>";
 
                             print "</div>";

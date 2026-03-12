@@ -47,16 +47,16 @@ session_start();
 /*DO NOT DELETE THESE */
 
 //include("../db-connect.php");
-include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
 
-//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+/*ini_set('display_errors', 1);
+error_reporting(E_ALL);*/
 
 
 //change location for when on the server, these are my (Jenna's) credentials

@@ -6,11 +6,11 @@ session_start();
 /*DO NOT DELETE THESE */
 
 //include("db-connect.php");
-include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
-//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
 
@@ -152,8 +152,13 @@ if (isset($_GET['user_id'])) {
 
                 print "<div>";
 
-                print "<img src=\"" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
 
+                if ($row2['user_pfp'] != NULL) {
+                    print "<img src=\"" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
+                } else if ($row2['user_pfp'] == NULL) {
+                    print "<img src=\"uploads/goblin.png\" alt=\"goblin image of user\">";
+
+                }
 
                 print "<p>" . $row2['user_bio'] . "</p>";
                 print "<p>" . $row2['user_email'] . "</p>";

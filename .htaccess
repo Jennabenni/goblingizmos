@@ -1,0 +1,4 @@
+<IfModule mod_php.c>
+    php_value upload_tmp_dir /home/ad/je686804/public_html/goblingizmos/tmp/
+    php_value sys_temp_dir /home/ad/je686804/public_html/goblingizmos/tmp/
+</IfModule>

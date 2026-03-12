@@ -6,11 +6,11 @@ session_start();
 /*DO NOT DELETE THESE */
 
 //include("../db-connect.php");
-include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
-//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
 
@@ -26,17 +26,29 @@ error_reporting(E_ALL);
 
 if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 
-
     $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
 
 
     //honestly all of this could be used
 
     $result = $mysqli->query($query_user_info_on_pages);
+}
 
 
+
+if (isset($_SESSION['logged_in'])) {
+
+
+    $queryInfoForOtherComposts = "SELECT * FROM `goblingizmos_users`";
+
+
+    $resultQueryForOthers = $mysqli->query($queryInfoForOtherComposts);
 
 }
+
+
+
+
 
 
 
@@ -177,25 +189,6 @@ $query_compost = "SELECT goblingizmos_community.user_id, compost_id, compost_img
 
 
 $resultCompost = $mysqli->query($query_compost);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
 
 
@@ -323,65 +316,67 @@ $resultCompost = $mysqli->query($query_compost);
                 print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . "\" enctype=\"multipart/form-data\">";
                 ?>
 
-                <div id="postItem1">
+                <div class="postTopRow">
+                    <div id="postItem1">
 
+                    </div>
+                    <div id="postItem2">
+                        <textarea name="compost_description" placeholder="Type your post..." rows="3"
+                            columns="30"></textarea>
+                    </div>
                 </div>
-                <div id="postItem2">
-                    <textarea name="compost_description" rows="5" columns="30"></textarea>
-                </div>
 
 
+                <div class="postBottomRow">
+                    <div id="postItem3">
+                        <div class='addBoxPost'>
+                            <img src="img/image.png" class="iconImg" alt="small picture box icon"
+                                onclick="document.getElementById('imagePost').click()">
+                            <label for="imagePost"></label>
+                            <input type="file" id="imagePost" name='compost_img'>
+                        </div>
 
-                <div id="postItem3">
-                    <div class='addBoxPost'>
-                        <img src="img/image.png" class="iconImg" alt="small picture box icon">
-                        <label for="imagePost"></label>
-                        <input type="file" id="imagePost" name='compost_img'>
+
+                        <select name="compost_category" id="category">
+                            <option value="autographs">Autographs</option>
+                            <option value="books">Books</option>
+                            <option value="caps">Bottle Caps</option>
+                            <option value="cans">Cans</option>
+                            <option value="charms">Charms</option>
+                            <option value="coins">Coins</option>
+                            <option value="figures">Figures</option>
+                            <option value="jewelry">Jewelry</option>
+                            <option value="magnets">Magnets</option>
+                            <option value="minerals">Minerals</option>
+                            <option value="perfume">Perfume</option>
+                            <option value="plates">Plates</option>
+                            <option value="cards">Playing Cards</option>
+                            <option value="plushies">Plushies</option>
+                            <option value="prints">Prints</option>
+                            <option value="stamps">Stamps</option>
+                            <option value="tickets">Tickets</option>
+                            <option value="games">Video Games</option>
+                            <option value="vinyls">Vinyls</option>
+                            <option value="other">Other</option>
+
+
+                        </select>
+
+                        <label for="sfw">SFW</label>
+                        <input type="radio" name="compost_sfw_nsfw" value="SFW">
+
+                        <label for="nsfw">NSFW</label>
+                        <input type="radio" name="compost_sfw_nsfw" value="NSFW">
                     </div>
 
+                    <div id="postItem4">
+                        <!--<img src="img/sendArrow.png" class="comIcons" alt="Post Bounty">-->
+                        <button type="submit" class="goblinButtons" name="submit">Post</button>
+                    </div>
 
+                    </form>
 
-                    <label for="category">Category</label>
-
-                    <select name="compost_category" id="category">
-                        <option value="autographs">Autographs</option>
-                        <option value="books">Books</option>
-                        <option value="caps">Bottle Caps</option>
-                        <option value="cans">Cans</option>
-                        <option value="charms">Charms</option>
-                        <option value="coins">Coins</option>
-                        <option value="figures">Figures</option>
-                        <option value="jewelry">Jewelry</option>
-                        <option value="magnets">Magnets</option>
-                        <option value="minerals">Minerals</option>
-                        <option value="perfume">Perfume</option>
-                        <option value="plates">Plates</option>
-                        <option value="cards">Playing Cards</option>
-                        <option value="plushies">Plushies</option>
-                        <option value="prints">Prints</option>
-                        <option value="stamps">Stamps</option>
-                        <option value="tickets">Tickets</option>
-                        <option value="games">Video Games</option>
-                        <option value="vinyls">Vinyls</option>
-                        <option value="other">Other</option>
-
-
-                    </select>
-
-                    <label for="sfw">SFW</label>
-                    <input type="radio" name="compost_sfw_nsfw" value="SFW">
-
-                    <label for="nsfw">NSFW</label>
-                    <input type="radio" name="compost_sfw_nsfw" value="NSFW">
                 </div>
-
-                <div id="postItem4">
-                    <!--<img src="img/sendArrow.png" class="comIcons" alt="Post Bounty">-->
-                    <button type="submit" class="goblinButtons" name="submit">Post</button>
-                </div>
-
-                </form>
-
             </div>
 
 
@@ -425,7 +420,7 @@ $resultCompost = $mysqli->query($query_compost);
                         //I don't have time to delve into this
                     
                         if ($resultCompost) {
-                            while (($row2 = $resultCompost->fetch_array(MYSQLI_ASSOC))) {
+                            while (($row2 = $resultCompost->fetch_array(MYSQLI_ASSOC)) && $row4 = $resultQueryForOthers->fetch_array(MYSQLI_ASSOC)) {
 
 
 
@@ -434,14 +429,19 @@ $resultCompost = $mysqli->query($query_compost);
 
 
 
-                                print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row['username'] . "</p>" . "</div>";
+                                print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row4['username'] . "</p>" . "</div>";
                                 print "<div class=\"gridItemForPostBox4\">";
 
                                 print "<div class=\"gridItemForPostBox5\">" . "<p>" . $row2['compost_category'] . "</p>" . "</div>";
 
 
-                                print "<a href=\"/userProfileView.php?user_id=" . $row2['user_id'] . "\">";
-                                print "<img src=\"" . $row['user_pfp'] . "\" alt=\"profile image of user\">";
+                                print "<a href=\"userProfileView.php?user_id=" . $row4['user_id'] . "\">";
+                                if ($row4['user_pfp'] != NULL) {
+                                    print "<img src=\"" . $row4['user_pfp'] . "\" alt=\"profile image of user\">";
+                                } else if ($row4['user_pfp'] == NULL) {
+                                    print "<img src=\"uploads/goblin.png\" alt=\"goblin image of user\">";
+
+                                }
                                 print "</a>";
 
 

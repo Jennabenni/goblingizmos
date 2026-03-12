@@ -14,12 +14,12 @@ error_reporting(E_ALL);
 /*DO NOT DELETE THESE */
 
 //include("../db-connect.php");
-include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
 
-//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
 
@@ -216,37 +216,102 @@ if (!isset($_SESSION['logged_in'])) {
             //$target_dir = "/home/ad/je686804/public_html/goblingizmos/uploads/";
             //uhhh remote??
 
+            /*
+                        $target_file = NULL;
+                        if (!empty($_FILES['post_img']) && $_FILES['post_img']['error'] === UPLOAD_ERR_OK) {
+                            $target_dir = "uploads/";
+                            //$target_dir = __DIR__ . "/uploads/";
+                            //$target_dir = "/home/ad/username/public_html/projectname/uploads";
+
+                            $target_file = $target_dir . basename(str_replace(' ', '_', $_FILES['post_img']["name"]));
+                            $uploadOk = 1;
+                            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+
+
+                            //checks if file is an image or if its fake (whatever that means)
+                            if (!empty($_FILES['post_img'])) {
+                                $check = getimagesize($_FILES["post_img"]["tmp_name"]);
+                                if ($check !== false) {
+                                    echo "File is an image - " . $check["mime"] . ".";
+                                    $uploadOk = 1;
+                                } else {
+                                    echo "File is not an image.";
+                                    $uploadOk = 0;
+                                }
+                            }
+                            if ($_FILES['post_img']["size"] > 800000) {
+                                echo "Your file is too large.";
+                                $uploadOk = 0;
+                            }
+
+                            if (file_exists($target_file)) {
+                                echo "This file already exists";
+                                $uploadOk = 0;
+                            }
+
+
+                            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+                                echo "Please choose an image that is either JPG, JPEG, or a PNG file.";
+                                $uploadOk = 0;
+                            }
+
+                            if ($uploadOk == 0) {
+                                echo "There was an issue with your file";
+                            } else {
+                                if (move_uploaded_file($_FILES['post_img']["tmp_name"], $target_file)) {
+                                    echo "The file was uploaded.";
+
+                                }
+                            }
+
+
+                        }*/
+
 
             $target_file = NULL;
             if (!empty($_FILES['post_img']) && $_FILES['post_img']['error'] === UPLOAD_ERR_OK) {
-                $target_dir = "uploads/";
-                $target_file = $target_dir . basename(str_replace(' ', '_', $_FILES['post_img']["name"]));
+
+                $target_dir = "/home/ad/je686804/public_html/goblingizmos/uploads/";
+
+
+                if (!is_dir($target_dir)) {
+                    if (!mkdir($target_dir, 0777, true)) {
+                        echo "Error: Could not create uploads directory";
+                        exit;
+                    }
+                }
+
+                // Verify directory is writable
+                if (!is_writable($target_dir)) {
+                    echo "Error: Uploads directory is not writable. ";
+                    exit;
+                }
+
+                $filename = basename(str_replace(' ', '_', $_FILES['post_img']["name"]));
+                $target_file = $target_dir . $filename;
                 $uploadOk = 1;
                 $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
 
-
-                //checks if file is an image or if its fake (whatever that means)
-                if (!empty($_FILES['post_img'])) {
-                    $check = getimagesize($_FILES["post_img"]["tmp_name"]);
-                    if ($check !== false) {
-                        echo "File is an image - " . $check["mime"] . ".";
-                        $uploadOk = 1;
-                    } else {
-                        echo "File is not an image.";
-                        $uploadOk = 0;
-                    }
+                $check = getimagesize($_FILES["post_img"]["tmp_name"]);
+                if ($check === false) {
+                    echo "File is not an image.";
+                    $uploadOk = 0;
+                } else {
+                    echo "File is an image - " . $check["mime"] . ". ";
+                    $uploadOk = 1;
                 }
+
                 if ($_FILES['post_img']["size"] > 800000) {
                     echo "Your file is too large.";
                     $uploadOk = 0;
                 }
 
                 if (file_exists($target_file)) {
-                    echo "This file already exists";
+                    echo "This file already exists. ";
                     $uploadOk = 0;
                 }
-
 
                 if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
                     echo "Please choose an image that is either JPG, JPEG, or a PNG file.";
@@ -257,12 +322,13 @@ if (!isset($_SESSION['logged_in'])) {
                     echo "There was an issue with your file";
                 } else {
                     if (move_uploaded_file($_FILES['post_img']["tmp_name"], $target_file)) {
-                        echo "The file was uploaded.";
-
+                        echo "The file was uploaded successfully.";
+                    } else {
+                        echo "Error: Failed to move uploaded file.";
                     }
                 }
-
-
+            } else if (!empty($_FILES['post_img'])) {
+                echo "Upload error code: " . $_FILES['post_img']['error'];
             }
 
 
@@ -295,7 +361,7 @@ if (!isset($_SESSION['logged_in'])) {
 
 
 
-                $insert_post_query = "INSERT INTO `goblingizmos_postsbounties` (`post_id`, `user_id`, `post_or_bounty`, `post_category`, `post_condition`, `post_boxCondition`, `post_price`, `post_location`, `post_description`,`post_img`, `post_sfw_nsfw`, `post_creation_date`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+                $insert_post_query = "INSERT INTO `goblingizmos_postsbounties` (`user_id`, `post_or_bounty`, `post_category`, `post_condition`, `post_boxCondition`, `post_price`, `post_location`, `post_description`,`post_img`, `post_sfw_nsfw`, `post_creation_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
 
                 $stmt = $mysqli->prepare($insert_post_query);
                 $stmt->bind_param(

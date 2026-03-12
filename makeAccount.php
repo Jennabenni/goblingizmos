@@ -5,8 +5,8 @@
 session_start();
 
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+/*ini_set('display_errors', 1);
+error_reporting(E_ALL);*/
 
 
 
@@ -14,11 +14,11 @@ error_reporting(E_ALL);
 //need this on everything, dont forget closing tag at bottom under html
 
 //include("../db-connect.php");
-include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
-//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
 //This will be Inserting into the DB
@@ -156,8 +156,8 @@ if (!isset($_SESSION['logged_in'])) {
                     $userAccessLevel = "user";
 
                     $insert_user_info_query = "INSERT INTO `goblingizmos_users`
-                    (`user_id`, `first_name`, `last_name`, `username`, `password`, `access_level`, `user_email`, `user_pfp`, `user_bio`)
-                    VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    (`first_name`, `last_name`, `username`, `password`, `access_level`, `user_email`, `user_pfp`, `user_bio`)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
                     $stmt = $mysqli->prepare($insert_user_info_query);
                     $stmt->bind_param(
