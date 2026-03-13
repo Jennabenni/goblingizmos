@@ -3,10 +3,10 @@ session_start();
 //make sure to have the closer at the end of html
 
 
-
+/*
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
+*/
 
 /*DO NOT DELETE THESE */
 
