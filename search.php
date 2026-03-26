@@ -19,9 +19,8 @@ include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
 
-
-//Will need to ask some stuff from Amy since I couldn't merge the same as usual
-
+//ini_set('display_errors', 1);
+//error_reporting(E_ALL);
 
 
 
@@ -75,26 +74,6 @@ if (isset($_SESSION['logged_in'])) {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -445,12 +424,8 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
                             print "<div class=\"boxesForEachPost\">";
                             print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row2['username'] . "</p>" . "</div>";
                             print "<div class=\"gridItemForPostBox4\">";
-                            if ($row2['user_pfp'] != NULL) {
-                                print "<img src=\"" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
-                            } else if ($row2['user_pfp'] == NULL) {
-                                print "<img src=\"uploads/goblin.png\" alt=\"goblin image of user\">";
-
-                            }
+                            print "<a href=\"userProfileView.php?user_id=" . $row2['user_id'] . "\">";
+                            print "<img src=\"" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
                             print "</a>";
                             print "</div>";
 

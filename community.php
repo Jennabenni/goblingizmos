@@ -24,31 +24,39 @@ error_reporting(E_ALL);
 
 
 
-if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 
-    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
+/* FIX: initialize row so it exists even if no query runs */
+$row = null;
+
+if (
+    isset($_SESSION['logged_in']) &&
+    $_SESSION['logged_in'] === true &&
+    isset($_SESSION['user_id'])
+) {
+
+
+    /* FIX: use prepared statement instead of direct SQL concatenation */
+    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = ?";
 
 
     //honestly all of this could be used
 
-    $result = $mysqli->query($query_user_info_on_pages);
+    $stmt = $mysqli->prepare($query_user_info_on_pages);
+
+    if (!$stmt) {
+        die("Prepare failed: " . $mysqli->error);
+    }
+
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_array(MYSQLI_ASSOC);
+    }
+
+    $stmt->close();
 }
-
-
-
-if (isset($_SESSION['logged_in'])) {
-
-
-    $queryInfoForOtherComposts = "SELECT * FROM `goblingizmos_users`";
-
-
-    $resultQueryForOthers = $mysqli->query($queryInfoForOtherComposts);
-
-}
-
-
-
-
 
 
 
@@ -56,6 +64,34 @@ $comSFWNSFW = NULL;
 $compostCategory = "";
 $compostLikes = 0;
 
+/* FIX: initialize variables so they always exist */
+$compostCategoryOptionSelected = NULL;
+$compostSfwNsfwOptionSelected = NULL;
+$compostDescription = "";
+
+/* FIX: use a whitelist array instead of a long chain of if/else statements */
+$allowedCategories = array(
+    "autographs",
+    "books",
+    "caps",
+    "cans",
+    "charms",
+    "coins",
+    "figures",
+    "jewelry",
+    "magnets",
+    "minerals",
+    "perfume",
+    "plates",
+    "cards",
+    "plushies",
+    "prints",
+    "stamps",
+    "tickets",
+    "games",
+    "vinyls",
+    "other"
+);
 
 
 
@@ -64,60 +100,28 @@ $compostLikes = 0;
 
 if (isset($_POST['submit'])) {
 
-    if (isset($_SESSION['logged_in']) && (isset($_POST['submit']))) {
+    if (
+        isset($_SESSION['logged_in']) &&
+        $_SESSION['logged_in'] === true &&
+        isset($_POST['submit'])
+    ) {
 
-        $compostCategory = $_POST['compost_category'];
+        $compostCategory = $_POST['compost_category'] ?? "";
+        $compostDescription = trim($_POST['compost_description'] ?? "");
 
-        if ($compostCategory == 'autographs') {
-            $compostCategoryOptionSelected = "autographs";
-        } else if ($compostCategory == 'books') {
-            $compostCategoryOptionSelected = "books";
-        } else if ($compostCategory == 'caps') {
-            $compostCategoryOptionSelected = "caps";
-        } else if ($compostCategory == 'cans') {
-            $compostCategoryOptionSelected = "cans";
-        } else if ($compostCategory == 'charms') {
-            $compostCategoryOptionSelected = "charms";
-        } else if ($compostCategory == 'coins') {
-            $compostCategoryOptionSelected = "coins";
-        } else if ($compostCategory == 'figures') {
-            $compostCategoryOptionSelected = "figures";
-        } else if ($compostCategory == 'jewelry') {
-            $compostCategoryOptionSelected = "jewelry";
-        } else if ($compostCategory == 'magnets') {
-            $compostCategoryOptionSelected = "magnets";
-        } else if ($compostCategory == 'minerals') {
-            $compostCategoryOptionSelected = "minerals";
-        } else if ($compostCategory == 'perfume') {
-            $compostCategoryOptionSelected = "perfume";
-        } else if ($compostCategory == 'plates') {
-            $compostCategoryOptionSelected = "plates";
-        } else if ($compostCategory == 'cards') {
-            $compostCategoryOptionSelected = "cards";
-        } else if ($compostCategory == 'plushies') {
-            $compostCategoryOptionSelected = "plushies";
-        } else if ($compostCategory == 'prints') {
-            $compostCategoryOptionSelected = "prints";
-        } else if ($compostCategory == 'stamps') {
-            $compostCategoryOptionSelected = "stamps";
-        } else if ($compostCategory == 'tickets') {
-            $compostCategoryOptionSelected = "tickets";
-        } else if ($compostCategory == 'games') {
-            $compostCategoryOptionSelected = "games";
-        } else if ($compostCategory == 'vinyls') {
-            $compostCategoryOptionSelected = "vinyls";
-        } else if ($compostCategory == 'other') {
-            $compostCategoryOptionSelected = "other";
+        /* FIX: validate category using whitelist */
+        if (in_array($compostCategory, $allowedCategories, true)) {
+            $compostCategoryOptionSelected = $compostCategory;
         }
 
         $comSFWNSFW = $_POST['compost_sfw_nsfw'] ?? NULL;
 
         if (!isset($_POST['compost_sfw_nsfw'])) {
             $compostSfwNsfwOptionSelected = NULL;
-        } else if ($comSFWNSFW == 'sfw') {
-            $compostSfwNsfwOptionSelected = "sfw";
-        } else if ($comSFWNSFW == 'nsfw') {
-            $compostSfwNsfwOptionSelected = "nsfw";
+        } else if ($comSFWNSFW == 'SFW') {
+            $compostSfwNsfwOptionSelected = "SFW";
+        } else if ($comSFWNSFW == 'NSFW') {
+            $compostSfwNsfwOptionSelected = "NSFW";
         }
 
         $target_file = NULL;
@@ -125,7 +129,15 @@ if (isset($_POST['submit'])) {
 
         if (!empty($_FILES['compost_img']) && $_FILES['compost_img']['error'] === UPLOAD_ERR_OK) {
             $target_dir = "uploads/";
-            $target_file = $target_dir . basename(str_replace(' ', '_', $_FILES['compost_img']["name"]));
+
+            /* FIX: create uploads folder if it does not exist */
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0777, true);
+            }
+
+            /* FIX: give uploads unique filenames so duplicate names do not collide */
+            $clean_file_name = str_replace(' ', '_', basename($_FILES['compost_img']["name"]));
+            $target_file = $target_dir . uniqid() . "_" . $clean_file_name;
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
             $check = getimagesize($_FILES["compost_img"]["tmp_name"]);
@@ -136,11 +148,6 @@ if (isset($_POST['submit'])) {
 
             if ($_FILES['compost_img']["size"] > 800000) {
                 echo "Your file is too large.";
-                $uploadOk = 0;
-            }
-
-            if (file_exists($target_file)) {
-                echo "This file already exists";
                 $uploadOk = 0;
             }
 
@@ -158,23 +165,39 @@ if (isset($_POST['submit'])) {
             }
         }
 
-        if ((($target_file != NULL) && ($uploadOk == 1)) || $target_file == NULL) {
+        /* FIX: require a valid category and non-empty description before insert */
+        if (
+            !empty($compostCategoryOptionSelected) &&
+            !empty($compostDescription) &&
+            ((($target_file != NULL) && ($uploadOk == 1)) || $target_file == NULL)
+        ) {
 
             $insert_post_query = "INSERT INTO `goblingizmos_community` (`user_id`, `compost_img`, `compost_category`, `compost_description`, `compost_sfw_nsfw`, `compost_likes`, `compost_creation_date`) VALUES (?, ?, ?, ?, ?, 0, CURRENT_TIMESTAMP)";
 
             $stmt = $mysqli->prepare($insert_post_query);
+
+            if (!$stmt) {
+                die("Prepare failed: " . $mysqli->error);
+            }
+
             $stmt->bind_param(
                 "issss",
                 $_SESSION['user_id'],
                 $target_file,
                 $compostCategoryOptionSelected,
-                $_POST['compost_description'],
+                $compostDescription,
                 $compostSfwNsfwOptionSelected
             );
 
-            $stmt->execute();
+            /* FIX: show helpful insert error while debugging */
+            if (!$stmt->execute()) {
+                print "<p>Post insert failed: " . htmlspecialchars($stmt->error) . "</p>";
+            }
+
             $stmt->close();
 
+        } else {
+            print "<p>There was an error</p>";
         }
 
     } else if ((isset($_POST['submit'])) && (empty($_POST['compost_category']) || empty($_POST['compost_description']))) {
@@ -184,11 +207,18 @@ if (isset($_POST['submit'])) {
 
 
 
-$query_compost = "SELECT goblingizmos_community.user_id, compost_id, compost_img, compost_category, compost_description, compost_sfw_nsfw, compost_likes, compost_creation_date FROM `goblingizmos_community` INNER JOIN goblingizmos_users ON goblingizmos_community.user_id=goblingizmos_users.user_id ORDER BY compost_id DESC";
+/* FIX: select poster username and profile picture from joined users table */
+$query_compost = "SELECT goblingizmos_community.user_id, goblingizmos_community.compost_id, goblingizmos_community.compost_img, goblingizmos_community.compost_category, goblingizmos_community.compost_description, goblingizmos_community.compost_sfw_nsfw, goblingizmos_community.compost_likes, goblingizmos_community.compost_creation_date, goblingizmos_users.username, goblingizmos_users.user_pfp FROM `goblingizmos_community` INNER JOIN goblingizmos_users ON goblingizmos_community.user_id = goblingizmos_users.user_id ORDER BY goblingizmos_community.compost_id DESC";
 
 
 
 $resultCompost = $mysqli->query($query_compost);
+
+/* FIX: avoid hard crash if local table is missing */
+if (!$resultCompost) {
+    $resultCompost = null;
+}
+
 ?>
 
 
@@ -262,23 +292,20 @@ $resultCompost = $mysqli->query($query_compost);
                 <div class="headerGridItem">
 
                     <?php
-                    if (isset($_SESSION['logged_in'])) {
-                        $row = $result->fetch_array(MYSQLI_ASSOC);
+                    if (
+                        isset($_SESSION['logged_in']) &&
+                        $_SESSION['logged_in'] === true &&
+                        isset($row)
+                    ) {
 
-                        if ($row['user_pfp'] != '') {
-                            print "<a href=\"userProfile.php\"><img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
-                        } else if ($row['user_pfp'] == '') {
+                        if (!empty($row['user_pfp'])) {
+                            print "<a href=\"userProfile.php\"><img src=\"" . htmlspecialchars($row['user_pfp']) . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\" onerror=\"this.src='img/PFP.png';\"></a>";
+                        } else {
                             print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                         }
-                    }
-
-
-                    if (!isset($_SESSION['logged_in'])) {
+                    } else {
                         print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                     }
-
-
-
                     ?>
 
                 </div>
@@ -312,71 +339,77 @@ $resultCompost = $mysqli->query($query_compost);
 
             <div id="comGridItem2" class="secondComGridPost">
                 <!--This is where user makes post PHP-->
-                <?php
-                print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . "\" enctype=\"multipart/form-data\">";
-                ?>
+                <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) { ?>
 
-                <div class="postTopRow">
-                    <div id="postItem1">
+                    <form method="POST" action="<?php print htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
+                        enctype="multipart/form-data">
 
-                    </div>
-                    <div id="postItem2">
-                        <textarea name="compost_description" placeholder="Type your post..." rows="3"
-                            columns="30"></textarea>
-                    </div>
-                </div>
+                        <div class="postTopRow">
+                            <div id="postItem1">
 
-
-                <div class="postBottomRow">
-                    <div id="postItem3">
-                        <div class='addBoxPost'>
-                            <img src="img/image.png" class="iconImg" alt="small picture box icon"
-                                onclick="document.getElementById('imagePost').click()">
-                            <label for="imagePost"></label>
-                            <input type="file" id="imagePost" name='compost_img'>
+                            </div>
+                            <div id="postItem2">
+                                <textarea name="compost_description" placeholder="Type your post..." rows="3"
+                                    columns="30"></textarea>
+                            </div>
                         </div>
 
 
-                        <select name="compost_category" id="category">
-                            <option value="autographs">Autographs</option>
-                            <option value="books">Books</option>
-                            <option value="caps">Bottle Caps</option>
-                            <option value="cans">Cans</option>
-                            <option value="charms">Charms</option>
-                            <option value="coins">Coins</option>
-                            <option value="figures">Figures</option>
-                            <option value="jewelry">Jewelry</option>
-                            <option value="magnets">Magnets</option>
-                            <option value="minerals">Minerals</option>
-                            <option value="perfume">Perfume</option>
-                            <option value="plates">Plates</option>
-                            <option value="cards">Playing Cards</option>
-                            <option value="plushies">Plushies</option>
-                            <option value="prints">Prints</option>
-                            <option value="stamps">Stamps</option>
-                            <option value="tickets">Tickets</option>
-                            <option value="games">Video Games</option>
-                            <option value="vinyls">Vinyls</option>
-                            <option value="other">Other</option>
+                        <div class="postBottomRow">
+                            <div id="postItem3">
+                                <div class='addBoxPost'>
+                                    <img src="img/image.png" class="iconImg" alt="small picture box icon"
+                                        onclick="document.getElementById('imagePost').click()">
+                                    <label for="imagePost"></label>
+                                    <input type="file" id="imagePost" name='compost_img'>
+                                </div>
 
 
-                        </select>
+                                <select name="compost_category" id="category">
+                                    <option value="autographs">Autographs</option>
+                                    <option value="books">Books</option>
+                                    <option value="caps">Bottle Caps</option>
+                                    <option value="cans">Cans</option>
+                                    <option value="charms">Charms</option>
+                                    <option value="coins">Coins</option>
+                                    <option value="figures">Figures</option>
+                                    <option value="jewelry">Jewelry</option>
+                                    <option value="magnets">Magnets</option>
+                                    <option value="minerals">Minerals</option>
+                                    <option value="perfume">Perfume</option>
+                                    <option value="plates">Plates</option>
+                                    <option value="cards">Playing Cards</option>
+                                    <option value="plushies">Plushies</option>
+                                    <option value="prints">Prints</option>
+                                    <option value="stamps">Stamps</option>
+                                    <option value="tickets">Tickets</option>
+                                    <option value="games">Video Games</option>
+                                    <option value="vinyls">Vinyls</option>
+                                    <option value="other">Other</option>
 
-                        <label for="sfw">SFW</label>
-                        <input type="radio" name="compost_sfw_nsfw" value="SFW">
 
-                        <label for="nsfw">NSFW</label>
-                        <input type="radio" name="compost_sfw_nsfw" value="NSFW">
-                    </div>
+                                </select>
 
-                    <div id="postItem4">
-                        <!--<img src="img/sendArrow.png" class="comIcons" alt="Post Bounty">-->
-                        <button type="submit" class="goblinButtons" name="submit">Post</button>
-                    </div>
+                                <label for="sfw">SFW</label>
+                                <input type="radio" name="compost_sfw_nsfw" value="SFW">
+
+                                <label for="nsfw">NSFW</label>
+                                <input type="radio" name="compost_sfw_nsfw" value="NSFW">
+                            </div>
+
+                            <div id="postItem4">
+                                <!--<img src="img/sendArrow.png" class="comIcons" alt="Post Bounty">-->
+                                <button type="submit" class="goblinButtons" name="submit">Post</button>
+                            </div>
 
                     </form>
 
-                </div>
+                <?php } else { ?>
+
+                    <p>Please sign in to create a post.</p>
+
+                <?php } ?>
+
             </div>
 
 
@@ -407,7 +440,7 @@ $resultCompost = $mysqli->query($query_compost);
 
 
 
-            <div id="comGridItem4">
+            <div id="communityFeed">
 
 
                 <div class="specificCatItem5">
@@ -416,80 +449,79 @@ $resultCompost = $mysqli->query($query_compost);
 
                     <?php
 
-                    if (isset($_SESSION['logged_in'])) {
+                    /* FIX: display posts based on query success, not on login state */
+                    if ($resultCompost && $resultCompost->num_rows > 0) {
                         //I don't have time to delve into this
                     
-                        if ($resultCompost) {
-                            while (($row2 = $resultCompost->fetch_array(MYSQLI_ASSOC)) && $row4 = $resultQueryForOthers->fetch_array(MYSQLI_ASSOC)) {
+                        while (($row2 = $resultCompost->fetch_array(MYSQLI_ASSOC))) {
 
 
 
 
-                                print "<div class=\"boxesForEachPost\">";
+                            print "<div class=\"boxesForEachPost\">";
 
 
 
-                                print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row4['username'] . "</p>" . "</div>";
-                                print "<div class=\"gridItemForPostBox4\">";
+                            print "<div class=\"gridItemForPostBox3\">" . "<p>" . htmlspecialchars($row2['username']) . "</p>" . "</div>";
+                            print "<div class=\"gridItemForPostBox4\">";
 
-                                print "<div class=\"gridItemForPostBox5\">" . "<p>" . $row2['compost_category'] . "</p>" . "</div>";
-
-
-                                print "<a href=\"userProfileView.php?user_id=" . $row4['user_id'] . "\">";
-                                if ($row4['user_pfp'] != NULL) {
-                                    print "<img src=\"" . $row4['user_pfp'] . "\" alt=\"profile image of user\">";
-                                } else if ($row4['user_pfp'] == NULL) {
-                                    print "<img src=\"uploads/goblin.png\" alt=\"goblin image of user\">";
-
-                                }
-                                print "</a>";
+                            print "<div class=\"gridItemForPostBox5\">" . "<p>" . htmlspecialchars($row2['compost_category']) . "</p>" . "</div>";
 
 
+                            print "<a href=\"userProfileView.php?user_id=" . urlencode($row2['user_id']) . "\">";
+                            if (!empty($row2['user_pfp'])) {
+                                print "<img src=\"" . htmlspecialchars($row2['user_pfp']) . "\" alt=\"profile image of user\" onerror=\"this.src='img/PFP.png';\">";
+                            } else {
+                                print "<img src=\"img/PFP.png\" alt=\"profile image of user\">";
+                            }
+                            print "</a>";
 
-                                print "</div>";
+
+
+                            print "</div>";
 
 
 
 
 
-                                print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2['compost_description'] . "</p>" . "</div>";
-                                //this always exists
+                            print "<div class=\"gridItemForPostBox11\">" . "<p>" . htmlspecialchars($row2['compost_description']) . "</p>" . "</div>";
+                            //this always exists
                     
 
 
 
-                                if (!empty($row2['compost_img'])) {
-                                    print "<div class=\"gridItemForPostBox12\">" . "<img src=\"" . $row2['compost_img'] . "\">" . "</div>";
-                                    //doesn't always exist
-                                }
-
-                                if (!empty($row2['post_sfw_nsfw'])) {
-                                    print "<div class=\"gridItemForPostBox13\">" . "<p>" . $row2['compost_sfw_nsfw'] . "</p>" .
-                                        "</div>";
-                                    //doesn't always exist
-                                }
-
-
-                                print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row2['compost_creation_date'] . "</p>" . "</div>";
-
-                                //always exists
-                    
-
-                                print "<div class=\"gridItemForPostBoxViewPost\">";
-                                //print "<a href=\"../categories/postView.php?compost_id=" . $row2['compost_id'] . "\"\">View Post</a>";
-                                print "</div>";
-
-                                print "</div>";
-
-
-
+                            if (!empty($row2['compost_img'])) {
+                                print "<div class=\"gridItemForPostBox12\">" . "<img src=\"" . htmlspecialchars($row2['compost_img']) . "\" alt=\"community post image\">" . "</div>";
+                                //doesn't always exist
                             }
 
+                            if (!empty($row2['compost_sfw_nsfw'])) {
+                                print "<div class=\"gridItemForPostBox13\">" . "<p>" . htmlspecialchars($row2['compost_sfw_nsfw']) . "</p>" .
+                                    "</div>";
+                                //doesn't always exist
+                            }
+
+
+                            print "<div class=\"gridItemForPostBox14\">" . "<p>" . htmlspecialchars($row2['compost_creation_date']) . "</p>" . "</div>";
+
+                            //always exists
+                    
+
+                            print "<div class=\"gridItemForPostBoxViewPost\">";
+                            //print "<a href=\"../categories/postView.php?compost_id=" . $row2['compost_id'] . "\"\">View Post</a>";
+                            print "</div>";
+
+                            print "</div>";
 
 
 
                         }
 
+
+
+
+                    } else {
+                        print "<p>No community posts yet.</p>";
                     }
                     ?>
 
@@ -512,6 +544,7 @@ $resultCompost = $mysqli->query($query_compost);
 
 
         </div>
+    </div>
     </div>
 
 
@@ -578,5 +611,7 @@ $resultCompost = $mysqli->query($query_compost);
 
 </html>
 <?php
-$mysqli->close();
+if (isset($mysqli) && $mysqli) {
+    $mysqli->close();
+}
 ?>
