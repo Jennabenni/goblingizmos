@@ -143,3 +143,11 @@ I've split up the files, so they can be done as:
 
 - search bar and bounties
 
+
+
+
+NOTES:
+
+
+- CSS may need adjustment for looking at post and community
+- User id and post id was removed from admin view, add back
