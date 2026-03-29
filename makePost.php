@@ -14,12 +14,13 @@ error_reporting(E_ALL);
 /*DO NOT DELETE THESE */
 
 //include("../db-connect.php");
-//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include(__DIR__ . "/db-connect.php");
+include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
 
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
 
@@ -46,18 +47,47 @@ what w3schools has
 //get rid of this before upload
 //error_reporting(E_ALL);
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-if (!isset($_SESSION['logged_in'])) {
+/* FIX: initialize row and message */
+$row = null;
+$formMessage = "";
+
+/* FIX: load logged-in user safely for header icon */
+if (
+    isset($_SESSION['logged_in']) &&
+    $_SESSION['logged_in'] === true &&
+    isset($_SESSION['user_id'])
+) {
+    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = ?";
+
+    $stmt = $mysqli->prepare($query_user_info_on_pages);
+
+    if (!$stmt) {
+        die("Prepare failed: " . $mysqli->error);
+    }
+
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_array(MYSQLI_ASSOC);
+    }
+
+    $stmt->close();
+}
+
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     //nothin, we block them down there in the form
 } else {
-
 
     //does anyone else see a sexy bitch in this room or is it just me
 
     //these should be all the radio buttons and other freaks
     $postBounty = "";
     $postCategory = "";
-
 
     $postCondition = NULL;
     $postBoxCondition = NULL;
@@ -67,28 +97,69 @@ if (!isset($_SESSION['logged_in'])) {
     $postPrice = 0;
     //Can't be null, since its not a string
 
+    /* FIX: initialize option variables */
+    $postBountyOptionSelected = NULL;
+    $postCategoryOptionSelected = NULL;
+    $postConditionOptionSelected = NULL;
+    $postBoxConditionOptionSelected = NULL;
+    $postSfwNsfwOptionSelected = NULL;
 
-
+    /* FIX: whitelists */
+    $allowedPostBounty = array("post", "bounty");
+    $allowedCategories = array(
+        "autographs",
+        "books",
+        "caps",
+        "cans",
+        "charms",
+        "coins",
+        "figures",
+        "jewelry",
+        "magnets",
+        "minerals",
+        "perfume",
+        "plates",
+        "cards",
+        "plushies",
+        "prints",
+        "stamps",
+        "tickets",
+        "games",
+        "vinyls",
+        "other"
+    );
+    $allowedConditions = array(
+        "new" => "new",
+        "likeNew" => "like new",
+        "used" => "used",
+        "damaged" => "damaged"
+    );
+    $allowedBoxConditions = array(
+        "boxnew" => "new",
+        "boxlikeNew" => "like new",
+        "boxused" => "used",
+        "boxdamaged" => "damaged"
+    );
+    $allowedContentLevels = array(
+        "sfw" => "sfw",
+        "nsfw" => "nsfw"
+    );
 
     if (isset($_POST['submit'])) {
 
         //these are the only ones listed bc everything else can be blank
-
-
         if (
-            isset($_POST['post_or_bounty']) && isset($_POST['post_category']) && isset($_POST['post_description']) &&
-
-
-            (!empty($_POST['post_or_bounty'])) && (!empty($_POST['post_category'])) && (!empty($_POST['post_description']))
-
+            isset($_POST['post_or_bounty']) &&
+            isset($_POST['post_category']) &&
+            isset($_POST['post_description']) &&
+            (!empty($_POST['post_or_bounty'])) &&
+            (!empty($_POST['post_category'])) &&
+            (!empty(trim($_POST['post_description'])))
         ) {
 
             $postBounty = $_POST['post_or_bounty'];
-
-            if ($postBounty == 'post') {
-                $postBountyOptionSelected = "post";
-            } else if ($postBounty == 'bounty') {
-                $postBountyOptionSelected = "bounty";
+            if (in_array($postBounty, $allowedPostBounty, true)) {
+                $postBountyOptionSelected = $postBounty;
             }
 
             //IT WORKED HOLY FUCK
@@ -96,89 +167,25 @@ if (!isset($_SESSION['logged_in'])) {
             //HEHE IT WOOORKS
 
             $postCategory = $_POST['post_category'];
-
-            if ($postCategory == 'autographs') {
-                $postCategoryOptionSelected = "autographs";
-            } else if ($postCategory == 'books') {
-                $postCategoryOptionSelected = "books";
-            } else if ($postCategory == 'caps') {
-                $postCategoryOptionSelected = "caps";
-            } else if ($postCategory == 'cans') {
-                $postCategoryOptionSelected = "cans";
-            } else if ($postCategory == 'charms') {
-                $postCategoryOptionSelected = "charms";
-            } else if ($postCategory == 'coins') {
-                $postCategoryOptionSelected = "coins";
-            } else if ($postCategory == 'figures') {
-                $postCategoryOptionSelected = "figures";
-            } else if ($postCategory == 'jewelry') {
-                $postCategoryOptionSelected = "jewelry";
-            } else if ($postCategory == 'magnets') {
-                $postCategoryOptionSelected = "magnets";
-            } else if ($postCategory == 'minerals') {
-                $postCategoryOptionSelected = "minerals";
-            } else if ($postCategory == 'perfume') {
-                $postCategoryOptionSelected = "perfume";
-            } else if ($postCategory == 'plates') {
-                $postCategoryOptionSelected = "plates";
-            } else if ($postCategory == 'cards') {
-                $postCategoryOptionSelected = "cards";
-            } else if ($postCategory == 'plushies') {
-                $postCategoryOptionSelected = "plushies";
-            } else if ($postCategory == 'prints') {
-                $postCategoryOptionSelected = "prints";
-            } else if ($postCategory == 'stamps') {
-                $postCategoryOptionSelected = "stamps";
-            } else if ($postCategory == 'tickets') {
-                $postCategoryOptionSelected = "tickets";
-            } else if ($postCategory == 'games') {
-                $postCategoryOptionSelected = "games";
-            } else if ($postCategory == 'vinyls') {
-                $postCategoryOptionSelected = "vinyls";
-            } else if ($postCategory == 'other') {
-                $postCategoryOptionSelected = "other";
-            }
-
-
-            if (!isset($_POST['post_condition'])) {
-                $postConditionOptionSelected = NULL;
+            if (in_array($postCategory, $allowedCategories, true)) {
+                $postCategoryOptionSelected = $postCategory;
             }
 
             if (isset($_POST['post_condition'])) {
+                $postCondition = $_POST['post_condition'];
 
-
-                if ($postCondition == 'new') {
-                    $postConditionOptionSelected = "new";
-                } else if ($postCondition == 'likeNew') {
-                    $postConditionOptionSelected = "like new";
-                } else if ($postCondition == 'used') {
-                    $postConditionOptionSelected = "used";
-                } else if ($postCondition == 'damaged') {
-                    $postConditionOptionSelected = "damaged";
+                if (isset($allowedConditions[$postCondition])) {
+                    $postConditionOptionSelected = $allowedConditions[$postCondition];
                 }
             }
-
-
-            if (!isset($_POST['post_boxCondition'])) {
-                $postBoxConditionOptionSelected = NULL;
-            }
-
 
             if (isset($_POST['post_boxCondition'])) {
+                $postBoxCondition = $_POST['post_boxCondition'];
 
-
-                if ($postBoxCondition == 'boxnew') {
-                    $postBoxConditionOptionSelected = "new";
-                } else if ($postBoxCondition == 'boxlikeNew') {
-                    $postBoxConditionOptionSelected = "like new";
-                } else if ($postBoxCondition == 'boxused') {
-                    $postBoxConditionOptionSelected = "used";
-                } else if ($postBoxCondition == 'boxdamaged') {
-                    $postBoxConditionOptionSelected = "damaged";
+                if (isset($allowedBoxConditions[$postBoxCondition])) {
+                    $postBoxConditionOptionSelected = $allowedBoxConditions[$postBoxCondition];
                 }
-
             }
-
 
             //POST PRICE.  MY BITCH WIFE
             //THIS WAS THE ISSUE
@@ -189,151 +196,63 @@ if (!isset($_SESSION['logged_in'])) {
             }
             $postPriceSQL = $postPrice;
 
-
-
-
-
-
-
-
-            if (!isset($_POST['post_sfw_nsfw'])) {
-                $postSfwNsfwOptionSelected = NULL;
-            }
-
-
             if (isset($_POST['post_sfw_nsfw'])) {
+                $postSFWNSFW = $_POST['post_sfw_nsfw'];
 
-                if ($postSFWNSFW == 'sfw') {
-                    $postSfwNsfwOptionSelected = "sfw";
-                } else if ($postSFWNSFW == 'nsfw') {
-                    $postSfwNsfwOptionSelected = "nsfw";
+                if (isset($allowedContentLevels[$postSFWNSFW])) {
+                    $postSfwNsfwOptionSelected = $allowedContentLevels[$postSFWNSFW];
                 }
             }
-
-
-
 
             //$target_dir = "/home/ad/je686804/public_html/goblingizmos/uploads/";
             //uhhh remote??
 
-            /*
-                        $target_file = NULL;
-                        if (!empty($_FILES['post_img']) && $_FILES['post_img']['error'] === UPLOAD_ERR_OK) {
-                            $target_dir = "uploads/";
-                            //$target_dir = __DIR__ . "/uploads/";
-                            //$target_dir = "/home/ad/username/public_html/projectname/uploads";
-
-                            $target_file = $target_dir . basename(str_replace(' ', '_', $_FILES['post_img']["name"]));
-                            $uploadOk = 1;
-                            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-
-
-                            //checks if file is an image or if its fake (whatever that means)
-                            if (!empty($_FILES['post_img'])) {
-                                $check = getimagesize($_FILES["post_img"]["tmp_name"]);
-                                if ($check !== false) {
-                                    echo "File is an image - " . $check["mime"] . ".";
-                                    $uploadOk = 1;
-                                } else {
-                                    echo "File is not an image.";
-                                    $uploadOk = 0;
-                                }
-                            }
-                            if ($_FILES['post_img']["size"] > 800000) {
-                                echo "Your file is too large.";
-                                $uploadOk = 0;
-                            }
-
-                            if (file_exists($target_file)) {
-                                echo "This file already exists";
-                                $uploadOk = 0;
-                            }
-
-
-                            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-                                echo "Please choose an image that is either JPG, JPEG, or a PNG file.";
-                                $uploadOk = 0;
-                            }
-
-                            if ($uploadOk == 0) {
-                                echo "There was an issue with your file";
-                            } else {
-                                if (move_uploaded_file($_FILES['post_img']["tmp_name"], $target_file)) {
-                                    echo "The file was uploaded.";
-
-                                }
-                            }
-
-
-                        }*/
-
-
             $target_file = NULL;
-            if (!empty($_FILES['post_img']) && $_FILES['post_img']['error'] === UPLOAD_ERR_OK) {
+            $uploadOk = 1;
 
-                //$target_dir = "/home/ad/je686804/public_html/goblingizmos/uploads/";
+            if (!empty($_FILES['post_img']) && $_FILES['post_img']['error'] === UPLOAD_ERR_OK) {
                 $target_dir = "uploads/";
 
-
+                /* FIX: create uploads folder if it does not exist */
                 if (!is_dir($target_dir)) {
-                    if (!mkdir($target_dir, 0777, true)) {
-                        echo "Error: Could not create uploads directory";
-                        exit;
-                    }
+                    mkdir($target_dir, 0777, true);
                 }
 
-                // Verify directory is writable
-                if (!is_writable($target_dir)) {
-                    echo "Error: Uploads directory is not writable. ";
-                    exit;
-                }
-
-                $filename = basename(str_replace(' ', '_', $_FILES['post_img']["name"]));
-                $target_file = $target_dir . $filename;
-                $uploadOk = 1;
+                /* FIX: unique filenames */
+                $clean_file_name = str_replace(' ', '_', basename($_FILES['post_img']["name"]));
+                $target_file = $target_dir . uniqid() . "_" . $clean_file_name;
                 $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-
+                //checks if file is an image or if its fake (whatever that means)
                 $check = getimagesize($_FILES["post_img"]["tmp_name"]);
                 if ($check === false) {
-                    echo "File is not an image.";
+                    $formMessage = "File is not an image.";
                     $uploadOk = 0;
-                } else {
-                    echo "File is an image - " . $check["mime"] . ". ";
-                    $uploadOk = 1;
                 }
 
                 if ($_FILES['post_img']["size"] > 800000) {
-                    echo "Your file is too large.";
-                    $uploadOk = 0;
-                }
-
-                if (file_exists($target_file)) {
-                    echo "This file already exists. ";
+                    $formMessage = "Your file is too large.";
                     $uploadOk = 0;
                 }
 
                 if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-                    echo "Please choose an image that is either JPG, JPEG, or a PNG file.";
+                    $formMessage = "Please choose an image that is either JPG, JPEG, or a PNG file.";
                     $uploadOk = 0;
                 }
 
-                if ($uploadOk == 0) {
-                    echo "There was an issue with your file";
-                } else {
-                    if (move_uploaded_file($_FILES['post_img']["tmp_name"], $target_file)) {
-                        echo "The file was uploaded successfully.";
-                    } else {
-                        echo "Error: Failed to move uploaded file.";
+                if ($uploadOk == 1) {
+                    if (!move_uploaded_file($_FILES['post_img']["tmp_name"], $target_file)) {
+                        $formMessage = "There was an issue with your file";
+                        $uploadOk = 0;
                     }
                 }
-            } else if (!empty($_FILES['post_img'])) {
-                echo "Upload error code: " . $_FILES['post_img']['error'];
             }
 
-
-            if ((($target_file != NULL) && ($uploadOk == 1)) || $target_file == NULL) {
+            if (
+                !empty($postBountyOptionSelected) &&
+                !empty($postCategoryOptionSelected) &&
+                ((($target_file != NULL) && ($uploadOk == 1)) || $target_file == NULL)
+            ) {
 
                 //IT WORKS
                 //IMG IS OPTIONAL! IF THERES AN ISSUE IT DOESNT SUBMIT! LETS FUCKIN GO
@@ -360,170 +279,91 @@ if (!isset($_SESSION['logged_in'])) {
 //I'm keeping both because Copilot helped me with the stuff below
 //I don't want to go past the point of no return
 
-
-
-                $insert_post_query = "INSERT INTO `goblingizmos_postsbounties` (`user_id`, `post_or_bounty`, `post_category`, `post_condition`, `post_boxCondition`, `post_price`, `post_location`, `post_description`,`post_img`, `post_sfw_nsfw`, `post_creation_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+                $insert_post_query = "INSERT INTO `goblingizmos_postsbounties` (`post_id`, `user_id`, `post_or_bounty`, `post_category`, `post_condition`, `post_boxCondition`, `post_price`, `post_location`, `post_description`,`post_img`, `post_sfw_nsfw`, `post_creation_date`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
 
                 $stmt = $mysqli->prepare($insert_post_query);
+
+                if (!$stmt) {
+                    die("Prepare failed: " . $mysqli->error);
+                }
+
+                $postLocation = trim($_POST['post_location'] ?? "");
+                $postDescription = trim($_POST['post_description'] ?? "");
+
                 $stmt->bind_param(
-                    "isssssssss",
+                    "issssissss",
                     $_SESSION['user_id'],
                     $postBountyOptionSelected,
                     $postCategoryOptionSelected,
                     $postConditionOptionSelected,
                     $postBoxConditionOptionSelected,
                     $postPriceSQL,
-                    $_POST['post_location'],
-                    $_POST['post_description'],
+                    $postLocation,
+                    $postDescription,
                     $target_file,
                     $postSfwNsfwOptionSelected
                 );
 
-                $stmt->execute();
+                if (!$stmt->execute()) {
+                    $formMessage = "Post insert failed: " . $stmt->error;
+                }
+
                 $stmt->close();
 
+                if (empty($formMessage)) {
+                    /* FIX: redirect with a map instead of a huge else-if chain */
+                    $postCategoryRedirects = array(
+                        "autographs" => "categories/autographsCategory.php",
+                        "books" => "categories/booksCategories.php",
+                        "caps" => "categories/bottleCapsCategories.php",
+                        "cans" => "categories/cansCategories.php",
+                        "charms" => "categories/charmsCategories.php",
+                        "coins" => "categories/coinsCategories.php",
+                        "figures" => "categories/figuresCategories.php",
+                        "jewelry" => "categories/jewelryCategories.php",
+                        "magnets" => "categories/magnetsCategories.php",
+                        "minerals" => "categories/mineralsCategories.php",
+                        "perfume" => "categories/perfumeCategories.php",
+                        "plates" => "categories/platesCategories.php",
+                        "cards" => "categories/cardsCategories.php",
+                        "plushies" => "categories/plushiesCategories.php",
+                        "prints" => "categories/printsCategories.php",
+                        "stamps" => "categories/stampsCategories.php",
+                        "tickets" => "categories/ticketsCategories.php",
+                        "games" => "categories/videoGamesCategories.php",
+                        "vinyls" => "categories/vinylsCategories.php",
+                        "other" => "categories/otherCategories.php"
+                    );
 
+                    if ($postBountyOptionSelected == 'bounty') {
+                        header("Location: search.php");
 
+                        //all bounties lead to search
+                        //get it? like all drains lead to the ocean?
+                        //or all roads lead to Rome??
+                        //guys please laugh
+                        exit();
+                    } else if (isset($postCategoryRedirects[$postCategoryOptionSelected])) {
+                        //so this is saying that if its a category and also an autograph, itll take you
+                        //straight to it
 
-
-
-
-                if (($postCategoryOptionSelected == 'autographs') && ($postBountyOptionSelected == 'post')) {
-                    //so this is saying that if its a category and also an autograph, itll take you
-                    //straight to it
-
-                    header("Location: categories/autographsCategory.php");
-                    //okay this works and still submits
-                    //yay
-                } else if (($postCategoryOptionSelected == 'books') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/booksCategories.php");
-                } else if (($postCategoryOptionSelected == 'caps') && ($postBountyOptionSelected == 'post')) {
-
-                    header("Location: categories/bottleCapsCategories.php");
-                } else if (($postCategoryOptionSelected == 'cans') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/cansCategories.php");
-                } else if (($postCategoryOptionSelected == 'charms') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/charmsCategories.php");
-                } else if (($postCategoryOptionSelected == 'coins') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/coinsCategories.php");
-                } else if (($postCategoryOptionSelected == 'figures') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/figuresCategories.php");
-                } else if (($postCategoryOptionSelected == 'jewelry') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/jewelryCategories.php");
-                } else if (($postCategoryOptionSelected == 'magnets') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/magnetsCategories.php");
-                } else if (($postCategoryOptionSelected == 'minerals') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/mineralsCategories.php");
-                } else if (($postCategoryOptionSelected == 'perfume') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/perfumeCategories.php");
-                } else if (($postCategoryOptionSelected == 'plates') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/platesCategories.php");
-                } else if (($postCategoryOptionSelected == 'cards') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/cardsCategories.php");
-                } else if (($postCategoryOptionSelected == 'plushies') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/plushiesCategories.php");
-                } else if (($postCategoryOptionSelected == 'prints') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/printsCategories.php");
-                } else if (($postCategoryOptionSelected == 'stamps') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/stampsCategories.php");
-                } else if (($postCategoryOptionSelected == 'tickets') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/ticketsCategories.php");
-                } else if (($postCategoryOptionSelected == 'games') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/videoGamesCategories.php");
-                } else if (($postCategoryOptionSelected == 'vinyls') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/vinylsCategories.php");
-                } else if (($postCategoryOptionSelected == 'other') && ($postBountyOptionSelected == 'post')) {
-
-
-                    header("Location: categories/otherCategories.php");
-                } else if ($postBountyOptionSelected == 'bounty') {
-
-
-                    header("Location: search.php");
-
-                    //all bounties lead to search
-                    //get it? like all drains lead to the ocean?
-                    //or all roads lead to Rome??
-                    //guys please laugh
+                        header("Location: " . $postCategoryRedirects[$postCategoryOptionSelected]);
+                        //okay this works and still submits
+                        //yay
+                        exit();
+                    }
                 }
             } else if ($uploadOk == 0) {
                 //nothin.
             }
+        } else if ((isset($_POST['submit'])) && (empty($_POST['post_or_bounty']) || empty($_POST['post_category']) || empty($_POST['post_description']))) {
 
-
-
-
-
-
-        } else if ((isset($_POST['submit'])) && empty($_POST['post_or_bounty']) || empty($_POST['post_category']) || empty($_POST['post_description'])) {
-
-            print "<p>Please make sure that the 'post or bounty' box, the 'post category' box, and the 'post desctiption' box are filled out.  </p>";
+            $formMessage = "Please make sure that the 'post or bounty' box, the 'post category' box, and the 'post desctiption' box are filled out.";
 
         }
-
-
-
     }
-
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -531,7 +371,7 @@ if (!isset($_SESSION['logged_in'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goblin Gizmos - User Profile</title>
+    <title>Make Post</title>
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
@@ -545,13 +385,9 @@ if (!isset($_SESSION['logged_in'])) {
 
 -->
 
-
-
-
 <body>
 
     <div class="page-wrap">
-
 
         <header>
 
@@ -561,9 +397,6 @@ if (!isset($_SESSION['logged_in'])) {
 
                 <div class="headerGridItem" id="logoFlex">
                     <img class="logoImage" src="img/goblinLogo.png" alt="a goblin face in a coin; the logo">
-
-
-
                 </div>
 
                 <div class="headerGridItem">
@@ -615,6 +448,20 @@ if (!isset($_SESSION['logged_in'])) {
                     if (!isset($_SESSION['logged_in'])) {
                         print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                     }*/
+
+                    if (
+                        isset($_SESSION['logged_in']) &&
+                        $_SESSION['logged_in'] === true &&
+                        $row
+                    ) {
+                        if (!empty($row['user_pfp'])) {
+                            print "<a href=\"userProfile.php\"><img src=\"" . htmlspecialchars($row['user_pfp']) . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\" onerror=\"this.src='img/PFP.png';\"></a>";
+                        } else {
+                            print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                        }
+                    } else {
+                        print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                    }
                     ?>
 
                 </div>
@@ -624,9 +471,7 @@ if (!isset($_SESSION['logged_in'])) {
 
         <!--Post and Bounty are the same thing, the difference is INTENT-->
 
-
         <!--All of this will def need to be PHP but I can do front end stuff-->
-
 
         <div class="FAQ">
 
@@ -647,19 +492,20 @@ if (!isset($_SESSION['logged_in'])) {
             post_creation_date
             */
 
+            if (!empty($formMessage)) {
+                print "<p>" . htmlspecialchars($formMessage) . "</p>";
+            }
 
-            if (!isset($_SESSION['logged_in'])) {
+            if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                 print "<p>To make a post, first make an account with us! It's free! </p>";
                 print "<a href='signIn.php'>Make an Account</a>";
             }
 
-            if (isset($_SESSION['logged_in'])) {
+            if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 
                 print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . "\" enctype=\"multipart/form-data\">";
                 //the enctype allows for file uploads
             
-
-
                 /* I'm making all these fucks input tags
                  */
 
@@ -668,18 +514,13 @@ if (!isset($_SESSION['logged_in'])) {
 
                 //lock in soldier
             
-
                 print "<input type=\"radio\" id=\"postChecked\" name=\"post_or_bounty\" value=\"post\">";
                 print "<label for=\"post\">Post</label>";
-
 
                 print "<input type=\"radio\" id=\"bountyChecked\" name=\"post_or_bounty\" value=\"bounty\">";
                 print "<label for=\"bounty\">Bounty</label>";
 
-
-
                 print "<h3>Category</h3>";
-
 
                 /*
                 print "<input type=\"text\" id='post_category' placeholder=\"Temp cat placeholder\" name='post_category'>";
@@ -714,45 +555,40 @@ if (!isset($_SESSION['logged_in'])) {
 
                 print "</select>";
 
-
                 print "<h3>Item Condition</h3>";
 
-                print "<input type=\"radio\" id=\"post_condition\" name=\"post_condition\" value=\"new\">";
+                print "<input type=\"radio\" id=\"post_condition_new\" name=\"post_condition\" value=\"new\">";
                 print "<label for=\"new\">New</label>";
 
-
-                print "<input type=\"radio\" id=\"post_condition\" name=\"post_condition\" value=\"likeNew\">";
+                print "<input type=\"radio\" id=\"post_condition_likeNew\" name=\"post_condition\" value=\"likeNew\">";
                 print "<label for=\"likeNew\">Like New</label>";
 
-                print "<input type=\"radio\" id=\"post_condition\" name=\"post_condition\" value=\"used\">";
+                print "<input type=\"radio\" id=\"post_condition_used\" name=\"post_condition\" value=\"used\">";
                 print "<label for=\"used\">Used</label>";
 
-                print "<input type=\"radio\" id=\"post_condition\" name=\"post_condition\" value=\"damaged\">";
+                print "<input type=\"radio\" id=\"post_condition_damaged\" name=\"post_condition\" value=\"damaged\">";
                 print "<label for=\"damaged\">Damaged</label>";
 
                 /*Okay I originally had n/a but if there's no condition, put nothing??? */
 
                 print "<h3>Box Condition</h3>";
 
-                print "<input type=\"radio\" id=\"post_boxCondition\" name=\"post_boxCondition\" value=\"boxnew\">";
+                print "<input type=\"radio\" id=\"post_boxCondition_new\" name=\"post_boxCondition\" value=\"boxnew\">";
                 print "<label for=\"boxnew\">New</label>";
 
-                print "<input type=\"radio\" id=\"post_boxCondition\" name=\"post_boxCondition\" value=\"boxlikeNew\">";
+                print "<input type=\"radio\" id=\"post_boxCondition_likeNew\" name=\"post_boxCondition\" value=\"boxlikeNew\">";
                 print "<label for=\"boxlikeNew\">Like New</label>";
 
-                print "<input type=\"radio\" id=\"post_boxCondition\" name=\"post_boxCondition\" value=\"boxused\">";
+                print "<input type=\"radio\" id=\"post_boxCondition_used\" name=\"post_boxCondition\" value=\"boxused\">";
                 print "<label for=\"boxused\">Used</label>";
 
-                print "<input type=\"radio\" id=\"post_boxCondition\" name=\"post_boxCondition\" value=\"boxdamaged\">";
+                print "<input type=\"radio\" id=\"post_boxCondition_damaged\" name=\"post_boxCondition\" value=\"boxdamaged\">";
                 print "<label for=\"boxdamaged\">Damaged</label>";
-
-
 
                 print "<h3>Price/Currency (if one)</h3>";
 
                 print "<label for='post_price'></label>";
                 print "<input type=\"text\" id='post_price' name='post_price' placeholder='Enter Price'>";
-
 
                 print "<h3>Location (Optional)</h3>";
                 print "<input type=\"text\" id='post_location' placeholder=\"Enter Location\" name='post_location'>";
@@ -760,22 +596,16 @@ if (!isset($_SESSION['logged_in'])) {
                 print "<h3>Description</h3>";
                 print "<textarea placeholder='Input Text' class='textAreaSize' rows='7' cols='50' id='post_description' name ='post_description'></textarea>";
 
-
-
-
-
                 print "<h3>Image</h3>";
-
 
                 /*This will need some love...... how in the hell
                 do I put pictures from my computer to database?? */
-
 
                 print "<div class='addBoxPost'>";
                 print "<img src=\"img/image.png\" class=\"iconImg\" alt=\"small picture box icon\"> ";
                 print "<label for=\"imagePost\"></label>";
                 print "<input type=\"file\" id=\"imagePost\" name='post_img'>";
-                print "</div>";
+                print " </div>";
 
                 /*
                                 print "<input type=\"text\" id='post_img' placeholder=\"Temp img placeholder\" name='post_img'>";
@@ -784,10 +614,9 @@ if (!isset($_SESSION['logged_in'])) {
                 print "<p>Can this be shown to a child? (SFW = Safe for work)</p>";
                 print "<p>If not, mark the post as 'NSFW' (NSFW = Not safe for work)</p>";
 
-                print "<input type=\"radio\" id=\"post_sfw_nsfw\" name=\"post_sfw_nsfw\" value=\"sfw\"><label for=\"sfw\">SFW</label>";
+                print "<input type=\"radio\" id=\"post_sfw_nsfw_sfw\" name=\"post_sfw_nsfw\" value=\"sfw\"><label for=\"sfw\">SFW</label>";
 
-                print "<input type=\"radio\" id=\"post_sfw_nsfw\" name=\"post_sfw_nsfw\" value=\"nsfw\"><label for=\"sfw\">NSFW</label>";
-
+                print "<input type=\"radio\" id=\"post_sfw_nsfw_nsfw\" name=\"post_sfw_nsfw\" value=\"nsfw\"><label for=\"sfw\">NSFW</label>";
 
                 print "<div>";
 
@@ -798,25 +627,12 @@ if (!isset($_SESSION['logged_in'])) {
                 //UGH
             
             }
-
-
-
-
-
-
-
-
-
             ?>
-
 
         </div>
     </div>
 
     <footer>
-
-
-
 
         <img src="img/goblinLogo.png" id="bottomLogo" alt="a goblin face in a coin; the logo">
         <!--PLACEHOLDER!! REPLACE LATER: LOGO-->
@@ -845,7 +661,6 @@ if (!isset($_SESSION['logged_in'])) {
 
                         <div class="footerGridItem2">
                             <ol>
-
 
                                 <li><a href="https://x.com/"> <img src="img/TwitterLogo.png" class="iconImg"
                                             alt="X logo"></a></li>
@@ -876,5 +691,7 @@ if (!isset($_SESSION['logged_in'])) {
 
 </html>
 <?php
-$mysqli->close();
+if (isset($mysqli) && $mysqli) {
+    $mysqli->close();
+}
 ?>

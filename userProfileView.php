@@ -6,42 +6,72 @@ session_start();
 /*DO NOT DELETE THESE */
 
 //include("db-connect.php");
-//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include(__DIR__ . "/db-connect.php");
+include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
 
+/* FIX: initialize variables */
+$row = null;
+$viewedUser = null;
+
+if (
+    isset($_SESSION['logged_in']) &&
+    $_SESSION['logged_in'] === true &&
+    isset($_SESSION['user_id'])
+) {
 
 
-if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
-
-
-    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
+    /* FIX: use prepared statement instead of direct SQL concatenation */
+    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = ?";
 
 
     //honestly all of this could be used
 
-    $resultPFP = $mysqli->query($query_user_info_on_pages);
+    $stmt = $mysqli->prepare($query_user_info_on_pages);
 
+    if (!$stmt) {
+        die("Prepare failed: " . $mysqli->error);
+    }
 
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    $resultPFP = $stmt->get_result();
 
+    if ($resultPFP && $resultPFP->num_rows > 0) {
+        $row = $resultPFP->fetch_array(MYSQLI_ASSOC);
+    }
+
+    $stmt->close();
 }
 
 
-if (isset($_GET['user_id'])) {
-    $query_some = "SELECT `username`,`user_pfp`,`user_bio`,`user_email` FROM `goblingizmos_users` WHERE user_id = '" . $_GET['user_id'] . "'";
+if (isset($_GET['user_id']) && $_GET['user_id'] !== '') {
+    /* FIX: use prepared statement for user_id from URL */
+    $query_some = "SELECT `username`,`user_pfp`,`user_bio`,`user_email` FROM `goblingizmos_users` WHERE user_id = ? LIMIT 1";
 
     //yaaaay
 
+    $stmtViewedUser = $mysqli->prepare($query_some);
 
-    $resultUser = $mysqli->query($query_some);
+    if (!$stmtViewedUser) {
+        die("Prepare failed: " . $mysqli->error);
+    }
 
+    $viewedUserId = (int) $_GET['user_id'];
+    $stmtViewedUser->bind_param("i", $viewedUserId);
+    $stmtViewedUser->execute();
+    $resultUser = $stmtViewedUser->get_result();
 
+    if ($resultUser && $resultUser->num_rows > 0) {
+        $viewedUser = $resultUser->fetch_array(MYSQLI_ASSOC);
+    }
 
-
+    $stmtViewedUser->close();
 }
 
 
@@ -114,25 +144,20 @@ if (isset($_GET['user_id'])) {
                     <?php
 
 
-                    if (isset($_SESSION['logged_in'])) {
-                        $row = $resultPFP->fetch_array(MYSQLI_ASSOC);
+                    if (
+                        isset($_SESSION['logged_in']) &&
+                        $_SESSION['logged_in'] === true &&
+                        $row
+                    ) {
 
-                        if ($row['user_pfp'] != '') {
-                            print "<a href=\"userProfile.php\"><img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
-                        } else if ($row['user_pfp'] == '') {
+                        if (!empty($row['user_pfp'])) {
+                            print "<a href=\"userProfile.php\"><img src=\"" . htmlspecialchars($row['user_pfp']) . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\" onerror=\"this.src='img/PFP.png';\"></a>";
+                        } else {
                             print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                         }
-                    }
-
-
-                    if (!isset($_SESSION['logged_in'])) {
+                    } else {
                         print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                     }
-
-
-
-
-
 
                     ?>
                 </div>
@@ -142,40 +167,36 @@ if (isset($_GET['user_id'])) {
 
 
         <?php
-        if ($resultUser) {
-            while ($row2 = $resultUser->fetch_array(MYSQLI_ASSOC)) {
-                print "<div class=\"signUpForms\">";
+        if ($viewedUser) {
+            print "<div class=\"signUpForms\">";
 
+            print "<div><h2>" . htmlspecialchars($viewedUser['username']) . "</h2></div>";
 
-                print "<div>" . "<p>" . $row2['username'] . "</p>" . "</div>";
+            print "<div>";
 
-
-                print "<div>";
-
-
-                if ($row2['user_pfp'] != NULL) {
-                    print "<img src=\"" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
-                } else if ($row2['user_pfp'] == NULL) {
-                    print "<img src=\"uploads/goblin.png\" alt=\"goblin image of user\">";
-
-                }
-
-                print "<p>" . $row2['user_bio'] . "</p>";
-                print "<p>" . $row2['user_email'] . "</p>";
-
-
-                print "</div>";
-
+            if (!empty($viewedUser['user_pfp'])) {
+                print "<img src=\"" . htmlspecialchars($viewedUser['user_pfp']) . "\" alt=\"profile image of user\" onerror=\"this.src='img/PFP.png';\">";
+            } else {
+                print "<img src=\"img/PFP.png\" alt=\"profile image of user\">";
             }
+
+            if (!empty($viewedUser['user_bio'])) {
+                print "<p>" . htmlspecialchars($viewedUser['user_bio']) . "</p>";
+            } else {
+                print "<p>No bio added yet.</p>";
+            }
+
+            if (!empty($viewedUser['user_email'])) {
+                print "<p>" . htmlspecialchars($viewedUser['user_email']) . "</p>";
+            }
+
+            print "</div>";
+            print "</div>";
+        } else {
+            print "<div class=\"signUpForms\">";
+            print "<p>User not found.</p>";
+            print "</div>";
         }
-
-
-
-
-
-
-
-
         ?>
 
 
@@ -184,9 +205,6 @@ if (isset($_GET['user_id'])) {
     </div>
 
     <footer>
-
-
-
 
         <img src="img/goblinLogo.png" id="bottomLogo" alt="a goblin face in a coin; the logo">
         <!--PLACEHOLDER!! REPLACE LATER: LOGO-->
@@ -204,7 +222,7 @@ if (isset($_GET['user_id'])) {
                                     <a href="support.php" class="titleLink">Support</a>
                                 </li>
                                 <li>
-                                    <p class="/titleLink"> |</p>
+                                    <p class="titleLink"> |</p>
                                 </li>
                                 <li>
                                     <a href="tos.php" class="titleLink">Terms of Service</a>
@@ -246,5 +264,7 @@ if (isset($_GET['user_id'])) {
 
 </html>
 <?php
-$mysqli->close();
+if (isset($mysqli) && $mysqli) {
+    $mysqli->close();
+}
 ?>

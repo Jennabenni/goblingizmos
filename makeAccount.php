@@ -5,8 +5,8 @@
 session_start();
 
 
-/*ini_set('display_errors', 1);
-error_reporting(E_ALL);*/
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 
 
@@ -14,11 +14,12 @@ error_reporting(E_ALL);*/
 //need this on everything, dont forget closing tag at bottom under html
 
 //include("../db-connect.php");
-//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include(__DIR__ . "/db-connect.php");
+include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
 //This will be Inserting into the DB
@@ -76,7 +77,11 @@ if anything has this, dont submit
 //I needed it to help with apostrophes.  These are modifications to my
 //code
 
-if (!isset($_SESSION['logged_in'])) {
+/* FIX: collect messages so they appear in one place */
+$formMessage = "";
+
+/* FIX: use stricter login check */
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     if (isset($_POST['submit'])) {
 
         // Only require: first_name, last_name, uname, password, user_email
@@ -107,88 +112,115 @@ if (!isset($_SESSION['logged_in'])) {
                 preg_match($regExKillSwitch, $email) ||
                 preg_match($regExKillSwitch, $bio)
             ) {
-                echo "Invalid characters detected";
+                $formMessage = "Invalid characters detected";
             } else {
 
-                // Handle file upload (optional)
-                $target_file = NULL;
-                $uploadOk = 1;
+                /* FIX: check for duplicate username or email before insert */
+                $check_existing_query = "SELECT user_id FROM `goblingizmos_users` WHERE username = ? OR user_email = ?";
+                $check_stmt = $mysqli->prepare($check_existing_query);
 
-                if (!empty($_FILES['user_pfp']) && $_FILES['user_pfp']['error'] === UPLOAD_ERR_OK) {
-                    $target_dir = "uploads/";
-                    $target_file = $target_dir . basename(str_replace(' ', '_', $_FILES['user_pfp']["name"]));
-                    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+                if (!$check_stmt) {
+                    die("Prepare failed: " . $mysqli->error);
+                }
 
-                    // Check if file is an image
-                    $check = getimagesize($_FILES["user_pfp"]["tmp_name"]);
-                    if ($check === false) {
-                        echo "File is not an image.";
-                        $uploadOk = 0;
-                    }
+                $check_stmt->bind_param("ss", $username, $email);
+                $check_stmt->execute();
+                $check_result = $check_stmt->get_result();
 
-                    if ($_FILES['user_pfp']["size"] > 800000) {
-                        echo "Your file is too large.";
-                        $uploadOk = 0;
-                    }
+                if ($check_result && $check_result->num_rows > 0) {
+                    $formMessage = "That username or email is already in use.";
+                } else {
 
-                    if (file_exists($target_file)) {
-                        echo "This file already exists";
-                        $uploadOk = 0;
-                    }
+                    // Handle file upload (optional)
+                    $target_file = NULL;
+                    $uploadOk = 1;
 
-                    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-                        echo "Please choose an image that is either JPG, JPEG, or a PNG file.";
-                        $uploadOk = 0;
-                    }
+                    if (!empty($_FILES['user_pfp']) && $_FILES['user_pfp']['error'] === UPLOAD_ERR_OK) {
+                        $target_dir = "uploads/";
 
-                    if ($uploadOk == 1) {
-                        if (!move_uploaded_file($_FILES['user_pfp']["tmp_name"], $target_file)) {
-                            echo "File upload failed";
+                        /* FIX: create uploads folder if it does not exist */
+                        if (!is_dir($target_dir)) {
+                            mkdir($target_dir, 0777, true);
+                        }
+
+                        /* FIX: make uploaded filenames unique */
+                        $clean_file_name = str_replace(' ', '_', basename($_FILES['user_pfp']["name"]));
+                        $target_file = $target_dir . uniqid() . "_" . $clean_file_name;
+                        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+                        // Check if file is an image
+                        $check = getimagesize($_FILES["user_pfp"]["tmp_name"]);
+                        if ($check === false) {
+                            $formMessage = "File is not an image.";
                             $uploadOk = 0;
                         }
+
+                        if ($_FILES['user_pfp']["size"] > 800000) {
+                            $formMessage = "Your file is too large.";
+                            $uploadOk = 0;
+                        }
+
+                        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+                            $formMessage = "Please choose an image that is either JPG, JPEG, or a PNG file.";
+                            $uploadOk = 0;
+                        }
+
+                        if ($uploadOk == 1) {
+                            if (!move_uploaded_file($_FILES['user_pfp']["tmp_name"], $target_file)) {
+                                $formMessage = "File upload failed";
+                                $uploadOk = 0;
+                            }
+                        }
+                    }
+
+                    // Insert user with prepared statement
+                    if ((($target_file != NULL) && ($uploadOk == 1)) || $target_file == NULL) {
+
+                        $hashedPassword = md5($password);
+                        $userAccessLevel = "user";
+
+                        $insert_user_info_query = "INSERT INTO `goblingizmos_users`
+                        (`user_id`, `first_name`, `last_name`, `username`, `password`, `access_level`, `user_email`, `user_pfp`, `user_bio`)
+                        VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+                        $stmt = $mysqli->prepare($insert_user_info_query);
+
+                        if (!$stmt) {
+                            die("Prepare failed: " . $mysqli->error);
+                        }
+
+                        $stmt->bind_param(
+                            "ssssssss",
+                            $firstName,
+                            $lastName,
+                            $username,
+                            $hashedPassword,
+                            $userAccessLevel,
+                            $email,
+                            $target_file,
+                            $bio
+                        );
+
+                        if ($stmt->execute()) {
+                            header("Location: signIn.php");
+                            exit;
+                        } else {
+                            $formMessage = "Error creating account: " . $stmt->error;
+                        }
+                        $stmt->close();
                     }
                 }
 
-                // Insert user with prepared statement
-                if ((($target_file != NULL) && ($uploadOk == 1)) || $target_file == NULL) {
-
-                    $hashedPassword = md5($password);
-                    $userAccessLevel = "user";
-
-                    $insert_user_info_query = "INSERT INTO `goblingizmos_users`
-                    (`first_name`, `last_name`, `username`, `password`, `access_level`, `user_email`, `user_pfp`, `user_bio`)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-                    $stmt = $mysqli->prepare($insert_user_info_query);
-                    $stmt->bind_param(
-                        "ssssssss",
-                        $firstName,
-                        $lastName,
-                        $username,
-                        $hashedPassword,
-                        $userAccessLevel,
-                        $email,
-                        $target_file,
-                        $bio
-                    );
-
-                    if ($stmt->execute()) {
-                        header("Location: signIn.php");
-                        exit;
-                    } else {
-                        echo "Error creating account: " . $stmt->error;
-                    }
-                    $stmt->close();
-                }
+                $check_stmt->close();
             }
         } else {
-            echo "Required fields: First Name, Last Name, Username, Password, and Email";
+            $formMessage = "Required fields: First Name, Last Name, Username, Password, and Email";
         }
     }
 
 
-} else if ($_SESSION['logged_in']) {
-    print "<p>You are currently logged in to an account.</p>";
+} else if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+    $formMessage = "You are currently logged in to an account.";
 }
 
 
@@ -283,6 +315,8 @@ if (!isset($_SESSION['logged_in'])) {
                         print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\"
                             alt=\"Profile\"></a>";
                     }*/
+
+                    print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                     ?>
 
                 </div>
@@ -292,8 +326,14 @@ if (!isset($_SESSION['logged_in'])) {
 
         <div>
 
-            <form method="POST" action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" enctype="multipart/form-data"
-                class="FAQ">
+            <?php
+            if (!empty($formMessage)) {
+                print "<p>" . htmlspecialchars($formMessage) . "</p>";
+            }
+            ?>
+
+            <form method="POST" action="<?php print htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
+                enctype="multipart/form-data" class="FAQ">
 
 
                 <div class="signInForm">
@@ -333,7 +373,7 @@ if (!isset($_SESSION['logged_in'])) {
 
                     <div>
 
-                        <input type="text" id="password" name="password" placeholder="Password" class="inputBoxes">
+                        <input type="password" id="password" name="password" placeholder="Password" class="inputBoxes">
 
                     </div>
 
@@ -443,5 +483,7 @@ if (!isset($_SESSION['logged_in'])) {
 
 </html>
 <?php
-$mysqli->close();
+if (isset($mysqli) && $mysqli) {
+    $mysqli->close();
+}
 ?>

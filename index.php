@@ -1,4 +1,5 @@
-<!--
+<?php
+/*
 Hello goblins, I'm gonna put my notes here to stay on track
 You will be seeing a lot of these
 
@@ -25,11 +26,8 @@ should the main SQL stuff be on the login page despite users coming here first?
 
 New start point: log in page
 (I will keep some of the stuff here though)
+*/
 
--->
-
-
-<?php
 
 //http://localhost/goblingizmos/index.php
 //this is what you copy and paste to open up the server
@@ -44,10 +42,13 @@ session_start();
 
 
 
-/*DO NOT DELETE THESE */
+/*DO NOT DELETE THESE. IIMMPPOORRTTAANNTT this is a machine specific line, one that only works on Jenna's device. Because of this, I have to change it to a db-connect.php that is in the repo.
+this needs to be on .gitignore i think, im still learning github a bit. I cannot test most pages with the previously used include line. I will keep it just as a comment. I will not be copying this note on every page,
+just know that I made it really easy to revert, just delete the comment slashes on the 3rd line below and delete the 2nd line below, unless this works anyways. There might have been a better way that I dont know, but I dont know*/
 
 //include("../db-connect.php");
-//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include(__DIR__ . "/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
@@ -55,8 +56,8 @@ session_start();
 include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
-/*ini_set('display_errors', 1);
-error_reporting(E_ALL);*/
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 
 //change location for when on the server, these are my (Jenna's) credentials
@@ -75,18 +76,36 @@ http://localhost/phpmyadmin/
 
 
 
+/* FIX: initialize row so it exists even if no query runs */
+$row = null;
 
-if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
+if (
+    isset($_SESSION['logged_in']) &&
+    $_SESSION['logged_in'] === true &&
+    isset($_SESSION['user_id'])
+) {
 
-
-    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
+    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = ?";
 
     //honestly all of this could be used
 
-    $result = $mysqli->query($query_user_info_on_pages);
+    $stmt = $mysqli->prepare($query_user_info_on_pages);
 
+    /* FIX: make prepare failure obvious during debugging */
+    if (!$stmt) {
+        die("Prepare failed: " . $mysqli->error);
+    }
 
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
+    /* FIX: only fetch if a row actually exists */
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_array(MYSQLI_ASSOC);
+    }
+
+    $stmt->close();
 }
 
 
@@ -174,18 +193,19 @@ Three columns, three rows
 
 
                     <?php
-                    if (isset($_SESSION['logged_in'])) {
-                        $row = $result->fetch_array(MYSQLI_ASSOC);
+                    /* FIX: check logged_in is actually true and row exists before using it */
+                    if (
+                        isset($_SESSION['logged_in']) &&
+                        $_SESSION['logged_in'] === true &&
+                        $row
+                    ) {
 
-                        if ($row['user_pfp'] != '') {
-                            print "<a href=\"userProfile.php\"><img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
-                        } else if ($row['user_pfp'] == '') {
+                        if (!empty($row['user_pfp'])) {
+                            print "<a href=\"userProfile.php\"><img src=\"" . htmlspecialchars($row['user_pfp']) . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\" onerror=\"this.src='img/PFP.png';\"></a>";
+                        } else {
                             print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                         }
-                    }
-
-
-                    if (!isset($_SESSION['logged_in'])) {
+                    } else {
                         print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                     }
 
@@ -235,9 +255,12 @@ Three columns, three rows
                 <div class="biggerHomeBox">
                     <h2>Welcome to Goblin Gizmos!</h2>
 
-                    <?php if (isset($_SESSION['logged_in'])) {
+                    <?php
+                    /* FIX: require logged_in to be true, not just set */
+                    if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
                         print "<p>You have successfully logged in</p>";
-                    } ?>
+                    }
+                    ?>
 
                     <div id="infoBoxHome">
                         <p>Welcome to Goblin Gizmos! Whether you're a novice, experienced, or an expert in collecting
@@ -253,7 +276,6 @@ Three columns, three rows
                     </div>
                 </div>
             </div>
-            <br>
 
 
 
@@ -267,13 +289,21 @@ Three columns, three rows
 
             <div id="homeGridItem4">
 
-                <a href="signIn.php">
-                    <h3 class="homeTabLinks">Create an Account</h3>
-                </a>
+                <?php
+                /* FIX: show different link depending on login state */
+                if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+                    print "<a href=\"userProfile.php\">";
+                    print "<h3 class=\"homeTabLinks\">Go to Profile</h3>";
+                    print "</a>";
+                } else {
+                    print "<a href=\"signIn.php\">";
+                    print "<h3 class=\"homeTabLinks\">Create an Account</h3>";
+                    print "</a>";
+                }
+                ?>
 
             </div>
 
-            <br>
 
 
 
@@ -359,5 +389,8 @@ Three columns, three rows
 
 </html>
 <?php
-$mysqli->close();
+/* FIX: only close connection if it exists */
+if (isset($mysqli) && $mysqli) {
+    $mysqli->close();
+}
 ?>

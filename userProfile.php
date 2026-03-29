@@ -11,127 +11,179 @@ that should be a simple enough fix
 */
 
 
-
-/*ini_set('display_errors', 1);
-error_reporting(E_ALL);*/
-
+/*
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+*/
 
 /*DO NOT DELETE THESE */
 
 //include("../db-connect.php");
-//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include(__DIR__ . "/db-connect.php");
+include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
 
 
 
 
+/* FIX: initialize variables */
+$userRow = null;
+$userPostsResult = null;
+$formMessage = "";
+
+if (
+    isset($_SESSION['logged_in']) &&
+    $_SESSION['logged_in'] === true &&
+    isset($_SESSION['user_id'])
+) {
 
 
-if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
-
-
-    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
+    /* FIX: use prepared statement instead of direct SQL concatenation */
+    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = ?";
 
     //it was the apostrophe
 
     //honestly all of this could be used
 
-    $resultPFP = $mysqli->query($query_user_info_on_pages);
+    $stmt = $mysqli->prepare($query_user_info_on_pages);
 
+    if (!$stmt) {
+        die("Prepare failed: " . $mysqli->error);
+    }
 
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    $resultPFP = $stmt->get_result();
 
-}
-
-
-
-if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin" || "user")) {
-    $query_all = "SELECT post_id, goblingizmos_postsbounties.user_id, post_or_bounty, post_category, post_condition, post_boxCondition, post_price, post_location, post_description, post_img, post_sfw_nsfw, post_creation_date, goblingizmos_users.username FROM `goblingizmos_postsbounties` INNER JOIN goblingizmos_users ON goblingizmos_postsbounties.user_id=goblingizmos_users.user_id WHERE goblingizmos_postsbounties.user_id = '" . $_SESSION['user_id'] . "' ORDER BY post_creation_date DESC";
-
-    //this is showing the posts for each person
-
-    $result = $mysqli->query($query_all);
-
-
-
-
-
-}
-
-if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin" || "user"))) {
-    //this is the submit button for updating the user's profile
-
-
-
-    //I won't take credit for this:
-
-    $usersNewUsername = $_POST['uname'];
-    $usersNewBio = $_POST['bio'];
-    $usersNewEmail = $_POST['user_email'];
-    $userId = $_SESSION['user_id'];
-
-    // Use a prepared statement
-    $updateInfoOnProfile = "UPDATE `goblingizmos_users` SET `username`= ?, `user_email`= ?, `user_bio`= ? WHERE user_id=?";
-
-    // Prepare the statement
-    $stmt = $mysqli->prepare($updateInfoOnProfile);
-
-    // Bind the parameters - "ssss" means 4 string parameters
-// The values are passed separately, not concatenated into the query
-    $stmt->bind_param("ssss", $usersNewUsername, $usersNewEmail, $usersNewBio, $userId);
-
-    // Execute the query
-    if ($stmt->execute()) {
-        header("Location: userProfile.php");
-    } else {
-        echo "Error updating profile: " . $stmt->error;
+    if ($resultPFP && $resultPFP->num_rows > 0) {
+        $userRow = $resultPFP->fetch_array(MYSQLI_ASSOC);
     }
 
     $stmt->close();
-
-    //this was copilots doing
-    //I needed it because apostrophes were a problem
-
-
-    /*
-
-
-    From a website
-
-    $inputname = "O'Brien";
-    $res = $mysqli->prepare("SELECT whatever from table1 where lastname = ? ";
-    $res->bind->param("s", $inputname);
-    $res->execute();
+}
 
 
 
+if (
+    isset($_SESSION['access_level']) &&
+    ($_SESSION['access_level'] == "admin" || $_SESSION['access_level'] == "user") &&
+    isset($_SESSION['user_id'])
+) {
+    /* FIX: original condition was always true because of || "user" */
+    $query_all = "SELECT post_id, goblingizmos_postsbounties.user_id, post_or_bounty, post_category, post_condition, post_boxCondition, post_price, post_location, post_description, post_img, post_sfw_nsfw, post_creation_date, goblingizmos_users.username
+    FROM `goblingizmos_postsbounties`
+    INNER JOIN goblingizmos_users ON goblingizmos_postsbounties.user_id = goblingizmos_users.user_id
+    WHERE goblingizmos_postsbounties.user_id = ?
+    ORDER BY post_creation_date DESC";
+
+    //this is showing the posts for each person
+
+    $stmtPosts = $mysqli->prepare($query_all);
+
+    if (!$stmtPosts) {
+        $formMessage = "Unable to load posts: " . $mysqli->error;
+    } else {
+        $stmtPosts->bind_param("i", $_SESSION['user_id']);
+        $stmtPosts->execute();
+        $userPostsResult = $stmtPosts->get_result();
+        $stmtPosts->close();
+    }
+}
+
+if (
+    isset($_POST['submit']) &&
+    isset($_SESSION['access_level']) &&
+    ($_SESSION['access_level'] == "admin" || $_SESSION['access_level'] == "user") &&
+    isset($_SESSION['user_id'])
+) {
+    //this is the submit button for updating the user's profile
+
+    //I won't take credit for this:
+
+    $usersNewUsername = trim($_POST['uname'] ?? "");
+    $usersNewBio = trim($_POST['bio'] ?? "");
+    $usersNewEmail = trim($_POST['user_email'] ?? "");
+    $userId = $_SESSION['user_id'];
+
+    /* FIX: validate required profile fields */
+    if ($usersNewUsername === "" || $usersNewEmail === "") {
+        $formMessage = "Username and email cannot be empty.";
+    } else {
+
+        /* FIX: check for duplicate username/email owned by someone else */
+        $checkDuplicateQuery = "SELECT user_id FROM `goblingizmos_users` WHERE (username = ? OR user_email = ?) AND user_id != ?";
+        $checkStmt = $mysqli->prepare($checkDuplicateQuery);
+
+        if (!$checkStmt) {
+            die("Prepare failed: " . $mysqli->error);
+        }
+
+        $checkStmt->bind_param("ssi", $usersNewUsername, $usersNewEmail, $userId);
+        $checkStmt->execute();
+        $duplicateResult = $checkStmt->get_result();
+
+        if ($duplicateResult && $duplicateResult->num_rows > 0) {
+            $formMessage = "That username or email is already in use.";
+        } else {
+
+            // Use a prepared statement
+            $updateInfoOnProfile = "UPDATE `goblingizmos_users` SET `username`= ?, `user_email`= ?, `user_bio`= ? WHERE user_id=?";
+
+            // Prepare the statement
+            $stmt = $mysqli->prepare($updateInfoOnProfile);
+
+            if (!$stmt) {
+                die("Prepare failed: " . $mysqli->error);
+            }
+
+            // Bind the parameters
+            // The values are passed separately, not concatenated into the query
+            $stmt->bind_param("sssi", $usersNewUsername, $usersNewEmail, $usersNewBio, $userId);
+
+            // Execute the query
+            if ($stmt->execute()) {
+                $stmt->close();
+                $checkStmt->close();
+                header("Location: userProfile.php");
+                exit();
+            } else {
+                $formMessage = "Error updating profile: " . $stmt->error;
+            }
+
+            $stmt->close();
+
+            //this was copilots doing
+            //I needed it because apostrophes were a problem
 
 
-    */
+            /*
+
+
+            From a website
+
+            $inputname = "O'Brien";
+            $res = $mysqli->prepare("SELECT whatever from table1 where lastname = ? ";
+            $res->bind->param("s", $inputname);
+            $res->execute();
 
 
 
 
 
+            */
 
+            /* $updateInfoOnProfile = "UPDATE `goblingizmos_users` SET `username`= '$usersNewUsername',`user_pfp`='$target_file', `user_bio`=  '$usersNewBio' WHERE user_id='" . $_SESSION['user_id'] . "'";*/
+        }
 
-    /* $updateInfoOnProfile = "UPDATE `goblingizmos_users` SET `username`= '$usersNewUsername',`user_pfp`='$target_file', `user_bio`=  '$usersNewBio' WHERE user_id='" . $_SESSION['user_id'] . "'";*/
-
-
-
-    $resultUpdate = $mysqli->query($updateInfoOnProfile);
-
-
-    header("Location: userProfile.php");
+        $checkStmt->close();
+    }
 
     //this acts as a reload
-
-
-
 }
 
 
@@ -214,26 +266,20 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
 
                     <?php
 
-                    if (isset($_SESSION['logged_in'])) {
-                        $row = $resultPFP->fetch_array(MYSQLI_ASSOC);
+                    if (
+                        isset($_SESSION['logged_in']) &&
+                        $_SESSION['logged_in'] === true &&
+                        $userRow
+                    ) {
 
-                        if ($row['user_pfp'] != '') {
-                            print "<a href=\"userProfile.php\"><img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
-                        } else if ($row['user_pfp'] == '') {
+                        if (!empty($userRow['user_pfp'])) {
+                            print "<a href=\"userProfile.php\"><img src=\"" . htmlspecialchars($userRow['user_pfp']) . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\" onerror=\"this.src='img/PFP.png';\"></a>";
+                        } else {
                             print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                         }
-                    }
-
-
-                    if (!isset($_SESSION['logged_in'])) {
+                    } else {
                         print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                     }
-
-
-
-
-
-
 
                     ?>
 
@@ -242,16 +288,15 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
             </div>
         </header>
 
-
-
-
-
-
         <?php
 
-        if (isset($_SESSION['logged_in'])) {
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 
             print "<div class=\"entireAreaUserProfile\">";
+
+            if (!empty($formMessage)) {
+                print "<p>" . htmlspecialchars($formMessage) . "</p>";
+            }
 
             print "<div>";
             //User's profile image
@@ -262,17 +307,14 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
 
             //start of form
         
-            if (isset($_SESSION['logged_in'])) {
+            if ($userRow) {
 
-                if ($row['user_pfp'] != '') {
-                    print "<img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\">";
-                } else if ($row['user_pfp'] == '') {
+                if (!empty($userRow['user_pfp'])) {
+                    print "<img src=\"" . htmlspecialchars($userRow['user_pfp']) . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\" onerror=\"this.src='img/PFP.png';\">";
+                } else {
                     print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                 }
-            }
-
-
-            if (!isset($_SESSION['logged_in'])) {
+            } else {
                 print "<img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\">";
             }
 
@@ -301,7 +343,7 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
 
 
             print " <div class=\"evenSmallerProfileBox\">";
-            print "<input type=\"text\" id=\"uname\" name=\"uname\" value=\"" . htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8') . "\">";
+            print "<input type=\"text\" id=\"uname\" name=\"uname\" value=\"" . htmlspecialchars($userRow['username'] ?? '', ENT_QUOTES, 'UTF-8') . "\">";
 
 
             print "<img src=\"img/pencilAndPaper.png\" class=\"iconImg\">";
@@ -311,10 +353,9 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
             print "<h3>Change Email</h3>";
             print "</div>";
             print "<div class=\"evenSmallerProfileBox\">";
-            print "<input type=\"text\" name=\"user_email\" value=\"" . $row['user_email'] . "\">";
+            print "<input type=\"text\" name=\"user_email\" value=\"" . htmlspecialchars($userRow['user_email'] ?? '', ENT_QUOTES, 'UTF-8') . "\">";
             print "<img src=\"img/pencilAndPaper.png\" class=\"iconImg\">";
             print "</div>";
-
 
 
 
@@ -325,7 +366,7 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
             print " </div>";
             print "<div class=\"evenSmallerProfileBox\">";
 
-            print " <input type=\"text\" id=\"bio\" name=\"bio\" value=\"" . $row['user_bio'] . "\">";
+            print " <input type=\"text\" id=\"bio\" name=\"bio\" value=\"" . htmlspecialchars($userRow['user_bio'] ?? '', ENT_QUOTES, 'UTF-8') . "\">";
 
 
             print " <img src=\"img/pencilAndPaper.png\" class=\"iconImg\">";
@@ -335,25 +376,22 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
 
             print "<div class=\"smallerLabelProfile\">";
             print "<h3>Top Categories</h3>";
-            //top categories
-        
+            print "</div>";
 
-            //A submit button is needed
-            print " <button type=\"submit\" class=\"goblinButtons\" id=\"holdingSpace\" name=\"submit\">Update</button>";
+            print "<div class=\"evenSmallerProfileBox\"></div>";
+
+            print "<button type=\"submit\" class=\"goblinButtons\" id=\"holdingSpace\" name=\"submit\">Update</button>";
 
             //Update user profile
         
 
+            print "</div>";
 
-
+            print "</div>";
 
             print "</form>";
             //Oh god will this need JS to add the categories UGHHH-->
         
-            print "  </div>";
-            print " <div class=\"evenSmallerProfileBox\"></div>";
-
-            print "  </div>";
 
             print " <div>";
 
@@ -374,71 +412,59 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
 
             print "<div class=\"specificCatItem5\">";
 
-            if (($row['user_id'] == $_SESSION['user_id'])) {
+            if ($userRow && isset($userRow['user_id']) && $userRow['user_id'] == $_SESSION['user_id']) {
 
-                while (($row = $result->fetch_array(MYSQLI_ASSOC))) {
+                if ($userPostsResult && $userPostsResult->num_rows > 0) {
+                    while (($postRow = $userPostsResult->fetch_array(MYSQLI_ASSOC))) {
 
+                        print "<div class=\"boxesForEachPost\">";
 
-
-                    print "<div class=\"boxesForEachPost\">";
-
-                    //print "<div class=\"gridItemForPostBox1\">" . $row2['post_id'] . "</div>";
-                    //print "<div class=\"gridItemForPostBox2\">" . $row2['user_id'] . "</div>";
+                        //print "<div class=\"gridItemForPostBox1\">" . $row2['post_id'] . "</div>";
+                        //print "<div class=\"gridItemForPostBox2\">" . $row2['user_id'] . "</div>";
         
 
+                        print "<div class=\"gridItemForPostBox3\"><p>" . htmlspecialchars($postRow['username']) . "</p></div>";
 
-                    print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row['username'] . "</p>" . "</div>";
+                        print "<div class=\"gridItemForPostBox5\"><p>" . htmlspecialchars($postRow['post_or_bounty']) . "</p></div>";
 
-
-
-
-                    print "<div class=\"gridItemForPostBox5\">" . $row['post_or_bounty'] . "</div>";
-
-
-
-                    // print "<div class=\"gridItemForPostBox6\">" . $row['post_category'] . "</div>";
+                        // print "<div class=\"gridItemForPostBox6\">" . $row['post_category'] . "</div>";
         
 
-                    if (!empty($row['post_price'])) {
-                        print "<div class=\"gridItemForPostBox9\">" . "<p>$" . $row['post_price'] . "</p>" . "</div>";
-                    }
+                        if (!empty($postRow['post_price'])) {
+                            print "<div class=\"gridItemForPostBox9\"><p>$" . htmlspecialchars($postRow['post_price']) . "</p></div>";
+                        }
 
-                    if (!empty($row['post_location'])) {
-                        print "<div class=\"gridItemForPostBox10\">" . $row['post_location'] . "</div>";
-                        //doesn't always exist
-                    }
+                        if (!empty($postRow['post_location'])) {
+                            print "<div class=\"gridItemForPostBox10\"><p>" . htmlspecialchars($postRow['post_location']) . "</p></div>";
+                            //doesn't always exist
+                        }
 
 
-                    print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row['post_description'] . "</p>" . "</div>";
-                    //this always exists
+                        print "<div class=\"gridItemForPostBox11\"><p>" . htmlspecialchars($postRow['post_description']) . "</p></div>";
+                        //this always exists
         
 
-                    if (!empty($row['post_img'])) {
-                        print "<div class=\"gridItemForPostBox12\">" . "<img src=\"" . $row['post_img'] . "\">" . "</div>";
-                        //doesn't always exist
-                    }
+                        if (!empty($postRow['post_img'])) {
+                            print "<div class=\"gridItemForPostBox12\"><img src=\"" . htmlspecialchars($postRow['post_img']) . "\" alt=\"post image\"></div>";
+                            //doesn't always exist
+                        }
 
-                    if (!empty($row['post_sfw_nsfw'])) {
-                        print "<div class=\"gridItemForPostBox13\">" . "<p>" . $row['post_sfw_nsfw'] . "</p>" .
-                            "</div>";
-                        //doesn't always exist
-                    }
+                        if (!empty($postRow['post_sfw_nsfw'])) {
+                            print "<div class=\"gridItemForPostBox13\"><p>" . htmlspecialchars($postRow['post_sfw_nsfw']) . "</p></div>";
+                            //doesn't always exist
+                        }
 
 
-                    print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row['post_creation_date'] . "</p>" . "</div>";
-                    //always exists
+                        print "<div class=\"gridItemForPostBox14\"><p>" . htmlspecialchars($postRow['post_creation_date']) . "</p></div>";
+                        //always exists
         
 
-                    print "</div>";
-
-
-
+                        print "</div>";
+                    }
+                } else {
+                    print "<p>No posts or bounties yet.</p>";
                 }
-
-
             }
-
-
 
             print " </div>";
 
@@ -462,9 +488,6 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
 
 
     <footer>
-
-
-
 
         <img src="img/goblinLogo.png" id="bottomLogo" alt="a goblin face in a coin; the logo">
         <!--PLACEHOLDER!! REPLACE LATER: LOGO-->
@@ -493,7 +516,6 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
 
                         <div class="footerGridItem2">
                             <ol>
-
 
                                 <li><a href="https://x.com/"> <img src="img/TwitterLogo.png" class="iconImg"
                                             alt="X logo"></a></li>
@@ -524,5 +546,7 @@ if ((isset($_POST['submit'])) && (isset($_SESSION['access_level']) && ($_SESSION
 
 </html>
 <?php
-$mysqli->close();
+if (isset($mysqli) && $mysqli) {
+    $mysqli->close();
+}
 ?>

@@ -2,38 +2,61 @@
 session_start();
 //make sure to have the closer at the end of html
 
+/*
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-/*ini_set('display_errors', 1);
-error_reporting(E_ALL);*/
-
-
+*/
 
 /*DO NOT DELETE THESE */
+/*If my method does not work and it needed to be reverted for all the other pages, do note that this one has a directory issue, since this file is a folder deeper in \categories\ */
 
 //include("../db-connect.php");
-//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include(__DIR__ . "/../db-connect.php");
+include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
 
+/* FIX: initialize variables */
+$row = null;
+$result = null;
+$resultUser = null;
+$resultUserPartTwo = null;
 
 
 //pfp stuff
-if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
+if (
+    isset($_SESSION['logged_in']) &&
+    $_SESSION['logged_in'] === true &&
+    isset($_SESSION['user_id'])
+) {
 
 
-    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
+    /* FIX: use prepared statement instead of direct SQL concatenation */
+    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = ?";
 
 
     //honestly all of this could be used
 
-    $resultPFP = $mysqli->query($query_user_info_on_pages);
+    $stmt = $mysqli->prepare($query_user_info_on_pages);
 
+    if (!$stmt) {
+        die("Prepare failed: " . $mysqli->error);
+    }
 
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    $resultPFP = $stmt->get_result();
 
+    if ($resultPFP && $resultPFP->num_rows > 0) {
+        $row = $resultPFP->fetch_array(MYSQLI_ASSOC);
+    }
+
+    $stmt->close();
 }
 
 
@@ -78,10 +101,6 @@ if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) 
 
     $resultUser = $mysqli->query($query_some);
 
-
-
-
-
 }
 
 if (isset($_SESSION['access_level'])) {
@@ -90,21 +109,7 @@ if (isset($_SESSION['access_level'])) {
 
 
     $resultUserPartTwo = $mysqli->query($query_bounties);
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
 
 ?>
 
@@ -125,8 +130,6 @@ if (isset($_SESSION['access_level'])) {
 
     <div class="page-wrap">
 
-
-
         <header>
 
             <div class="headerGrid">
@@ -135,9 +138,6 @@ if (isset($_SESSION['access_level'])) {
 
                 <div class="headerGridItem" id="logoFlex">
                     <img class="logoImage" src="../img/goblinLogo.png" alt="a goblin face in a coin; the logo">
-
-
-
                 </div>
 
                 <div class="headerGridItem">
@@ -173,32 +173,23 @@ if (isset($_SESSION['access_level'])) {
                 </div>
                 <div class="headerGridItem">
 
-
                     <?php
 
 
-                    if (isset($_SESSION['logged_in'])) {
-                        $row = $resultPFP->fetch_array(MYSQLI_ASSOC);
+                    if (
+                        isset($_SESSION['logged_in']) &&
+                        $_SESSION['logged_in'] === true &&
+                        $row
+                    ) {
 
-                        if ($row['user_pfp'] != '') {
-                            print "<a href=\"../userProfile.php\"><img src=\"../" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
-                        } else if ($row['user_pfp'] == '') {
+                        if (!empty($row['user_pfp'])) {
+                            print "<a href=\"../userProfile.php\"><img src=\"../" . htmlspecialchars($row['user_pfp']) . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\" onerror=\"this.src='../img/PFP.png';\"></a>";
+                        } else {
                             print "<a href=\"../userProfile.php\"> <img src=\"../img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                         }
-                    }
-
-
-                    if (!isset($_SESSION['logged_in'])) {
+                    } else {
                         print "<a href=\"../userProfile.php\"> <img src=\"../img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                     }
-
-
-
-
-
-
-
-
 
                     ?>
                 </div>
@@ -216,21 +207,19 @@ if (isset($_SESSION['access_level'])) {
                     <div class="bigBountyOnCat">
                         <?php
 
-                        if (isset($_SESSION['access_level'])) {
+                        if (isset($_SESSION['access_level']) && $resultUserPartTwo) {
 
                             $bountyCounter = 0;
 
                             while (($row3 = $resultUserPartTwo->fetch_array(MYSQLI_ASSOC))) {
                                 if (($row3['post_category'] == 'autographs') && ($row3['post_or_bounty'] == 'bounty')) {
 
-
-
                                     print "<div class=\"boxesForEachBounty\">";
                                     print "<a href=\"../search.php\" class=\"bountyClickStyle\">";
-                                    print "<div class=\"gridItemForBountyDisplayBox11\">" . "<p>" . $row3['post_description'] . "</p>" . "</div>";
+                                    print "<div class=\"gridItemForBountyDisplayBox11\"><p>" . htmlspecialchars($row3['post_description']) . "</p></div>";
                                     //this always exists
                                     if (!empty($row3['post_img'])) {
-                                        print "<div class=\"gridItemForBountyDisplayBox12\">" . "<img src=\"../" . $row3['post_img'] . "\">" . "</div>";
+                                        print "<div class=\"gridItemForBountyDisplayBox12\"><img src=\"../" . htmlspecialchars($row3['post_img']) . "\" alt=\"bounty image\"></div>";
                                         //doesn't always exist
                                     }
                                     print "</a>";
@@ -245,11 +234,6 @@ if (isset($_SESSION['access_level'])) {
 
                             }
 
-
-
-
-
-
                         }
 
                         ?>
@@ -259,18 +243,9 @@ if (isset($_SESSION['access_level'])) {
 
             </div>
 
-
-
-
-
-
-            <div class="specificCatItem2"> <a href="../makePost.php">
-
-                    <button type="button" class="goblinButtons">Make a Post</button>
-                </a>
+            <div class="specificCatItem2">
+                <a href="../makePost.php" class="goblinButtons">Make a Post</a>
             </div>
-
-
 
             <div class="specificCatItem3">
 
@@ -278,7 +253,6 @@ if (isset($_SESSION['access_level'])) {
                     <img src="../img/autographs.png" alt="image of a signed paper">
                 </div>
                 <div class="grayBoxInInfo">
-
 
                     <h2>Autographs</h2>
                     <p>Autographs are a signature or dedication that usually is written by a celebrity that individuals
@@ -298,183 +272,121 @@ if (isset($_SESSION['access_level'])) {
 
             </div>
 
-
-
             <div class="specificCatItem4">
                 <h3>Posts</h3>
             </div>
 
-
             <div class="specificCatItem5">
-
-
-
-
-
-
-
-
-
-
-
-
 
                 <?php
 
-                if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) {
+                if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin") && $result) {
                     while (($row = $result->fetch_array(MYSQLI_ASSOC))) {
                         //for admins
                 
-
-
                         if (($row['post_category'] == 'autographs') && ($row['post_or_bounty'] == 'post')) {
                             //IT'S THAT EASY???
                             //Look how much thinking sleep can get ya
                             // who would've thought
                 
-
                             print "<div class=\"boxesForEachPost\">";
 
-
-
-                            print "<div class=\"gridItemForPostBox1\">" . "<p> Post Id:" . $row['post_id'] . "</p>" . "</div>";
-                            print "<div class=\"gridItemForPostBox2\">" . "<p>User Id:" . $row['user_id'] . "</p>" . "</div>";
-                            print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row['username'] . "</p>" . "</div>";
+                            /* print "<div class=\"gridItemForPostBox1\">" . "<p> Post Id:" . $row['post_id'] . "</p>" . "</div>"; */ /* these made it so the user and post IDs showed, seemed silly so I kept it but hid it*/
+                            /* print "<div class=\"gridItemForPostBox2\">" . "<p>User Id:" . $row['user_id'] . "</p>" . "</div>"; */
+                            print "<div class=\"gridItemForPostBox3\"><p>" . htmlspecialchars($row['username']) . "</p></div>";
                             print "<div class=\"gridItemForPostBox4\">";
 
-                            print "<a href=\"../userProfileView.php?user_id=" . $row['user_id'] . "\">";
-
-                            if ($row['user_pfp'] != NULL) {
-                                print "<img src=\"../" . $row['user_pfp'] . "\" alt=\"profile image of user\">";
-                            } else if ($row['user_pfp'] == NULL) {
-                                print "<img src=\"../uploads/goblin.png\" alt=\"goblin image of user\">";
-
+                            print "<a href=\"../userProfileView.php?user_id=" . urlencode($row['user_id']) . "\">";
+                            if (!empty($row['user_pfp'])) {
+                                print "<img src=\"../" . htmlspecialchars($row['user_pfp']) . "\" alt=\"profile image of user\" onerror=\"this.src='../img/PFP.png';\">";
+                            } else {
+                                print "<img src=\"../img/PFP.png\" alt=\"profile image of user\">";
                             }
                             print "</a>";
 
-
-
                             print "</div>";
 
-
-
-
-
-
-
                             if (!empty($row['post_price'])) {
-                                print "<div class=\"gridItemForPostBox9\">" . "<p>$" . $row['post_price'] . "</p>" . "</div>";
+                                print "<div class=\"gridItemForPostBox9\"><p>$" . htmlspecialchars($row['post_price']) . "</p></div>";
                                 //doesn't always exist
                             }
 
-
-                            print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row['post_description'] . "</p>" . "</div>";
+                            print "<div class=\"gridItemForPostBox11\"><p>" . htmlspecialchars($row['post_description']) . "</p></div>";
                             //this always exists
                 
-
-
-
                             if (!empty($row['post_img'])) {
-                                print "<div class=\"gridItemForPostBox12\">" . "<img src=\"../" . $row['post_img'] . "\">" . "</div>";
+                                print "<div class=\"gridItemForPostBox12\"><img src=\"../" . htmlspecialchars($row['post_img']) . "\" alt=\"post image\"></div>";
                                 //doesn't always exist
                             }
 
                             if (!empty($row['post_sfw_nsfw'])) {
-                                print "<div class=\"gridItemForPostBox13\">" . "<p>" . $row['post_sfw_nsfw'] . "</p>" . "</div>";
+                                print "<div class=\"gridItemForPostBox13\"><p>" . htmlspecialchars($row['post_sfw_nsfw']) . "</p></div>";
                                 //doesn't always exist
                             }
 
-
-                            print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row['post_creation_date'] . "</p>" . "</div>";
+                            print "<div class=\"gridItemForPostBox14\"><p>" . htmlspecialchars($row['post_creation_date']) . "</p></div>";
                             //always exists
                 
-
                             // print "<a href=\"../categories/postView.php?post_id=" . $row['post_id'] . "\"\">View Post</a>";
                 
-
-
                             print "<div class=\"gridItemForPostBoxViewPost\">";
-                            print "<a href=\"../categories/postView.php?post_id=" . $row['post_id'] . "\"\">View Post</a>";
+                            print "<a href=\"../categories/postView.php?post_id=" . urlencode($row['post_id']) . "\">View Post</a>";
                             print "</div>";
 
-
-
                             print "</div>";
-
-
 
                         }
 
-
                     }
 
-                } else if (isset($_SESSION['access_level']) && (($_SESSION['access_level']) == "user")) {
+                } else if (isset($_SESSION['access_level']) && (($_SESSION['access_level']) == "user") && $resultUser) {
 
                     while (($row2 = $resultUser->fetch_array(MYSQLI_ASSOC))) {
                         if (($row2['post_category'] == 'autographs') && ($row2['post_or_bounty'] == 'post')) {
 
-
-
                             print "<div class=\"boxesForEachPost\">";
 
-
-
-                            print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row2['username'] . "</p>" . "</div>";
+                            print "<div class=\"gridItemForPostBox3\"><p>" . htmlspecialchars($row2['username']) . "</p></div>";
                             print "<div class=\"gridItemForPostBox4\">";
 
-
-                            print "<a href=\"../userProfileView.php?user_id=" . $row2['user_id'] . "\">";
-                            if ($row2['user_pfp'] != NULL) {
-                                print "<img src=\"../" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
-                            } else if ($row2['user_pfp'] == NULL) {
-                                print "<img src=\"../uploads/goblin.png\" alt=\"goblin image of user\">";
-
+                            print "<a href=\"../userProfileView.php?user_id=" . urlencode($row2['user_id']) . "\">";
+                            if (!empty($row2['user_pfp'])) {
+                                print "<img src=\"../" . htmlspecialchars($row2['user_pfp']) . "\" alt=\"profile image of user\" onerror=\"this.src='../img/PFP.png';\">";
+                            } else {
+                                print "<img src=\"../img/PFP.png\" alt=\"profile image of user\">";
                             }
                             print "</a>";
 
-
-
                             print "</div>";
 
-
-
                             if (!empty($row2['post_price'])) {
-                                print "<div class=\"gridItemForPostBox9\">" . "<p>$" . $row2['post_price'] . "</p>" . "</div>";
+                                print "<div class=\"gridItemForPostBox9\"><p>$" . htmlspecialchars($row2['post_price']) . "</p></div>";
                                 //doesn't always exist
                 
                                 //I made it in $ because I do NOT have the time to code in a whole other currency section
                                 //Hate to be like that but oh well
                 
-
-
                             }
 
-
-                            print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2['post_description'] . "</p>" . "</div>";
+                            print "<div class=\"gridItemForPostBox11\"><p>" . htmlspecialchars($row2['post_description']) . "</p></div>";
                             //this always exists
                 
-
-
-
                             if (!empty($row2['post_img'])) {
-                                print "<div class=\"gridItemForPostBox12\">" . "<img src=\"../" . $row2['post_img'] . "\">" . "</div>";
+                                print "<div class=\"gridItemForPostBox12\"><img src=\"../" . htmlspecialchars($row2['post_img']) . "\" alt=\"post image\"></div>";
                                 //doesn't always exist
                             }
 
                             if (!empty($row2['post_sfw_nsfw'])) {
-                                print "<div class=\"gridItemForPostBox13\">" . "<p>" . $row2['post_sfw_nsfw'] . "</p>" .
-                                    "</div>";
+                                print "<div class=\"gridItemForPostBox13\"><p>" . htmlspecialchars($row2['post_sfw_nsfw']) . "</p></div>";
                                 //doesn't always exist
                             }
 
-
-                            print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row2['post_creation_date'] . "</p>" . "</div>";
+                            print "<div class=\"gridItemForPostBox14\"><p>" . htmlspecialchars($row2['post_creation_date']) . "</p></div>";
 
                             //always exists
                 
-
                             print "<div class=\"gridItemForPostBoxViewPost\">";
-                            print "<a href=\"../categories/postView.php?post_id=" . $row2['post_id'] . "\"\">View Post</a>";
+                            print "<a href=\"../categories/postView.php?post_id=" . urlencode($row2['post_id']) . "\">View Post</a>";
                             print "</div>";
 
                             print "</div>";
@@ -483,10 +395,7 @@ if (isset($_SESSION['access_level'])) {
 
                     }
 
-
-
-
-                } else if (!isset($_SESSION['logged_in'])) {
+                } else if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                     print "<div class=\"signUpForms\">";
                     print "<p>Please create an account with us to view these posts; It's free!</p>";
 
@@ -495,34 +404,17 @@ if (isset($_SESSION['access_level'])) {
                     print "</div>";
                 }
 
-
-
                 ?>
-
-
-
-
-
-
 
             </div>
         </div>
     </div>
     </div>
 
-
-
-
-
-
     <!--Something weird happened to footer; investigate later
     fixed
 
     when in doubt, add divs-->
-
-
-
-
 
     <!--Something weird happened to footer; investigate later
     fixed
@@ -530,9 +422,6 @@ if (isset($_SESSION['access_level'])) {
     when in doubt, add divs-->
 
     <footer>
-
-
-
 
         <img src="../img/goblinLogo.png" id="bottomLogo" alt="a goblin face in a coin; the logo">
         <!--PLACEHOLDER!! REPLACE LATER: LOGO-->
@@ -550,7 +439,7 @@ if (isset($_SESSION['access_level'])) {
                                     <a href="../support.php" class="titleLink">Support</a>
                                 </li>
                                 <li>
-                                    <p class="/titleLink"> |</p>
+                                    <p class="titleLink"> |</p>
                                 </li>
                                 <li>
                                     <a href="../tos.php" class="titleLink">Terms of Service</a>
@@ -561,7 +450,6 @@ if (isset($_SESSION['access_level'])) {
 
                         <div class="footerGridItem2">
                             <ol>
-
 
                                 <li><a href="https://x.com/"> <img src="../img/TwitterLogo.png" class="iconImg"
                                             alt="X logo"></a></li>
@@ -588,11 +476,11 @@ if (isset($_SESSION['access_level'])) {
 
     </footer>
 
-
-
 </body>
 
 </html>
 <?php
-$mysqli->close();
+if (isset($mysqli) && $mysqli) {
+    $mysqli->close();
+}
 ?>

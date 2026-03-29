@@ -57,13 +57,11 @@ session_start();
 //need this on everything, dont forget closing tag at bottom under html
 
 
-/*
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-*/
+
 
 //include("../db-connect.php");
-//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include(__DIR__ . "/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
@@ -73,24 +71,44 @@ include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 
 //following my old code
 
-/*
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-*/
 
 
-if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 
-    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
+
+/* FIX: initialize row and login message */
+$row = null;
+$loginMessage = "";
+
+if (
+    isset($_SESSION['logged_in']) &&
+    $_SESSION['logged_in'] === true &&
+    isset($_SESSION['user_id'])
+) {
+
+    /* FIX: use prepared statement instead of direct SQL concatenation */
+    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = ?";
 
 
     //honestly all of this could be used
 
-    $result = $mysqli->query($query_user_info_on_pages);
+    $stmt = $mysqli->prepare($query_user_info_on_pages);
 
+    if (!$stmt) {
+        die("Prepare failed: " . $mysqli->error);
+    }
 
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_array(MYSQLI_ASSOC);
+    }
+
+    $stmt->close();
 }
 
 
@@ -98,29 +116,48 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 
 
 
-if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
-    $select_query = "SELECT * FROM `goblingizmos_users`";
+if (
+    isset($_POST['submit']) &&
+    (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true)
+) {
+    /* FIX: query only the username being attempted instead of all users */
+    $select_query = "SELECT * FROM `goblingizmos_users` WHERE username = ? LIMIT 1";
+
+    $select_stmt = $mysqli->prepare($select_query);
 
 
+    if (!$select_stmt) {
+        die("Prepare failed: " . $mysqli->error);
+    }
 
-    $select_result = $mysqli->query($select_query);
+    $submittedUsername = trim($_POST['uname'] ?? "");
+    $submittedPassword = $_POST['password'] ?? "";
 
+    $select_stmt->bind_param("s", $submittedUsername);
+    $select_stmt->execute();
+    $select_result = $select_stmt->get_result();
 
-    while ($row = $select_result->fetch_object()) {
-        if ((($_POST['uname']) == ($row->username)) && (md5($_POST['password']) == ($row->password))) {
+    if ($select_result && $select_result->num_rows > 0) {
+        $userRow = $select_result->fetch_object();
+
+        if (($submittedUsername == $userRow->username) && (md5($submittedPassword) == $userRow->password)) {
             $_SESSION['logged_in'] = true;
-            $_SESSION['user_logged_in'] = $row->username;
-            $_SESSION['user_id'] = $row->user_id;
-            $_SESSION['access_level'] = $row->access_level;
-            $_SESSION['first_name'] = $row->first_name;
-            $_SESSION['last_name'] = $row->last_name;
+            $_SESSION['user_logged_in'] = $userRow->username;
+            $_SESSION['user_id'] = $userRow->user_id;
+            $_SESSION['access_level'] = $userRow->access_level;
+            $_SESSION['first_name'] = $userRow->first_name;
+            $_SESSION['last_name'] = $userRow->last_name;
+
+            header("Location: index.php");
+            exit();
         } else {
-            //You messed with the wrong house fool
+            $loginMessage = "Invalid username or password.";
         }
+    } else {
+        $loginMessage = "Invalid username or password.";
     }
-    if (isset($_SESSION['logged_in'])) {
-        header("Location: index.php");
-    }
+
+    $select_stmt->close();
 
     //OMG I HAD .html... BROTHER
 
@@ -207,22 +244,20 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
                     <?php
 
 
-                    if (isset($_SESSION['logged_in'])) {
-                        $row = $result->fetch_array(MYSQLI_ASSOC);
+                    if (
+                        isset($_SESSION['logged_in']) &&
+                        $_SESSION['logged_in'] === true &&
+                        $row
+                    ) {
 
-                        if ($row['user_pfp'] != '') {
-                            print "<a href=\"userProfile.php\"><img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
-                        } else if ($row['user_pfp'] == '') {
+                        if (!empty($row['user_pfp'])) {
+                            print "<a href=\"userProfile.php\"><img src=\"" . htmlspecialchars($row['user_pfp']) . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\" onerror=\"this.src='img/PFP.png';\"></a>";
+                        } else {
                             print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                         }
-                    }
-
-
-                    if (!isset($_SESSION['logged_in'])) {
+                    } else {
                         print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                     }
-
-
 
 
 
@@ -242,6 +277,12 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
             <p>If you have been brought to this page after creating an account, please sign in below.</p>
         </div>
 
+        <?php
+        if (!empty($loginMessage)) {
+            print "<div class=\"signUpForms\"><p>" . htmlspecialchars($loginMessage) . "</p></div>";
+        }
+        ?>
+
         <div class="signUpGap">
 
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" class="signUpForms">
@@ -258,7 +299,7 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
 
                     <div>
 
-                        <input type="text" id="password" name="password" placeholder="Password" class="inputBoxes">
+                        <input type="password" id="password" name="password" placeholder="Password" class="inputBoxes">
 
                     </div>
 
@@ -271,6 +312,7 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
 
                 </div>
             </form>
+
 
 
 
@@ -295,7 +337,6 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
 
 
     </div> <!--when you do php, keep this div after it, it's for the footer staying sticky-->
-
 
 
 
@@ -378,5 +419,7 @@ if (isset($_POST['submit']) && (!isset($_SESSION['logged_in']))) {
 
 </html>
 <?php
-$mysqli->close();
+if (isset($mysqli) && $mysqli) {
+    $mysqli->close();
+}
 ?>

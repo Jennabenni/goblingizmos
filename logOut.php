@@ -2,26 +2,14 @@
 
 session_start();
 
-if (isset($_SESSION['logged-in'])) {
-    unset($_SESSION['logged-in']);
-}
+/* Remove all session variables */
+$_SESSION = [];
 
+/* Destroy the session completely */
+session_destroy();
 
-if (isset($_SESSION['user_logged_in'])) {
-    unset($_SESSION['user_logged_in']);
-}
-if (isset($_SESSION['user_id'])) {
-    unset($_SESSION['user_id']);
-}
-if (isset($_SESSION['access_level'])) {
-    unset($_SESSION['access_level']);
-}
+/* Redirect user to sign-in page */
 header("Location: signIn.php");
-
-?>
-<?php
-session_unset();
-//HOORAY!!
-
+exit();
 
 ?>

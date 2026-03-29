@@ -424,8 +424,12 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
                             print "<div class=\"boxesForEachPost\">";
                             print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row2['username'] . "</p>" . "</div>";
                             print "<div class=\"gridItemForPostBox4\">";
-                            print "<a href=\"userProfileView.php?user_id=" . $row2['user_id'] . "\">";
-                            print "<img src=\"" . $row2['user_pfp'] . "\" alt=\"profile image of user\">";
+                            print "<a href=\"userProfileView.php?user_id=" . urlencode($row2['user_id']) . "\">";
+                            if (!empty($row2['user_pfp'])) {
+                                print "<img src=\"" . htmlspecialchars($row2['user_pfp']) . "\" alt=\"profile image of user\" onerror=\"this.src='img/PFP.png';\">";
+                            } else {
+                                print "<img src=\"img/PFP.png\" alt=\"profile image of user\">";
+                            }
                             print "</a>";
                             print "</div>";
 

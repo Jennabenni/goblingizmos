@@ -6,28 +6,47 @@ session_start();
 /*DO NOT DELETE THESE */
 
 //include("../db-connect.php");
-//include("/Applications/XAMPP/htdocs/dig3134c/db-connect.php");
+//include(__DIR__ . "/db-connect.php");
+include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
 
 
+/* FIX: initialize row */
+$row = null;
 
-if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
+if (
+    isset($_SESSION['logged_in']) &&
+    $_SESSION['logged_in'] === true &&
+    isset($_SESSION['user_id'])
+) {
 
 
-    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = '" . $_SESSION['user_id'] . "'";
+    /* FIX: use prepared statement instead of direct SQL concatenation */
+    $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = ?";
 
 
     //honestly all of this could be used
 
-    $result = $mysqli->query($query_user_info_on_pages);
+    $stmt = $mysqli->prepare($query_user_info_on_pages);
 
+    if (!$stmt) {
+        die("Prepare failed: " . $mysqli->error);
+    }
 
+    $stmt->bind_param("i", $_SESSION['user_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_array(MYSQLI_ASSOC);
+    }
+
+    $stmt->close();
 }
 
 
@@ -105,28 +124,20 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
                     <?php
 
 
-                    if (isset($_SESSION['logged_in'])) {
-                        $row = $result->fetch_array(MYSQLI_ASSOC);
+                    if (
+                        isset($_SESSION['logged_in']) &&
+                        $_SESSION['logged_in'] === true &&
+                        $row
+                    ) {
 
-                        if ($row['user_pfp'] != '') {
-                            print "<a href=\"userProfile.php\"><img src=\"" . $row['user_pfp'] . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\"></a>";
-                        } else if ($row['user_pfp'] == '') {
+                        if (!empty($row['user_pfp'])) {
+                            print "<a href=\"userProfile.php\"><img src=\"" . htmlspecialchars($row['user_pfp']) . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\" onerror=\"this.src='img/PFP.png';\"></a>";
+                        } else {
                             print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                         }
-                    }
-
-
-                    if (!isset($_SESSION['logged_in'])) {
+                    } else {
                         print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
                     }
-
-
-
-
-
-
-
-
 
                     ?>
 
@@ -363,9 +374,6 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 
     <footer>
 
-
-
-
         <img src="img/goblinLogo.png" id="bottomLogo" alt="a goblin face in a coin; the logo">
         <!--PLACEHOLDER!! REPLACE LATER: LOGO-->
 
@@ -424,5 +432,7 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 
 </html>
 <?php
-$mysqli->close();
+if (isset($mysqli) && $mysqli) {
+    $mysqli->close();
+}
 ?>
