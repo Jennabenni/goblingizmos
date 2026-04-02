@@ -456,8 +456,6 @@ if (!$resultCompost) {
                         while (($row2 = $resultCompost->fetch_array(MYSQLI_ASSOC))) {
 
 
-
-
                             print "<div class=\"boxesForEachPost\">";
 
 
@@ -511,13 +509,16 @@ if (!$resultCompost) {
                             //print "<a href=\"../categories/postView.php?compost_id=" . $row2['compost_id'] . "\"\">View Post</a>";
                             print "</div>";
 
+
+
+                            //THE COMMENTS
+                            print "<div><a href=\"communityComments.php?compost_id=" . htmlspecialchars($row2['compost_id']) . "\"\">See Comments</a>></div>";
+
                             print "</div>";
 
 
 
                         }
-
-
 
 
                     } else {
@@ -526,22 +527,9 @@ if (!$resultCompost) {
                     ?>
 
 
-
-
-
-
-
                 </div>
 
-
-
-
-
-
-
             </div>
-
-
 
         </div>
     </div>
