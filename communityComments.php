@@ -194,7 +194,7 @@ if (isset($_GET['compost_id'])) {
 
 
 
-                print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2(['compost_description']) . "</p>" . "</div>";
+                print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2['compost_description'] . "</p>" . "</div>";
 
 
 
