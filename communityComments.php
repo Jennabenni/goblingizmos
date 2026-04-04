@@ -191,15 +191,15 @@ if (!$resultCompost) {
 
 
 
-            print "<div class=\"gridItemForPostBox3\">" . "<p>" . htmlspecialchars($row2['username']) . "</p>" . "</div>";
+            print "<div class=\"gridItemForPostBox3\">" . "<p>" . htmlspecialchars($row['username']) . "</p>" . "</div>";
             print "<div class=\"gridItemForPostBox4\">";
 
-            print "<div class=\"gridItemForPostBox5\">" . "<p>" . htmlspecialchars($row2['compost_category']) . "</p>" . "</div>";
+            print "<div class=\"gridItemForPostBox5\">" . "<p>" . htmlspecialchars($row['compost_category']) . "</p>" . "</div>";
 
 
-            print "<a href=\"userProfileView.php?user_id=" . urlencode($row2['user_id']) . "\">";
-            if (!empty($row2['user_pfp'])) {
-                print "<img src=\"" . htmlspecialchars($row2['user_pfp']) . "\" alt=\"profile image of user\" onerror=\"this.src='img/PFP.png';\">";
+            print "<a href=\"userProfileView.php?user_id=" . urlencode($row['user_id']) . "\">";
+            if (!empty($row['user_pfp'])) {
+                print "<img src=\"" . htmlspecialchars($row['user_pfp']) . "\" alt=\"profile image of user\" onerror=\"this.src='img/PFP.png';\">";
             } else {
                 print "<img src=\"img/PFP.png\" alt=\"profile image of user\">";
             }
@@ -207,23 +207,23 @@ if (!$resultCompost) {
 
             print "</div>";
 
-            print "<div class=\"gridItemForPostBox11\">" . "<p>" . htmlspecialchars($row2['compost_description']) . "</p>" . "</div>";
+            print "<div class=\"gridItemForPostBox11\">" . "<p>" . htmlspecialchars($row['compost_description']) . "</p>" . "</div>";
 
 
 
-            if (!empty($row2['compost_img'])) {
-                print "<div class=\"gridItemForPostBox12\">" . "<img src=\"" . htmlspecialchars($row2['compost_img']) . "\" alt=\"community post image\">" . "</div>";
+            if (!empty($row['compost_img'])) {
+                print "<div class=\"gridItemForPostBox12\">" . "<img src=\"" . htmlspecialchars($row['compost_img']) . "\" alt=\"community post image\">" . "</div>";
 
             }
 
-            if (!empty($row2['compost_sfw_nsfw'])) {
-                print "<div class=\"gridItemForPostBox13\">" . "<p>" . htmlspecialchars($row2['compost_sfw_nsfw']) . "</p>" .
+            if (!empty($row['compost_sfw_nsfw'])) {
+                print "<div class=\"gridItemForPostBox13\">" . "<p>" . htmlspecialchars($row['compost_sfw_nsfw']) . "</p>" .
                     "</div>";
 
             }
 
 
-            print "<div class=\"gridItemForPostBox14\">" . "<p>" . htmlspecialchars($row2['compost_creation_date']) . "</p>" . "</div>";
+            print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row['compost_creation_date'] . "</p>" . "</div>";
 
 
 
