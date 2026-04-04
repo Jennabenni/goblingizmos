@@ -58,7 +58,7 @@ if (
 }
 
 
-if (isset($_GET['post_id'])) {
+if (isset($_GET['compost_id'])) {
     $query_compostSelect = "SELECT compost_id, goblingizmos_community.user_id, compost_category, compost_description, compost_img, compost_sfw_nsfw, compost_creation_date, goblingizmos_users.username, goblingizmos_users.user_pfp FROM `goblingizmos_community` INNER JOIN goblingizmos_users ON goblingizmos_community.user_id=goblingizmos_users.user_id WHERE post_id = '" . $_GET['post_id'] . "'";
 
 
