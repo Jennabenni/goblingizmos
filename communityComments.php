@@ -13,10 +13,6 @@ session_start();
 include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
 
-
-/*WHY DO THESE ALL HAVE BUTTONS FUCK */
-
-
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
@@ -28,7 +24,7 @@ error_reporting(E_ALL);
 /* FIX: initialize row so it exists even if no query runs */
 $row = null;
 $viewedCompostComments = null;
-//This was in postView but personally I don't know how to code like that
+
 
 if (
     isset($_SESSION['logged_in']) &&
@@ -36,6 +32,8 @@ if (
     isset($_SESSION['user_id'])
 ) {
 
+
+    //This is for the pfp right??
 
     /* FIX: use prepared statement instead of direct SQL concatenation */
     $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = ?";
@@ -60,22 +58,17 @@ if (
 }
 
 
+if (isset($_GET['post_id'])) {
+    $query_compostSelect = "SELECT compost_id, goblingizmos_community.user_id, compost_category, compost_description, compost_img, compost_sfw_nsfw, compost_creation_date, goblingizmos_users.username, goblingizmos_users.user_pfp FROM `goblingizmos_community` INNER JOIN goblingizmos_users ON goblingizmos_community.user_id=goblingizmos_users.user_id WHERE post_id = '" . $_GET['post_id'] . "'";
 
 
 
 
+    $resultCompostUser = $mysqli->query($query_compostSelect);
 
-/* FIX: select poster username and profile picture from joined users table */
-$query_compost = "SELECT goblingizmos_community.user_id, goblingizmos_community.compost_id, goblingizmos_community.compost_img, goblingizmos_community.compost_category, goblingizmos_community.compost_description, goblingizmos_community.compost_sfw_nsfw, goblingizmos_community.compost_likes, goblingizmos_community.compost_creation_date, goblingizmos_users.username, goblingizmos_users.user_pfp FROM `goblingizmos_community` INNER JOIN goblingizmos_users ON goblingizmos_community.user_id = goblingizmos_users.user_id ORDER BY goblingizmos_community.compost_id DESC";
-
-
-
-$resultCompost = $mysqli->query($query_compost);
-
-/* FIX: avoid hard crash if local table is missing */
-if (!$resultCompost) {
-    $resultCompost = null;
 }
+
+
 
 ?>
 
@@ -175,70 +168,64 @@ if (!$resultCompost) {
         <?php
 
 
-        if ($resultCompost) {
+        if ($resultCompostUser) {
 
-            /*
-
-
+            while ($row2 = $resultCompostUser->fetch_array(MYSQLI_ASSOC)) {
 
 
-
-            */
+                print "<div class=\"boxesForEachPost\">";
 
 
 
-            print "<div class=\"boxesForEachPost\">";
+                print "<div class=\"gridItemForPostBox3\">" . "<p>" . ($row2['username']) . "</p>" . "</div>";
+                print "<div class=\"gridItemForPostBox4\">";
+
+                print "<div class=\"gridItemForPostBox5\">" . "<p>" . ($row2['compost_category']) . "</p>" . "</div>";
+
+
+                print "<a href=\"userProfileView.php?user_id=" . ($row2['user_id']) . "\">";
+                if (!empty($row2['user_pfp'])) {
+                    print "<img src=\"" . htmlspecialchars($row2['user_pfp']) . "\" alt=\"profile image of user\" onerror=\"this.src='img/PFP.png';\">";
+                } else {
+                    print "<img src=\"img/PFP.png\" alt=\"profile image of user\">";
+                }
+                print "</a>";
+                print "</div>";
 
 
 
-            print "<div class=\"gridItemForPostBox3\">" . "<p>" . htmlspecialchars($row['username']) . "</p>" . "</div>";
-            print "<div class=\"gridItemForPostBox4\">";
-
-            print "<div class=\"gridItemForPostBox5\">" . "<p>" . htmlspecialchars($row['compost_category']) . "</p>" . "</div>";
+                print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2(['compost_description']) . "</p>" . "</div>";
 
 
-            print "<a href=\"userProfileView.php?user_id=" . urlencode($row['user_id']) . "\">";
-            if (!empty($row['user_pfp'])) {
-                print "<img src=\"" . htmlspecialchars($row['user_pfp']) . "\" alt=\"profile image of user\" onerror=\"this.src='img/PFP.png';\">";
-            } else {
-                print "<img src=\"img/PFP.png\" alt=\"profile image of user\">";
+
+                if (!empty($row2['compost_img'])) {
+                    print "<div class=\"gridItemForPostBox12\">" . "<img src=\"" . ($row2['compost_img']) . "\" alt=\"community post image\">" . "</div>";
+
+                }
+
+                if (!empty($row2['compost_sfw_nsfw'])) {
+                    print "<div class=\"gridItemForPostBox13\">" . "<p>" . ($row2['compost_sfw_nsfw']) . "</p>" .
+                        "</div>";
+
+                }
+
+
+                print "<div class=\"gridItemForPostBox14\">" . "<p>" . ($row2['compost_creation_date']) . "</p>" . "</div>";
+
+
+
+
+
+                print "</div>";
+
+
+
+
             }
-            print "</a>";
-
-            print "</div>";
-
-            print "<div class=\"gridItemForPostBox11\">" . "<p>" . htmlspecialchars($row['compost_description']) . "</p>" . "</div>";
-
-
-
-            if (!empty($row['compost_img'])) {
-                print "<div class=\"gridItemForPostBox12\">" . "<img src=\"" . htmlspecialchars($row['compost_img']) . "\" alt=\"community post image\">" . "</div>";
-
-            }
-
-            if (!empty($row['compost_sfw_nsfw'])) {
-                print "<div class=\"gridItemForPostBox13\">" . "<p>" . htmlspecialchars($row['compost_sfw_nsfw']) . "</p>" .
-                    "</div>";
-
-            }
-
-
-            print "<div class=\"gridItemForPostBox14\">" . "<p>" . $row['compost_creation_date'] . "</p>" . "</div>";
-
-
-
-
-
-            print "</div>";
-
 
 
 
         }
-
-
-
-
 
 
 
