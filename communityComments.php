@@ -66,7 +66,7 @@ if (isset($_GET['compost_id'])) {
 
 
     $query_get_comment = "SELECT * FROM `goblingizmos_comments` WHERE compost_id = '" . $_GET['compost_id'] . "'
-    ORDER BY comment_creation_date ASC ";
+    ORDER BY comment_compost_creation_date ASC ";
     //I think I gotta innerjoin
     /*
       - user_id (Foreign Key)
