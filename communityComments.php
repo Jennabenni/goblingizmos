@@ -65,7 +65,7 @@ if (isset($_GET['compost_id'])) {
     $resultCompostUser = $mysqli->query($query_compostSelect);
 
 
-    $query_get_comment = "SELECT * FROM `goblingizmos_comments` WHERE compost_id = '" . $_GET['compost_id'] . "'
+    $query_get_comment = "SELECT * FROM `goblingizmos_comments` INNER JOIN goblingizmos_community ON goblingizmos_comments.compost_id=goblingizmos_community.compost_id WHERE compost_id = '" . $_GET['compost_id'] . "'
     ORDER BY comment_compost_creation_date ASC ";
     //I think I gotta innerjoin
     /*
