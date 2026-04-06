@@ -67,6 +67,20 @@ if (isset($_GET['compost_id'])) {
     $resultCompostUser = $mysqli->query($query_compostSelect);
 
 }
+$commentLikeValue = "0";
+
+
+if (($_SESSION['logged_in'] == 'true') && isset($_POST['submit']) && !empty($_POST['comment_text'])) {
+
+    $commentPosting = "INSERT INTO `goblingizmos_comments` (`user_id`, `comment_compost_id`, `compost_id`, `comment_text`, `comment_compost_likes`, `comment_compost_creation_date`) VALUES ('', NULL, '" . $_GET['compost_id'] . "' , '', NULL, current_timestamp())";
+
+    //ugh
+
+
+
+
+
+}
 
 
 
@@ -220,13 +234,58 @@ if (isset($_GET['compost_id'])) {
 
 
 
-
             }
 
 
 
         }
 
+
+
+
+        print "<div class = \"FAQ\">";
+
+        /*
+
+        Okay so the new table has
+
+        - user_id (Foreign Key)
+        - comment_compost_id (Primary key)
+        - comment_text
+        - comment_compost_likes
+        - comment_compost_creation_date
+         */
+
+        print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . "\">";
+        //didnt do the enctype because I didnt allow for media uploads
+        
+        //display user pfp
+//textbox
+//submit
+        
+
+        if (
+            isset($_SESSION['logged_in']) &&
+            $_SESSION['logged_in'] === true &&
+            isset($row)
+        ) {
+
+            if (!empty($row['user_pfp'])) {
+                print "<a href=\"userProfile.php\"><img src=\"" . htmlspecialchars($row['user_pfp']) . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\" onerror=\"this.src='img/PFP.png';\"></a>";
+            } else {
+                print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+            }
+        } else {
+            print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+        }
+
+        print "<textarea placeholder='Input Text' class='textAreaSize' rows='7' cols='50' id='comment_text' name ='comment_text'></textarea>";
+
+
+        print " <button type=\"submit\" class=\"goblinButtons\" id=\"holdingSpace\" name=\"submit\">Comment</button>";
+
+
+        print "</form>";
 
 
 
