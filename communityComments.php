@@ -283,9 +283,10 @@ if (($_SESSION['logged_in'] == 'true') && isset($_POST['submit']) && !empty($_PO
         - comment_compost_creation_date
          */
 
-        print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . "\">";
+        print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER['PHP_SELF']) . "?compost_id=" . $_GET['compost_id'] . "\">";
         //didnt do the enctype because I didnt allow for media uploads
         
+
         //display user pfp
 //textbox
 //submit
