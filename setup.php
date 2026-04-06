@@ -50,11 +50,47 @@ $insertNewPostsPop = "INSERT INTO `goblingizmos_postsbounties` (`user_id`, `post
 
 */
 
+//create table
+
+$createCommentsTable = "CREATE TABLE `goblingizmos_comments` (
+  `user_id` int(255) NOT NULL,
+  `comment_compost_id` int(255) NOT NULL,
+  `compost_id` int(255) NOT NULL,
+  `comment_text` varchar(255) NOT NULL,
+  `comment_compost_likes` int(255) DEFAULT NULL,
+  `comment_compost_creation_date` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+";
+
+$editCommentsTableForPrimKey = "ALTER TABLE `goblingizmos_comments`
+  ADD PRIMARY KEY (`comment_compost_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `goblingizmos_comments_ibfk_1` (`compost_id`)";
+
+$lotsOfEditshere = "ALTER TABLE `goblingizmos_comments`
+  MODIFY `comment_compost_id` int(255) NOT NULL AUTO_INCREMENT";
+
+
+$tableIsLinked = "ALTER TABLE `goblingizmos_comments`
+  ADD CONSTRAINT `goblingizmos_comments_ibfk_1` FOREIGN KEY (`compost_id`) REFERENCES `goblingizmos_community` (`compost_id`)";
 
 
 
+$mysqli->query($createCommentsTable);
 
-$mysqli->query($insertNewPostsPop);
+if ($mysqli->query($createCommentsTable)) {
+    echo "Table created successfully!";
+} else {
+    echo "Error creating table: " . $mysqli->error;
+}
+
+
+$mysqli->query($editCommentsTableForPrimKey);
+
+$mysqli->query($lotsOfEditshere);
+
+$mysqli->query($tableIsLinked);
+
 
 $mysqli->close();
 

@@ -61,10 +61,24 @@ if (
 if (isset($_GET['compost_id'])) {
     $query_compostSelect = "SELECT compost_id, goblingizmos_community.user_id, compost_category, compost_description, compost_img, compost_sfw_nsfw, compost_creation_date, goblingizmos_users.username, goblingizmos_users.user_pfp FROM `goblingizmos_community` INNER JOIN goblingizmos_users ON goblingizmos_community.user_id=goblingizmos_users.user_id WHERE compost_id = '" . $_GET['compost_id'] . "'";
 
-
-
-
+    //this is the specific post
     $resultCompostUser = $mysqli->query($query_compostSelect);
+
+
+    $query_get_comment = "SELECT * FROM `goblingizmos_comments` WHERE compost_id = '" . $_GET['compost_id'] . "'
+    ORDER BY comment_creation_date ASC ";
+    //I think I gotta innerjoin
+    /*
+      - user_id (Foreign Key)
+        - comment_compost_id (Primary key)
+        - compost_id (Foreign key)
+        - comment_text
+        - comment_compost_likes
+        - comment_compost_creation_date
+*/
+    $comment_result = $mysqli->query($query_get_comment);
+
+
 
 }
 $commentLikeValue = "0";
@@ -74,10 +88,7 @@ if (($_SESSION['logged_in'] == 'true') && isset($_POST['submit']) && !empty($_PO
 
     $commentPosting = "INSERT INTO `goblingizmos_comments` (`user_id`, `comment_compost_id`, `compost_id`, `comment_text`, `comment_compost_likes`, `comment_compost_creation_date`) VALUES ('', NULL, '" . $_GET['compost_id'] . "' , '', NULL, current_timestamp())";
 
-    //ugh
-
-
-
+    //inserting the commment
 
 
 }
@@ -240,6 +251,21 @@ if (($_SESSION['logged_in'] == 'true') && isset($_POST['submit']) && !empty($_PO
 
         }
 
+        if ($comment_result) {
+            while ($row2 = $comment_result->fetch_array(MYSQLI_ASSOC)) {
+
+                print "<div class=\"boxesForEachPost\">";
+
+                print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2['comment_text'] . "</p>" . "</div>";
+
+
+                print "</div>";
+
+
+            }
+
+        }
+
 
 
 
@@ -251,6 +277,7 @@ if (($_SESSION['logged_in'] == 'true') && isset($_POST['submit']) && !empty($_PO
 
         - user_id (Foreign Key)
         - comment_compost_id (Primary key)
+        - compost_id (Foreign key)
         - comment_text
         - comment_compost_likes
         - comment_compost_creation_date
