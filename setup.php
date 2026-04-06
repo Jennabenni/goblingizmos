@@ -45,13 +45,52 @@ $mysqli->query($insertData);
 
 
 
-
+/*
 $insertNewPostsPop = "INSERT INTO `goblingizmos_postsbounties` (`user_id`, `post_or_bounty`, `post_category`, `post_condition`, `post_boxCondition`, `post_price`, `post_location`, `post_description`, `post_img`, `post_sfw_nsfw`, `post_creation_date`) VALUES ('18', 'bounty', 'cans', 'new', NULL, '10000000', NULL, 'I am so fascinated and need to sell this can.  Offer is right there folks', 'uploads/cans3.jpg', NULL, '2026-02-17'), ('17', 'post', 'charms', NULL, NULL, NULL, '', 'Got this for my lanyard!', 'uploads/charm1.JPEG', NULL, '2026-03-02'), ('16', 'post', 'charms', NULL, NULL, NULL, NULL, 'Check this out', 'uploads/charms2.jpg', NULL, '2026-03-09'), ('2', 'bounty', 'charms', NULL, NULL, NULL, NULL, 'looking for this', 'uploads/charms3.jpg', NULL, '2026-03-07'), ('1', 'post', 'coins', NULL, NULL, NULL, NULL, 'Honestly it feels like everyone on this website was curated by the Goblin Gizmos engineering lead....', 'uploads/coin1.jpg', NULL, '2026-03-09'), ('11', 'post', 'coins', NULL, NULL, NULL, NULL, 'I think it is funny how one can be at a loss for words when it comes to numerous categories', 'uploads/coin2.jpg', NULL, '2026-03-12'), ('1', 'bounty', 'coins', NULL, NULL, NULL, NULL, 'Need this NOW', NULL, NULL, '2026-03-08'), ('15', 'post', 'figures', NULL, NULL, NULL, NULL, 'Collected this recently', 'uploads/figures1.jpeg', NULL, '2026-03-09'), ('1', 'post', 'figures', NULL, NULL, NULL, NULL, 'How many times can I type generic text before it becomes obvious I am not looking at the pictures', NULL, NULL, '2026-03-03'), ('1', 'bounty', 'figures', NULL, NULL, '35', NULL, 'Selling this', 'uploads/figures3.jpg', 'sfw', '2026-03-08'), ('11', 'post', 'jewelry', NULL, NULL, NULL, NULL, 'this belonged to my grandmother', 'uploads/jewelry1.jpg', NULL, '2026-03-08'), ('1', 'post', 'jewelry', NULL, NULL, NULL, NULL, 'If you are seeing this, silver or gold jewelry? Or are you fancy with a rose gold', 'uploads/jewelry2.jpg', NULL, '2026-03-08'), ('11', 'bounty', 'jewelry', NULL, NULL, NULL, NULL, 'I NEED THIS NOW', 'uploads/jewelry3.jpg', NULL, '2026-03-09'), ('1', 'post', 'magnets', NULL, NULL, NULL, NULL, 'hey guys do we think this will stick to metal', 'uploads/magnet1.jpg', NULL, '2026-03-09')";
 
+*/
+
+//create table
+
+$createCommentsTable = "CREATE TABLE `goblingizmos_comments` (
+  `user_id` int(255) NOT NULL,
+  `comment_compost_id` int(255) NOT NULL,
+  `compost_id` int(255) NOT NULL,
+  `comment_text` varchar(255) NOT NULL,
+  `comment_compost_likes` int(255) DEFAULT NULL,
+  `comment_compost_creation_date` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+";
+
+$editCommentsTableForPrimKey = "ALTER TABLE `goblingizmos_comments`
+  ADD PRIMARY KEY (`comment_compost_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `goblingizmos_comments_ibfk_1` (`compost_id`)";
+
+$lotsOfEditshere = "ALTER TABLE `goblingizmos_comments`
+  MODIFY `comment_compost_id` int(255) NOT NULL AUTO_INCREMENT";
+
+
+$tableIsLinked = "ALTER TABLE `goblingizmos_comments`
+  ADD CONSTRAINT `goblingizmos_comments_ibfk_1` FOREIGN KEY (`compost_id`) REFERENCES `goblingizmos_community` (`compost_id`)";
 
 
 
-$mysqli->query($insertNewPostsPop);
+$mysqli->query($createCommentsTable);
+
+if ($mysqli->query($createCommentsTable)) {
+    echo "Table created successfully!";
+} else {
+    echo "Error creating table: " . $mysqli->error;
+}
+
+
+$mysqli->query($editCommentsTableForPrimKey);
+
+$mysqli->query($lotsOfEditshere);
+
+$mysqli->query($tableIsLinked);
+
 
 $mysqli->close();
 
