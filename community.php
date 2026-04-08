@@ -518,7 +518,7 @@ if (!$resultCompost) {
                                 print "</div>";
                             }
 
-                            print "</div>";
+
 
 
 
