@@ -483,6 +483,43 @@ if (!$resultCompost) {
                             //print "<a href=\"../categories/postView.php?compost_id=" . $row2['compost_id'] . "\"\">View Post</a>";
                             print "</div>";
 
+                            /* -- EDIT BUTTON --
+                             * Only the author of this post sees the Edit button.
+                             * $row2['user_id'] is the post author's ID.
+                             * $_SESSION['user_id'] is the currently logged-in user's ID. */
+                            if (
+                                isset($_SESSION['logged_in']) &&
+                                $_SESSION['logged_in'] === true &&
+                                (int) $row2['user_id'] === (int) $_SESSION['user_id']
+                            ) {
+                                print "<div class=\"gridItemForPostBoxViewPost\">";
+                                print "<a href=\"editCommunityPost.php?compost_id=" . urlencode($row2['compost_id']) . "\">";
+                                print "<button type=\"button\" class=\"goblinButtons\">Edit</button>";
+                                print "</a>";
+                                print "</div>";
+                            }
+
+                            /* -- DELETE BUTTON --
+                             * The author OR any admin can delete a community post.
+                             * $row holds the logged-in user's info (loaded before this loop),
+                             * so $row['access_level'] is safe to check here. */
+                            if (
+                                isset($_SESSION['logged_in']) &&
+                                $_SESSION['logged_in'] === true &&
+                                (
+                                    (int) $row2['user_id'] === (int) $_SESSION['user_id'] ||
+                                    (isset($row['access_level']) && $row['access_level'] === 'admin')
+                                )
+                            ) {
+                                print "<div class=\"gridItemForPostBoxViewPost\">";
+                                print "<a href=\"deleteConfirm.php?post_id=" . urlencode($row2['compost_id']) . "&type=community\">";
+                                print "<button type=\"button\" class=\"deleteButton\">Delete</button>";
+                                print "</a>";
+                                print "</div>";
+                            }
+
+                            print "</div>";
+
 
 
 
