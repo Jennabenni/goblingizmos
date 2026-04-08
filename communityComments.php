@@ -65,7 +65,7 @@ if (isset($_GET['compost_id'])) {
     $resultCompostUser = $mysqli->query($query_compostSelect);
 
 
-    $query_get_comment = "SELECT * FROM `goblingizmos_comments` INNER JOIN goblingizmos_community ON goblingizmos_comments.compost_id=goblingizmos_community.compost_id WHERE compost_id = '" . $_GET['compost_id'] . "'
+    $query_get_comment = "SELECT * FROM `goblingizmos_comments` INNER JOIN goblingizmos_community ON goblingizmos_comments.compost_id=goblingizmos_community.compost_id INNER JOIN goblingizmos_users ON goblingizmos_comments.user_id=goblingizmos_users.user_id WHERE goblingizmos_community.compost_id = '" . $_GET['compost_id'] . "'
     ORDER BY comment_compost_creation_date ASC ";
     //I think I gotta innerjoin
     /*
@@ -81,16 +81,39 @@ if (isset($_GET['compost_id'])) {
 
 
 }
-$commentLikeValue = "0";
+
+if (
+    isset($_SESSION['logged_in']) &&
+    $_SESSION['logged_in'] === true &&
+    isset($_POST['submit']) &&
+    !empty($_POST['comment_text']) &&
+    isset($_GET['compost_id'])
+) {
+    $commentText = $_POST['comment_text'];
+    $commentLikeValue = 0;
+    $userId = $_SESSION['user_id'];
+    $compostId = $_GET['compost_id'];
 
 
-if (($_SESSION['logged_in'] == 'true') && isset($_POST['submit']) && !empty($_POST['comment_text'])) {
+    $stmt = $mysqli->prepare(
+        "INSERT INTO `goblingizmos_comments`
+        (`user_id`, `comment_compost_id`, `compost_id`, `comment_text`, `comment_compost_likes`, `comment_compost_creation_date`)
+        VALUES (?, NULL, ?, ?, ?, current_timestamp())"
+    );
 
-    $commentPosting = "INSERT INTO `goblingizmos_comments` (`user_id`, `comment_compost_id`, `compost_id`, `comment_text`, `comment_compost_likes`, `comment_compost_creation_date`) VALUES ('', NULL, '" . $_GET['compost_id'] . "' , '', NULL, current_timestamp())";
+    if ($stmt) {
+        $stmt->bind_param("iisi", $userId, $compostId, $commentText, $commentLikeValue);
+        $stmt->execute();
+        $stmt->close();
 
-    //inserting the commment
+        header("Location: " . $_SERVER['PHP_SELF'] . "?compost_id=" . $_GET['compost_id']);
 
 
+
+
+    } else {
+        echo "Error preparing statement: " . $mysqli->error;
+    }
 }
 
 
@@ -190,8 +213,16 @@ if (($_SESSION['logged_in'] == 'true') && isset($_POST['submit']) && !empty($_PO
         </header>
 
 
-        <?php
 
+        <a href="community.php">
+            <img src="img/backbutton.png" alt="an arrow pointing to the left" class="iconImg">
+        </a>
+
+
+
+
+
+        <?php
 
         if ($resultCompostUser) {
 
@@ -251,21 +282,27 @@ if (($_SESSION['logged_in'] == 'true') && isset($_POST['submit']) && !empty($_PO
 
         }
 
-        if ($comment_result) {
-            while ($row2 = $comment_result->fetch_array(MYSQLI_ASSOC)) {
+        if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in'] == true)) {
+            if ($comment_result) {
+                while ($row3 = $comment_result->fetch_array(MYSQLI_ASSOC)) {
 
-                print "<div class=\"boxesForEachPost\">";
+                    print "<div class=\"boxesForEachPost\">";
 
-                print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2['comment_text'] . "</p>" . "</div>";
+                    print "<p>" . $row3['username'] . "</p>";
+                    print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row3['comment_text'] . "</p>" . "</div>";
+                    print "<p>" . $row3['comment_compost_creation_date'] . "</p>";
 
 
-                print "</div>";
+                    print "</div>";
 
+
+                }
 
             }
+        } else {
+            print "<p>Please log in to view comments on this post</p>";
 
         }
-
 
 
 

@@ -51,7 +51,7 @@ $insertNewPostsPop = "INSERT INTO `goblingizmos_postsbounties` (`user_id`, `post
 */
 
 //create table
-
+/*
 $createCommentsTable = "CREATE TABLE `goblingizmos_comments` (
   `user_id` int(255) NOT NULL,
   `comment_compost_id` int(255) NOT NULL,
@@ -60,7 +60,7 @@ $createCommentsTable = "CREATE TABLE `goblingizmos_comments` (
   `comment_compost_likes` int(255) DEFAULT NULL,
   `comment_compost_creation_date` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-";
+";*/
 
 $editCommentsTableForPrimKey = "ALTER TABLE `goblingizmos_comments`
   ADD PRIMARY KEY (`comment_compost_id`),
@@ -74,15 +74,6 @@ $lotsOfEditshere = "ALTER TABLE `goblingizmos_comments`
 $tableIsLinked = "ALTER TABLE `goblingizmos_comments`
   ADD CONSTRAINT `goblingizmos_comments_ibfk_1` FOREIGN KEY (`compost_id`) REFERENCES `goblingizmos_community` (`compost_id`)";
 
-
-
-$mysqli->query($createCommentsTable);
-
-if ($mysqli->query($createCommentsTable)) {
-    echo "Table created successfully!";
-} else {
-    echo "Error creating table: " . $mysqli->error;
-}
 
 
 $mysqli->query($editCommentsTableForPrimKey);

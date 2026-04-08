@@ -414,32 +414,6 @@ if (!$resultCompost) {
 
 
 
-            <!--Community and friend tab
-
-        why do we even have a friends tab
-
-        Novatnik pressured us into making a social media feature and we folded very easily -carter
-        -->
-
-            <!-- <div id="comGridItem3">
-                <ol class="comFriendsHeader">
-
-                    <li>
-                        <h2>Community</h2>
-                    </li>
-
-                </ol>
-            </div>-->
-
-            <!--Maybe they look the same but they're two different pages???
-            or is this DOM?
-
-
-            -->
-
-
-
-
             <div id="communityFeed">
 
 
@@ -511,7 +485,10 @@ if (!$resultCompost) {
 
 
 
-                            //THE COMMENTS
+
+
+
+                            //THE COMMENTS (Viewing)
                             print "<div><a href=\"communityComments.php?compost_id=" . htmlspecialchars($row2['compost_id']) . "\"\">See Comments</a>></div>";
 
                             print "</div>";
