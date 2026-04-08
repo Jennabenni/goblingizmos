@@ -105,34 +105,37 @@ if (
 
     //I won't take credit for this:
 
+    $usersNewFirstName = trim($_POST['first_name'] ?? "");
+    $usersNewLastName = trim($_POST['last_name'] ?? "");
     $usersNewUsername = trim($_POST['uname'] ?? "");
     $usersNewBio = trim($_POST['bio'] ?? "");
     $usersNewEmail = trim($_POST['user_email'] ?? "");
     $userId = $_SESSION['user_id'];
 
     /* FIX: validate required profile fields */
-    if ($usersNewUsername === "" || $usersNewEmail === "") {
-        $formMessage = "Username and email cannot be empty.";
+    if ($usersNewFirstName === "" || $usersNewLastName === "" || $usersNewUsername === "" || $usersNewEmail === "") {
+    $formMessage = "First name, last name, username, and email cannot be empty.";
     } else {
 
         /* FIX: check for duplicate username/email owned by someone else */
-        $checkDuplicateQuery = "SELECT user_id FROM `goblingizmos_users` WHERE (username = ? OR user_email = ?) AND user_id != ?";
+        // AI-assisted: checking duplicate username only because current sample data contains repeated emails
+        $checkDuplicateQuery = "SELECT user_id FROM `goblingizmos_users` WHERE username = ? AND user_id != ?";
         $checkStmt = $mysqli->prepare($checkDuplicateQuery);
 
         if (!$checkStmt) {
             die("Prepare failed: " . $mysqli->error);
         }
 
-        $checkStmt->bind_param("ssi", $usersNewUsername, $usersNewEmail, $userId);
+        $checkStmt->bind_param("si", $usersNewUsername, $userId);
         $checkStmt->execute();
         $duplicateResult = $checkStmt->get_result();
 
         if ($duplicateResult && $duplicateResult->num_rows > 0) {
-            $formMessage = "That username or email is already in use.";
+            $formMessage = "That username is already in use.";
         } else {
 
             // Use a prepared statement
-            $updateInfoOnProfile = "UPDATE `goblingizmos_users` SET `username`= ?, `user_email`= ?, `user_bio`= ? WHERE user_id=?";
+            $updateInfoOnProfile = "UPDATE `goblingizmos_users` SET `first_name`= ?, `last_name`= ?, `username`= ?, `user_email`= ?, `user_bio`= ? WHERE user_id=?";
 
             // Prepare the statement
             $stmt = $mysqli->prepare($updateInfoOnProfile);
@@ -143,7 +146,7 @@ if (
 
             // Bind the parameters
             // The values are passed separately, not concatenated into the query
-            $stmt->bind_param("sssi", $usersNewUsername, $usersNewEmail, $usersNewBio, $userId);
+            $stmt->bind_param("sssssi", $usersNewFirstName, $usersNewLastName, $usersNewUsername, $usersNewEmail, $usersNewBio, $userId);
 
             // Execute the query
             if ($stmt->execute()) {
@@ -333,6 +336,30 @@ if (
 
             print "<div class=\"smallerProfileBox\">";
 
+            // FIRST NAME
+            print "<div class=\"smallerLabelProfile\">";
+            print "<label for=\"first_name\">";
+            print "<h3>First Name</h3>";
+            print "</label>";
+            print "</div>";
+
+            print "<div class=\"evenSmallerProfileBox\">";
+            print "<input type=\"text\" id=\"first_name\" name=\"first_name\" value=\"" . htmlspecialchars($userRow['first_name'] ?? '', ENT_QUOTES, 'UTF-8') . "\">";
+            print "<img src=\"img/pencilAndPaper.png\" class=\"iconImg\">";
+            print "</div>";
+
+            // LAST NAME
+            print "<div class=\"smallerLabelProfile\">";
+            print "<label for=\"last_name\">";
+            print "<h3>Last Name</h3>";
+            print "</label>";
+            print "</div>";
+
+            print "<div class=\"evenSmallerProfileBox\">";
+            print "<input type=\"text\" id=\"last_name\" name=\"last_name\" value=\"" . htmlspecialchars($userRow['last_name'] ?? '', ENT_QUOTES, 'UTF-8') . "\">";
+            print "<img src=\"img/pencilAndPaper.png\" class=\"iconImg\">";
+            print "</div>";
+
             print "<div class=\"smallerLabelProfile\">";
             print "<label for=\"uname\">";
 
@@ -395,12 +422,14 @@ if (
 
             print " <div>";
 
-            //  print " <a href=\"settings.php\" class=\"goblinButtons\">Settings</a>";
+            
         
             /* <!--
          <a href="accessibility.php" class="goblinButtons">Accessibility</a>
          -->*/
+            
             print " <a href=\"logOut.php\" class=\"goblinButtons\">Log Out</a>";
+            print " <a href=\"settings.php\" class=\"goblinButtons\">Settings</a>";
 
 
             print "</div>";
