@@ -1,27 +1,5 @@
 <?php
 /*
-Hello goblins, I'm gonna put my notes here to stay on track
-You will be seeing a lot of these
-
----------------------------- ******
-Main SQL priorities
-
-1. Accounts (admin, user, nobody) (I will make admin accounts for all of us + novatnak)
-
-2. Making posts (bounties + posts) (community) (reports)
-Bounties and posts are together, and one of the checkboxes determines which one
-it's filed away into
-
-3. Account info that user sets (we also need regex for account setup)
-
-
-So we'll need four to five data tables, I can get the format from them
-should the main SQL stuff be on the login page despite users coming here first?
-
-
-
-
-
 
 
 New start point: log in page
