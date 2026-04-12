@@ -290,8 +290,8 @@ if (isset($_SESSION['access_level'])) {
                              * $row['user_id'] is the post author; $_SESSION['user_id'] is the logged-in admin. */
                             if ((int) $row['user_id'] === (int) $_SESSION['user_id']) {
                                 print "<div class=\"gridItemForPostBoxViewPost\">";
-                                print "<a href=\"../editPost.php?post_id=" . urlencode($row['post_id']) . "\">";
-                                print "<button type=\"button\" class=\"goblinButtons\">Edit</button>";
+                                print "<a href=\"../editPost.php?post_id=" . urlencode($row['post_id']) . "\" class=\"goblinButtons\">Edit";
+                                //print "<button type=\"button\" class=\"goblinButtons\">Edit</button>";
                                 print "</a>";
                                 print "</div>";
                             }
@@ -300,13 +300,12 @@ if (isset($_SESSION['access_level'])) {
                              * All admins can delete any post — no additional check needed
                              * because we are already inside the admin-only branch. */
                             print "<div class=\"gridItemForPostBoxViewPost\">";
-                            print "<a href=\"../deleteConfirm.php?post_id=" . urlencode($row['post_id']) . "&type=post\">";
-                            print "<button type=\"button\" class=\"deleteButton\">Delete</button>";
+                            print "<a href=\"../deleteConfirm.php?post_id=" . urlencode($row['post_id']) . "&type=post\" class=\"deleteButton\">Delete";
+                            //print "<button type=\"button\" class=\"deleteButton\">Delete</button>";
                             print "</a>";
                             print "</div>";
 
                             print "</div>";
-
                         }
 
                     }
@@ -366,8 +365,8 @@ if (isset($_SESSION['access_level'])) {
                              * $row2['user_id'] is the post author; $_SESSION['user_id'] is the logged-in user. */
                             if ((int) $row2['user_id'] === (int) $_SESSION['user_id']) {
                                 print "<div class=\"gridItemForPostBoxViewPost\">";
-                                print "<a href=\"../editPost.php?post_id=" . urlencode($row2['post_id']) . "\">";
-                                print "<button type=\"button\" class=\"goblinButtons\">Edit</button>";
+                                print "<a href=\"../editPost.php?post_id=" . urlencode($row2['post_id']) . "\" class=\"goblinButtons\">Edit";
+                                // print "<button type=\"button\" class=\"goblinButtons\">Edit</button>";
                                 print "</a>";
                                 print "</div>";
                             }
@@ -376,8 +375,8 @@ if (isset($_SESSION['access_level'])) {
                              * Regular users can only delete their own posts. */
                             if ((int) $row2['user_id'] === (int) $_SESSION['user_id']) {
                                 print "<div class=\"gridItemForPostBoxViewPost\">";
-                                print "<a href=\"../deleteConfirm.php?post_id=" . urlencode($row2['post_id']) . "&type=post\">";
-                                print "<button type=\"button\" class=\"deleteButton\">Delete</button>";
+                                print "<a href=\"../deleteConfirm.php?post_id=" . urlencode($row2['post_id']) . "&type=post\" class=\"deleteButton\">Delete";
+                                //print "<button type=\"button\" class=\"deleteButton\">Delete</button>";
                                 print "</a>";
                                 print "</div>";
                             }
