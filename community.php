@@ -350,7 +350,7 @@ if (!$resultCompost) {
                             </div>
                             <div id="postItem2">
                                 <textarea name="compost_description" placeholder="Type your post..." rows="3"
-                                    columns="30"></textarea>
+                                    cols="30"></textarea>
                             </div>
                         </div>
 
