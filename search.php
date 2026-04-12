@@ -303,7 +303,7 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
                     <div class="searchBar">
 
                         <div>
-                            <img src="img/magGlass.png" class="comIcons">
+                            <img src="img/magGlass.png" class="comIcons" alt="small magnifying glass">
                         </div>
 
                         <!--Input-->
@@ -367,7 +367,7 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
 
                         <!-- Yay, more filters! I have no idea how to attach dropdowns to an image though.. maybe the filter button can be there for funsies to let people know there's a filter? Also persistent filter -->
                         <div>
-                            <img src="img/filter.png" class="comIcons">
+                            <img src="img/filter.png" class="comIcons" alt="an icon of a funnel">
                             <select name="sort" id="sort" class="searchBarItems">
 
                                 <option value="newest" <?php echo (!isset($_GET['sort']) || $_GET['sort'] === 'newest') ? 'selected' : ''; ?>>Newest</option>
@@ -389,8 +389,8 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
 
 
 
-            <div id="searchGridItem3"><a href="makePost.php">
-                    <button type="button" class="goblinButtons">Create a Bounty</a></button>
+            <div id="searchGridItem3"><a href="makePost.php" class="goblinButtons">Create a Bounty</a>
+                <!--<button type="button" class="goblinButtons">Create a Bounty</button>-->
             </div>
             <!--I think <button>'s cannot contain or be contained by <a>'s, no issue currently, works as intended, but if issues arise later check here, I'm not 100% sure myself-->
 
