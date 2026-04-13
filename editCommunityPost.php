@@ -4,7 +4,14 @@ session_start();
 /*DO NOT DELETE THESE */
 
 //include("db-connect.php");
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+
+
+
+//DOCKER CONNECTION DO NOT TOUCH ARF ARF
+require 'db_connectionGG.php';
+
+
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);

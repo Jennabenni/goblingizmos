@@ -9,16 +9,22 @@ error_reporting(E_ALL);
 */
 
 /*DO NOT DELETE THESE */
-/*If my method does not work and it needed to be reverted for all the other pages, do note that this one has a directory issue, since this file is a folder deeper in \categories\ */
+
 
 //include("../db-connect.php");
 //include(__DIR__ . "/../db-connect.php");
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
 //include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
+
+
+//DOCKER CONNECTION DO NOT TOUCH ARF ARF
+require '../db_connectionGG.php';
+
+
 
 
 /* FIX: initialize variables */
@@ -203,7 +209,7 @@ if (isset($_SESSION['access_level'])) {
 
             <div class="specificCatItem1">
                 <aside class="bountiesSection">
-                    <h3>Bounties</h3>
+                    <h2>Bounties</h2>
                     <div class="bigBountyOnCat">
                         <?php
 
@@ -273,7 +279,7 @@ if (isset($_SESSION['access_level'])) {
             </div>
 
             <div class="specificCatItem4">
-                <h3>Posts</h3>
+                <h2>Posts</h2>
             </div>
 
             <div class="specificCatItem5">
@@ -338,8 +344,8 @@ if (isset($_SESSION['access_level'])) {
                              * $row['user_id'] is the post author; $_SESSION['user_id'] is the logged-in admin. */
                             if ((int) $row['user_id'] === (int) $_SESSION['user_id']) {
                                 print "<div class=\"gridItemForPostBoxViewPost\">";
-                                print "<a href=\"../editPost.php?post_id=" . urlencode($row['post_id']) . "\">";
-                                print "<button type=\"button\" class=\"goblinButtons\">Edit</button>";
+                                print "<a href=\"../editPost.php?post_id=" . urlencode($row['post_id']) . "\" class=\"goblinButtons\">Edit";
+                                //print "<button type=\"button\" class=\"goblinButtons\">Edit</button>";
                                 print "</a>";
                                 print "</div>";
                             }
@@ -348,8 +354,8 @@ if (isset($_SESSION['access_level'])) {
                              * All admins can delete any post — no additional check needed
                              * because we are already inside the admin-only branch. */
                             print "<div class=\"gridItemForPostBoxViewPost\">";
-                            print "<a href=\"../deleteConfirm.php?post_id=" . urlencode($row['post_id']) . "&type=post\">";
-                            print "<button type=\"button\" class=\"deleteButton\">Delete</button>";
+                            print "<a href=\"../deleteConfirm.php?post_id=" . urlencode($row['post_id']) . "&type=post\" class=\"deleteButton\">Delete";
+                            //print "<button type=\"button\" class=\"deleteButton\">Delete</button>";
                             print "</a>";
                             print "</div>";
 
@@ -414,18 +420,20 @@ if (isset($_SESSION['access_level'])) {
                              * $row2['user_id'] is the post author; $_SESSION['user_id'] is the logged-in user. */
                             if ((int) $row2['user_id'] === (int) $_SESSION['user_id']) {
                                 print "<div class=\"gridItemForPostBoxViewPost\">";
-                                print "<a href=\"../editPost.php?post_id=" . urlencode($row2['post_id']) . "\">";
-                                print "<button type=\"button\" class=\"goblinButtons\">Edit</button>";
+                                print "<a href=\"../editPost.php?post_id=" . urlencode($row2['post_id']) . "\" class=\"goblinButtons\">Edit";
+                                // print "<button type=\"button\" class=\"goblinButtons\">Edit</button>";
                                 print "</a>";
                                 print "</div>";
                             }
 
+                            //to validate i need to change the a tags to look like buttons
+                
                             /* -- DELETE BUTTON (user loop) --
                              * Regular users can only delete their own posts. */
                             if ((int) $row2['user_id'] === (int) $_SESSION['user_id']) {
                                 print "<div class=\"gridItemForPostBoxViewPost\">";
-                                print "<a href=\"../deleteConfirm.php?post_id=" . urlencode($row2['post_id']) . "&type=post\">";
-                                print "<button type=\"button\" class=\"deleteButton\">Delete</button>";
+                                print "<a href=\"../deleteConfirm.php?post_id=" . urlencode($row2['post_id']) . "&type=post\" class=\"deleteButton\">Delete";
+                                //print "<button type=\"button\" class=\"deleteButton\">Delete</button>";
                                 print "</a>";
                                 print "</div>";
                             }
@@ -450,17 +458,9 @@ if (isset($_SESSION['access_level'])) {
             </div>
         </div>
     </div>
-    </div>
 
-    <!--Something weird happened to footer; investigate later
-    fixed
 
-    when in doubt, add divs-->
 
-    <!--Something weird happened to footer; investigate later
-    fixed
-
-    when in doubt, add divs-->
 
     <footer>
 

@@ -4,7 +4,14 @@ session_start();
 /*DO NOT DELETE THESE */
 
 //include("db-connect.php");
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+
+
+
+//DOCKER CONNECTION DO NOT TOUCH ARF ARF
+require 'db_connectionGG.php';
+
+
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -16,7 +23,7 @@ error_reporting(E_ALL);
  * Guests have no business editing a post.
  * --------------------------------------------------------------- */
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || !isset($_SESSION['user_id'])) {
-    header("Location: signIn.php");
+    header("Location:signIn.php");
     exit();
 }
 
@@ -53,7 +60,7 @@ $stmt->close();
 $postId = isset($_GET['post_id']) ? (int) $_GET['post_id'] : 0;
 
 if ($postId <= 0) {
-    header("Location: categories.php");
+    header("Location:categories.php");
     exit();
 }
 
@@ -107,7 +114,7 @@ $stmt->close();
  * If the post does not exist or the user is not the author, redirect.
  * --------------------------------------------------------------- */
 if (!$existingPost || (int) $existingPost['user_id'] !== (int) $_SESSION['user_id']) {
-    header("Location: categories.php");
+    header("Location:categories.php");
     exit();
 }
 
@@ -147,23 +154,23 @@ $allowedCategories = array(
 
 /* condition radio values (key = submitted value, value = what goes into DB) */
 $allowedConditions = array(
-    "new"      => "new",
-    "likeNew"  => "like new",
-    "used"     => "used",
-    "damaged"  => "damaged"
+    "new" => "new",
+    "likeNew" => "like new",
+    "used" => "used",
+    "damaged" => "damaged"
 );
 
 /* box condition radio values (key = submitted value, value = what goes into DB) */
 $allowedBoxConditions = array(
-    "boxnew"      => "new",
-    "boxlikeNew"  => "like new",
-    "boxused"     => "used",
-    "boxdamaged"  => "damaged"
+    "boxnew" => "new",
+    "boxlikeNew" => "like new",
+    "boxused" => "used",
+    "boxdamaged" => "damaged"
 );
 
 /* sfw/nsfw radio values */
 $allowedContentLevels = array(
-    "sfw"  => "sfw",
+    "sfw" => "sfw",
     "nsfw" => "nsfw"
 );
 
@@ -178,18 +185,18 @@ $allowedContentLevels = array(
 
 /* DB value → radio key for post_condition */
 $conditionReverseMap = array(
-    "new"      => "new",
+    "new" => "new",
     "like new" => "likeNew",
-    "used"     => "used",
-    "damaged"  => "damaged"
+    "used" => "used",
+    "damaged" => "damaged"
 );
 
 /* DB value → radio key for post_boxCondition */
 $boxConditionReverseMap = array(
-    "new"      => "boxnew",
+    "new" => "boxnew",
     "like new" => "boxlikeNew",
-    "used"     => "boxused",
-    "damaged"  => "boxdamaged"
+    "used" => "boxused",
+    "damaged" => "boxdamaged"
 );
 
 
@@ -200,25 +207,25 @@ $boxConditionReverseMap = array(
  * --------------------------------------------------------------- */
 $categoryFileMap = array(
     "autographs" => "categories/autographsCategory.php",
-    "books"      => "categories/booksCategories.php",
-    "caps"       => "categories/bottleCapsCategories.php",
-    "cans"       => "categories/cansCategories.php",
-    "charms"     => "categories/charmsCategories.php",
-    "coins"      => "categories/coinsCategories.php",
-    "figures"    => "categories/figuresCategories.php",
-    "jewelry"    => "categories/jewelryCategories.php",
-    "magnets"    => "categories/magnetsCategories.php",
-    "minerals"   => "categories/mineralsCategories.php",
-    "perfume"    => "categories/perfumeCategories.php",
-    "plates"     => "categories/platesCategories.php",
-    "cards"      => "categories/cardsCategories.php",
-    "plushies"   => "categories/plushiesCategories.php",
-    "prints"     => "categories/printsCategories.php",
-    "stamps"     => "categories/stampsCategories.php",
-    "tickets"    => "categories/ticketsCategories.php",
-    "games"      => "categories/videoGamesCategories.php",
-    "vinyls"     => "categories/vinylsCategories.php",
-    "other"      => "categories/otherCategories.php",
+    "books" => "categories/booksCategories.php",
+    "caps" => "categories/bottleCapsCategories.php",
+    "cans" => "categories/cansCategories.php",
+    "charms" => "categories/charmsCategories.php",
+    "coins" => "categories/coinsCategories.php",
+    "figures" => "categories/figuresCategories.php",
+    "jewelry" => "categories/jewelryCategories.php",
+    "magnets" => "categories/magnetsCategories.php",
+    "minerals" => "categories/mineralsCategories.php",
+    "perfume" => "categories/perfumeCategories.php",
+    "plates" => "categories/platesCategories.php",
+    "cards" => "categories/cardsCategories.php",
+    "plushies" => "categories/plushiesCategories.php",
+    "prints" => "categories/printsCategories.php",
+    "stamps" => "categories/stampsCategories.php",
+    "tickets" => "categories/ticketsCategories.php",
+    "games" => "categories/videoGamesCategories.php",
+    "vinyls" => "categories/vinylsCategories.php",
+    "other" => "categories/otherCategories.php",
 );
 
 
@@ -233,16 +240,16 @@ $categoryFileMap = array(
  * If the update fails validation these hold whatever the user
  * typed/selected so they don't lose their work on reshowing.
  * --------------------------------------------------------------- */
-$formPostBounty    = $existingPost['post_or_bounty'];
-$formCategory      = $existingPost['post_category'];
-$formCondition     = $conditionReverseMap[$existingPost['post_condition']]       ?? null;
-$formBoxCondition  = $boxConditionReverseMap[$existingPost['post_boxCondition']] ?? null;
-$formPrice         = $existingPost['post_price'] > 0 ? $existingPost['post_price'] : "";
-$formLocation      = $existingPost['post_location']  ?? "";
-$formDescription   = $existingPost['post_description'];
-$formSfwNsfw       = $existingPost['post_sfw_nsfw']   ?? null;
+$formPostBounty = $existingPost['post_or_bounty'] ?? "";
+$formCategory = $existingPost['post_category'] ?? "";
+$formCondition = isset($existingPost['post_condition']) ? ($conditionReverseMap[$existingPost['post_condition']] ?? "") : "";
+$formBoxCondition = isset($existingPost['post_boxCondition']) ? ($boxConditionReverseMap[$existingPost['post_boxCondition']] ?? "") : "";
+$formPrice = $existingPost['post_price'] > 0 ? $existingPost['post_price'] : "";
+$formLocation = $existingPost['post_location'] ?? "";
+$formDescription = $existingPost['post_description'] ?? "";
+$formSfwNsfw = $existingPost['post_sfw_nsfw'] ?? "";
 
-$updateError   = null;
+$updateError = null;
 $updateSuccess = false;
 
 
@@ -253,25 +260,25 @@ $updateSuccess = false;
 if (isset($_POST['submit_edit'])) {
 
     /* Pull every submitted field; trim strings where appropriate */
-    $submittedPostBounty   = $_POST['post_or_bounty']   ?? "";
-    $submittedCategory     = $_POST['post_category']    ?? "";
-    $submittedCondition    = $_POST['post_condition']   ?? null;
+    $submittedPostBounty = $_POST['post_or_bounty'] ?? "";
+    $submittedCategory = $_POST['post_category'] ?? "";
+    $submittedCondition = $_POST['post_condition'] ?? null;
     $submittedBoxCondition = $_POST['post_boxCondition'] ?? null;
-    $submittedPrice        = trim($_POST['post_price']  ?? "");
-    $submittedLocation     = trim($_POST['post_location'] ?? "");
-    $submittedDescription  = trim($_POST['post_description'] ?? "");
-    $submittedSfwNsfw      = $_POST['post_sfw_nsfw']    ?? null;
+    $submittedPrice = trim($_POST['post_price'] ?? "");
+    $submittedLocation = trim($_POST['post_location'] ?? "");
+    $submittedDescription = trim($_POST['post_description'] ?? "");
+    $submittedSfwNsfw = $_POST['post_sfw_nsfw'] ?? null;
 
     /* Update form state variables so the form re-fills correctly
      * if validation fails and the page needs to be reshown */
-    $formPostBounty   = $submittedPostBounty;
-    $formCategory     = $submittedCategory;
-    $formCondition    = $submittedCondition;
+    $formPostBounty = $submittedPostBounty;
+    $formCategory = $submittedCategory;
+    $formCondition = $submittedCondition;
     $formBoxCondition = $submittedBoxCondition;
-    $formPrice        = $submittedPrice;
-    $formLocation     = $submittedLocation;
-    $formDescription  = $submittedDescription;
-    $formSfwNsfw      = $submittedSfwNsfw;
+    $formPrice = $submittedPrice;
+    $formLocation = $submittedLocation;
+    $formDescription = $submittedDescription;
+    $formSfwNsfw = $submittedSfwNsfw;
 
     /* -------------------------------------------------------
      * VALIDATE post_or_bounty
@@ -303,9 +310,9 @@ if (isset($_POST['submit_edit'])) {
      * If submitted, they must be in the whitelist.
      * If valid, map the submitted key to the DB value.
      * ------------------------------------------------------- */
-    $mappedCondition    = null;
+    $mappedCondition = null;
     $mappedBoxCondition = null;
-    $mappedSfwNsfw      = null;
+    $mappedSfwNsfw = null;
 
     if ($updateError === null) {
 
@@ -355,7 +362,7 @@ if (isset($_POST['submit_edit'])) {
      * on disk without a matching DB update.
      * ------------------------------------------------------- */
     $newImagePath = $existingPost['post_img']; /* default: keep the existing image */
-    $uploadOk     = 1;
+    $uploadOk = 1;
 
     if ($updateError === null && !empty($_FILES['post_img']) && $_FILES['post_img']['error'] === UPLOAD_ERR_OK) {
 
@@ -368,25 +375,25 @@ if (isset($_POST['submit_edit'])) {
 
         /* Give the new file a unique name so it never collides with existing files */
         $clean_file_name = str_replace(' ', '_', basename($_FILES['post_img']['name']));
-        $candidate_path  = $target_dir . uniqid() . "_" . $clean_file_name;
-        $imageFileType   = strtolower(pathinfo($candidate_path, PATHINFO_EXTENSION));
+        $candidate_path = $target_dir . uniqid() . "_" . $clean_file_name;
+        $imageFileType = strtolower(pathinfo($candidate_path, PATHINFO_EXTENSION));
 
         /* Verify it is actually an image, not a renamed file */
         $check = getimagesize($_FILES['post_img']['tmp_name']);
         if ($check === false) {
-            $uploadOk    = 0;
+            $uploadOk = 0;
             $updateError = "Uploaded file is not a valid image.";
         }
 
         /* Enforce the 800KB size limit */
         if ($uploadOk === 1 && $_FILES['post_img']['size'] > 800000) {
-            $uploadOk    = 0;
+            $uploadOk = 0;
             $updateError = "Image file is too large. Maximum size is 800KB.";
         }
 
         /* Only allow JPG, JPEG, and PNG */
         if ($uploadOk === 1 && $imageFileType !== "jpg" && $imageFileType !== "jpeg" && $imageFileType !== "png") {
-            $uploadOk    = 0;
+            $uploadOk = 0;
             $updateError = "Only JPG, JPEG, and PNG images are allowed.";
         }
 
@@ -401,7 +408,7 @@ if (isset($_POST['submit_edit'])) {
                 $newImagePath = $candidate_path;
 
             } else {
-                $uploadOk    = 0;
+                $uploadOk = 0;
                 $updateError = "Image could not be saved. Please try again.";
             }
         }
@@ -477,11 +484,11 @@ if (isset($_POST['submit_edit'])) {
              * Posts go to their category page.
              * --------------------------------------------------- */
             if ($submittedPostBounty === "bounty") {
-                header("Location: search.php");
+                header("Location:search.php");
                 exit();
             } else {
                 $redirectTarget = $categoryFileMap[$submittedCategory] ?? "categories.php";
-                header("Location: " . $redirectTarget);
+                header("Location:" . $redirectTarget);
                 exit();
             }
 
@@ -595,8 +602,8 @@ if (isset($_POST['submit_edit'])) {
                 page always knows which post it is editing, even on POST.
             -->
             <form method="POST"
-                  action="<?php print htmlspecialchars($_SERVER["PHP_SELF"]) . "?post_id=" . htmlspecialchars($postId); ?>"
-                  enctype="multipart/form-data">
+                action="<?php print htmlspecialchars($_SERVER["PHP_SELF"]) . "?post_id=" . htmlspecialchars($postId); ?>"
+                enctype="multipart/form-data">
 
                 <!-- POST OR BOUNTY -->
                 <h3>Is this a Category Post or a Bounty?</h3>
@@ -604,7 +611,7 @@ if (isset($_POST['submit_edit'])) {
 
                 <?php
                 /* Pre-check whichever radio button matches the saved post_or_bounty value */
-                $postChecked   = ($formPostBounty === "post")   ? "checked" : "";
+                $postChecked = ($formPostBounty === "post") ? "checked" : "";
                 $bountyChecked = ($formPostBounty === "bounty") ? "checked" : "";
                 ?>
 
@@ -625,25 +632,25 @@ if (isset($_POST['submit_edit'])) {
                     /* Build each <option> and mark the saved category as selected */
                     $categoryLabels = array(
                         "autographs" => "Autographs",
-                        "books"      => "Books",
-                        "caps"       => "Bottle Caps",
-                        "cans"       => "Cans",
-                        "charms"     => "Charms",
-                        "coins"      => "Coins",
-                        "figures"    => "Figures",
-                        "jewelry"    => "Jewelry",
-                        "magnets"    => "Magnets",
-                        "minerals"   => "Minerals",
-                        "perfume"    => "Perfume",
-                        "plates"     => "Plates",
-                        "cards"      => "Playing Cards",
-                        "plushies"   => "Plushies",
-                        "prints"     => "Prints",
-                        "stamps"     => "Stamps",
-                        "tickets"    => "Tickets",
-                        "games"      => "Video Games",
-                        "vinyls"     => "Vinyls",
-                        "other"      => "Other",
+                        "books" => "Books",
+                        "caps" => "Bottle Caps",
+                        "cans" => "Cans",
+                        "charms" => "Charms",
+                        "coins" => "Coins",
+                        "figures" => "Figures",
+                        "jewelry" => "Jewelry",
+                        "magnets" => "Magnets",
+                        "minerals" => "Minerals",
+                        "perfume" => "Perfume",
+                        "plates" => "Plates",
+                        "cards" => "Playing Cards",
+                        "plushies" => "Plushies",
+                        "prints" => "Prints",
+                        "stamps" => "Stamps",
+                        "tickets" => "Tickets",
+                        "games" => "Video Games",
+                        "vinyls" => "Vinyls",
+                        "other" => "Other",
                     );
 
                     foreach ($categoryLabels as $value => $label) {
@@ -663,16 +670,20 @@ if (isset($_POST['submit_edit'])) {
                  * $formCondition holds the radio KEY ("likeNew"), not the DB value ("like new"). */
                 ?>
 
-                <input type="radio" id="post_condition_new"     name="post_condition" value="new"     <?php if ($formCondition === "new")     print "checked"; ?>>
+                <input type="radio" id="post_condition_new" name="post_condition" value="new" <?php if ($formCondition === "new")
+                    print "checked"; ?>>
                 <label for="post_condition_new">New</label>
 
-                <input type="radio" id="post_condition_likeNew" name="post_condition" value="likeNew" <?php if ($formCondition === "likeNew") print "checked"; ?>>
+                <input type="radio" id="post_condition_likeNew" name="post_condition" value="likeNew" <?php if ($formCondition === "likeNew")
+                    print "checked"; ?>>
                 <label for="post_condition_likeNew">Like New</label>
 
-                <input type="radio" id="post_condition_used"    name="post_condition" value="used"    <?php if ($formCondition === "used")    print "checked"; ?>>
+                <input type="radio" id="post_condition_used" name="post_condition" value="used" <?php if ($formCondition === "used")
+                    print "checked"; ?>>
                 <label for="post_condition_used">Used</label>
 
-                <input type="radio" id="post_condition_damaged" name="post_condition" value="damaged" <?php if ($formCondition === "damaged") print "checked"; ?>>
+                <input type="radio" id="post_condition_damaged" name="post_condition" value="damaged" <?php if ($formCondition === "damaged")
+                    print "checked"; ?>>
                 <label for="post_condition_damaged">Damaged</label>
 
 
@@ -684,16 +695,20 @@ if (isset($_POST['submit_edit'])) {
                  * $formBoxCondition holds the radio KEY ("boxlikeNew"). */
                 ?>
 
-                <input type="radio" id="post_boxCondition_new"     name="post_boxCondition" value="boxnew"     <?php if ($formBoxCondition === "boxnew")     print "checked"; ?>>
+                <input type="radio" id="post_boxCondition_new" name="post_boxCondition" value="boxnew" <?php if ($formBoxCondition === "boxnew")
+                    print "checked"; ?>>
                 <label for="post_boxCondition_new">New</label>
 
-                <input type="radio" id="post_boxCondition_likeNew" name="post_boxCondition" value="boxlikeNew" <?php if ($formBoxCondition === "boxlikeNew") print "checked"; ?>>
+                <input type="radio" id="post_boxCondition_likeNew" name="post_boxCondition" value="boxlikeNew" <?php if ($formBoxCondition === "boxlikeNew")
+                    print "checked"; ?>>
                 <label for="post_boxCondition_likeNew">Like New</label>
 
-                <input type="radio" id="post_boxCondition_used"    name="post_boxCondition" value="boxused"    <?php if ($formBoxCondition === "boxused")    print "checked"; ?>>
+                <input type="radio" id="post_boxCondition_used" name="post_boxCondition" value="boxused" <?php if ($formBoxCondition === "boxused")
+                    print "checked"; ?>>
                 <label for="post_boxCondition_used">Used</label>
 
-                <input type="radio" id="post_boxCondition_damaged" name="post_boxCondition" value="boxdamaged" <?php if ($formBoxCondition === "boxdamaged") print "checked"; ?>>
+                <input type="radio" id="post_boxCondition_damaged" name="post_boxCondition" value="boxdamaged" <?php if ($formBoxCondition === "boxdamaged")
+                    print "checked"; ?>>
                 <label for="post_boxCondition_damaged">Damaged</label>
 
 
@@ -702,21 +717,15 @@ if (isset($_POST['submit_edit'])) {
 
                 <label for="post_price"></label>
                 <!-- Value is pre-filled with the saved price; blank if no price was set -->
-                <input type="text"
-                       id="post_price"
-                       name="post_price"
-                       placeholder="Enter Price"
-                       value="<?php print htmlspecialchars($formPrice); ?>">
+                <input type="text" id="post_price" name="post_price" placeholder="Enter Price"
+                    value="<?php print htmlspecialchars($formPrice); ?>">
 
 
                 <!-- LOCATION (optional) -->
                 <h3>Location (Optional)</h3>
 
-                <input type="text"
-                       id="post_location"
-                       name="post_location"
-                       placeholder="Enter Location"
-                       value="<?php print htmlspecialchars($formLocation); ?>">
+                <input type="text" id="post_location" name="post_location" placeholder="Enter Location"
+                    value="<?php print htmlspecialchars($formLocation); ?>">
 
 
                 <!-- DESCRIPTION (required) -->
@@ -724,14 +733,8 @@ if (isset($_POST['submit_edit'])) {
 
                 <!-- The textarea content must sit between the tags with no extra whitespace
                      or the pre-filled text will have leading/trailing spaces -->
-                <textarea
-                    placeholder="Input Text"
-                    class="textAreaSize"
-                    rows="7"
-                    cols="50"
-                    id="post_description"
-                    name="post_description"
-                ><?php print htmlspecialchars($formDescription); ?></textarea>
+                <textarea placeholder="Input Text" class="textAreaSize" rows="7" cols="50" id="post_description"
+                    name="post_description"><?php print htmlspecialchars($formDescription); ?></textarea>
 
 
                 <!-- IMAGE (optional replacement) -->
@@ -748,7 +751,7 @@ if (isset($_POST['submit_edit'])) {
 
                 <div class="addBoxPost">
                     <img src="img/image.png" class="iconImg" alt="small picture box icon"
-                         onclick="document.getElementById('imagePostEdit').click()">
+                        onclick="document.getElementById('imagePostEdit').click()">
                     <label for="imagePostEdit"></label>
                     <input type="file" id="imagePostEdit" name="post_img">
                 </div>
@@ -759,16 +762,19 @@ if (isset($_POST['submit_edit'])) {
                 <p>Can this be shown to a child? (SFW = Safe for work)</p>
                 <p>If not, mark the post as 'NSFW' (NSFW = Not safe for work)</p>
 
-                <input type="radio" id="post_sfw_nsfw_sfw"  name="post_sfw_nsfw" value="sfw"  <?php if ($formSfwNsfw === "sfw")  print "checked"; ?>>
+                <input type="radio" id="post_sfw_nsfw_sfw" name="post_sfw_nsfw" value="sfw" <?php if ($formSfwNsfw === "sfw")
+                    print "checked"; ?>>
                 <label for="post_sfw_nsfw_sfw">SFW</label>
 
-                <input type="radio" id="post_sfw_nsfw_nsfw" name="post_sfw_nsfw" value="nsfw" <?php if ($formSfwNsfw === "nsfw") print "checked"; ?>>
+                <input type="radio" id="post_sfw_nsfw_nsfw" name="post_sfw_nsfw" value="nsfw" <?php if ($formSfwNsfw === "nsfw")
+                    print "checked"; ?>>
                 <label for="post_sfw_nsfw_nsfw">NSFW</label>
 
 
                 <!-- Submit uses the standard site button style -->
                 <div>
-                    <button type="submit" name="submit_edit" class="goblinButtons" id="holdingSpace">Save Changes</button>
+                    <button type="submit" name="submit_edit" class="goblinButtons" id="holdingSpace">Save
+                        Changes</button>
                 </div>
 
             </form>
@@ -813,9 +819,12 @@ if (isset($_POST['submit_edit'])) {
 
                         <div class="footerGridItem2">
                             <ol>
-                                <li><a href="https://x.com/"><img src="img/TwitterLogo.png" class="iconImg" alt="X logo"></a></li>
-                                <li><a href="https://www.instagram.com/"><img src="img/instagram.png" class="iconImg" alt="Instagram logo"></a></li>
-                                <li><a href="https://www.facebook.com/"><img src="img/facebook.png" class="iconImg" alt="Facebook logo"></a></li>
+                                <li><a href="https://x.com/"><img src="img/TwitterLogo.png" class="iconImg"
+                                            alt="X logo"></a></li>
+                                <li><a href="https://www.instagram.com/"><img src="img/instagram.png" class="iconImg"
+                                            alt="Instagram logo"></a></li>
+                                <li><a href="https://www.facebook.com/"><img src="img/facebook.png" class="iconImg"
+                                            alt="Facebook logo"></a></li>
                             </ol>
                         </div>
 

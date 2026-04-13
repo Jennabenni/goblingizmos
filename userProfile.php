@@ -20,12 +20,18 @@ error_reporting(E_ALL);
 
 //include("../db-connect.php");
 //include(__DIR__ . "/db-connect.php");
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
 //include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
+
+
+
+//DOCKER CONNECTION DO NOT TOUCH ARF ARF
+require 'db_connectionGG.php';
+
 
 
 
@@ -114,7 +120,7 @@ if (
 
     /* FIX: validate required profile fields */
     if ($usersNewFirstName === "" || $usersNewLastName === "" || $usersNewUsername === "" || $usersNewEmail === "") {
-    $formMessage = "First name, last name, username, and email cannot be empty.";
+        $formMessage = "First name, last name, username, and email cannot be empty.";
     } else {
 
         /* FIX: check for duplicate username/email owned by someone else */
@@ -422,12 +428,12 @@ if (
 
             print " <div>";
 
-            
-        
+
+
             /* <!--
          <a href="accessibility.php" class="goblinButtons">Accessibility</a>
          -->*/
-            
+
             print " <a href=\"logOut.php\" class=\"goblinButtons\">Log Out</a>";
             print " <a href=\"settings.php\" class=\"goblinButtons\">Settings</a>";
 

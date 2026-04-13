@@ -15,13 +15,20 @@ error_reporting(E_ALL);
 
 //include("../db-connect.php");
 //include(__DIR__ . "/db-connect.php");
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
 
 //include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
+
+
+
+
+//DOCKER CONNECTION DO NOT TOUCH ARF ARF
+require 'db_connectionGG.php';
+
 
 
 /*
@@ -509,28 +516,28 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                 /* I'm making all these fucks input tags
                  */
 
-                print "<h3>Is this a Category Post or a Bounty?</h3>";
+                print "<h2>Is this a Category Post or a Bounty?</h2>";
                 print "<p>Are you showing off (post) or looking for this item (bounty)?</p>";
 
                 //lock in soldier
             
                 print "<input type=\"radio\" id=\"postChecked\" name=\"post_or_bounty\" value=\"post\">";
-                print "<label for=\"post\">Post</label>";
+                print "<label for=\"postChecked\">Post</label>";
 
                 print "<input type=\"radio\" id=\"bountyChecked\" name=\"post_or_bounty\" value=\"bounty\">";
-                print "<label for=\"bounty\">Bounty</label>";
+                print "<label for=\"bountyChecked\">Bounty</label>";
 
-                print "<h3>Category</h3>";
+                print "<h2>Category</h2>";
 
                 /*
                 print "<input type=\"text\" id='post_category' placeholder=\"Temp cat placeholder\" name='post_category'>";
 */
 
                 //good lord
-                print " <label for=\"category\"></label>";
+                print " <label for=\"post_category\"></label>";
                 print "<select name=\"post_category\" id=\"post_category\" class=\"searchBarItems\">";
 
-                print "<option value=\"other\"></option>";
+                print "<option value=\"other\">_______</option>";
                 //By default if they dont pick one, it goes to other ^
                 print "<option value=\"autographs\">Autographs</option>";
                 print "<option value=\"books\">Books</option>";
@@ -555,68 +562,71 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
                 print "</select>";
 
-                print "<h3>Item Condition</h3>";
+                print "<h2>Item Condition</h2>";
 
                 print "<input type=\"radio\" id=\"post_condition_new\" name=\"post_condition\" value=\"new\">";
-                print "<label for=\"new\">New</label>";
+                print "<label for=\"post_condition_new\">New</label>";
 
                 print "<input type=\"radio\" id=\"post_condition_likeNew\" name=\"post_condition\" value=\"likeNew\">";
-                print "<label for=\"likeNew\">Like New</label>";
+                print "<label for=\"post_condition_likeNew\">Like New</label>";
 
                 print "<input type=\"radio\" id=\"post_condition_used\" name=\"post_condition\" value=\"used\">";
-                print "<label for=\"used\">Used</label>";
+                print "<label for=\"post_condition_used\">Used</label>";
 
                 print "<input type=\"radio\" id=\"post_condition_damaged\" name=\"post_condition\" value=\"damaged\">";
-                print "<label for=\"damaged\">Damaged</label>";
+                print "<label for=\"post_condition_damaged\">Damaged</label>";
 
                 /*Okay I originally had n/a but if there's no condition, put nothing??? */
 
-                print "<h3>Box Condition</h3>";
+                print "<h2>Box Condition</h2>";
 
                 print "<input type=\"radio\" id=\"post_boxCondition_new\" name=\"post_boxCondition\" value=\"boxnew\">";
-                print "<label for=\"boxnew\">New</label>";
+                print "<label for=\"post_boxCondition_new\">New</label>";
 
                 print "<input type=\"radio\" id=\"post_boxCondition_likeNew\" name=\"post_boxCondition\" value=\"boxlikeNew\">";
-                print "<label for=\"boxlikeNew\">Like New</label>";
+                print "<label for=\"post_boxCondition_likeNew\">Like New</label>";
 
                 print "<input type=\"radio\" id=\"post_boxCondition_used\" name=\"post_boxCondition\" value=\"boxused\">";
-                print "<label for=\"boxused\">Used</label>";
+                print "<label for=\"post_boxCondition_used\">Used</label>";
 
                 print "<input type=\"radio\" id=\"post_boxCondition_damaged\" name=\"post_boxCondition\" value=\"boxdamaged\">";
-                print "<label for=\"boxdamaged\">Damaged</label>";
+                print "<label for=\"post_boxCondition_damaged\">Damaged</label>";
 
-                print "<h3>Price/Currency (if one)</h3>";
+                print "<h2>Price/Currency (if one)</h2>";
 
                 print "<label for='post_price'></label>";
                 print "<input type=\"text\" id='post_price' name='post_price' placeholder='Enter Price'>";
 
-                print "<h3>Location (Optional)</h3>";
+                print "<h2>Location (Optional)</h2>";
                 print "<input type=\"text\" id='post_location' placeholder=\"Enter Location\" name='post_location'>";
 
-                print "<h3>Description</h3>";
+                print "<h2>Description</h2>";
                 print "<textarea placeholder='Input Text' class='textAreaSize' rows='7' cols='50' id='post_description' name ='post_description'></textarea>";
 
-                print "<h3>Image</h3>";
+                print "<h2>Image</h2>";
 
                 /*This will need some love...... how in the hell
                 do I put pictures from my computer to database?? */
 
                 print "<div class='addBoxPost'>";
-                print "<img src=\"img/image.png\" class=\"iconImg\" alt=\"small picture box icon\"> ";
-                print "<label for=\"imagePost\"></label>";
-                print "<input type=\"file\" id=\"imagePost\" name='post_img'>";
+                //print "<img src=\"img/image.png\" class=\"iconImg\" alt=\"small picture box icon\"> ";
+                print "<label for=\"imagePost\">
+                <img src=\"img/image.png\" class=\"iconImg\" alt=\"small picture box icon\">
+                <input type=\"file\" id=\"imagePost\" name='post_img'>
+                </label>";
+                //print "<input type=\"file\" id=\"imagePost\" name='post_img'>";
                 print " </div>";
 
                 /*
                                 print "<input type=\"text\" id='post_img' placeholder=\"Temp img placeholder\" name='post_img'>";
                 */
-                print "<h3>Content Level</h3>";
+                print "<h2>Content Level</h2>";
                 print "<p>Can this be shown to a child? (SFW = Safe for work)</p>";
                 print "<p>If not, mark the post as 'NSFW' (NSFW = Not safe for work)</p>";
 
-                print "<input type=\"radio\" id=\"post_sfw_nsfw_sfw\" name=\"post_sfw_nsfw\" value=\"sfw\"><label for=\"sfw\">SFW</label>";
+                print "<input type=\"radio\" id=\"post_sfw_nsfw_sfw\" name=\"post_sfw_nsfw\" value=\"sfw\"><label for=\"post_sfw_nsfw_sfw\">SFW</label>";
 
-                print "<input type=\"radio\" id=\"post_sfw_nsfw_nsfw\" name=\"post_sfw_nsfw\" value=\"nsfw\"><label for=\"sfw\">NSFW</label>";
+                print "<input type=\"radio\" id=\"post_sfw_nsfw_nsfw\" name=\"post_sfw_nsfw\" value=\"nsfw\"><label for=\"post_sfw_nsfw_nsfw\">NSFW</label>";
 
                 print "<div>";
 

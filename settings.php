@@ -7,12 +7,20 @@ session_start();
 
 //include("../db-connect.php");
 //include(__DIR__ . "/db-connect.php");
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
 //include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
+
+
+
+//DOCKER CONNECTION DO NOT TOUCH ARF ARF
+require 'db_connectionGG.php';
+
+
+
 
 
 /*
@@ -301,121 +309,121 @@ print "</form>";
 }*/
 
         ?>
-<?php
-if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+        <?php
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 
 
-    print "<div class=\"entireAreaUserProfile\">";
-    print "<div class=\"smallerProfileBox\" style=\"display:flex; flex-direction:column; align-items:center;\">";
+            print "<div class=\"entireAreaUserProfile\">";
+            print "<div class=\"smallerProfileBox\" style=\"display:flex; flex-direction:column; align-items:center;\">";
 
-    print "<h2 style=\"margin-bottom:10px;\">Settings</h2>";
-    print "<p style=\"margin-bottom:25px;\">Manage your account settings below.</p>";
+            print "<h2 style=\"margin-bottom:10px;\">Settings</h2>";
+            print "<p style=\"margin-bottom:25px;\">Manage your account settings below.</p>";
 
-    print "<h3 style=\"margin-bottom:15px;\">Profile Picture</h3>";
+            print "<h3 style=\"margin-bottom:15px;\">Profile Picture</h3>";
 
-    print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . "\" style=\"display:flex; flex-direction:column; align-items:center; gap:12px;\">";
+            print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . "\" style=\"display:flex; flex-direction:column; align-items:center; gap:12px;\">";
 
-    if (!empty($pfpMessage)) {
-        print "<p>" . htmlspecialchars($pfpMessage) . "</p>";
-    }
+            if (!empty($pfpMessage)) {
+                print "<p>" . htmlspecialchars($pfpMessage) . "</p>";
+            }
 
-    if (isset($row['user_pfp']) && !empty($row['user_pfp'])) {
-        print "<img src=\"" . htmlspecialchars($row['user_pfp']) . "\" alt=\"Current profile picture\" style=\"max-width:150px; max-height:150px; border-radius:50%;\">";
-    }
+            if (isset($row['user_pfp']) && !empty($row['user_pfp'])) {
+                print "<img src=\"" . htmlspecialchars($row['user_pfp']) . "\" alt=\"Current profile picture\" style=\"max-width:150px; max-height:150px; border-radius:50%;\">";
+            }
 
-    print "<label for=\"pfp-file-input\">Choose an image:</label>";
-    print "<input type=\"file\" id=\"pfp-file-input\" accept=\"image/*\">";
+            print "<label for=\"pfp-file-input\">Choose an image:</label>";
+            print "<input type=\"file\" id=\"pfp-file-input\" accept=\"image/*\">";
 
-    print "<img id=\"pfp-preview\" src=\"\" alt=\"Preview of your new profile picture\" style=\"display:none; max-width:150px; max-height:150px; border-radius:50%;\">";
+            print "<img id=\"pfp-preview\" src=\"\" alt=\"Preview of your new profile picture\" style=\"display:none; max-width:150px; max-height:150px; border-radius:50%;\">";
 
-    print "<p id=\"pfp-upload-status\" style=\"font-style:italic;\"></p>";
+            print "<p id=\"pfp-upload-status\" style=\"font-style:italic;\"></p>";
 
-    print "<input type=\"hidden\" id=\"pfp-url-hidden\" name=\"pfp_url\" value=\"\">";
+            print "<input type=\"hidden\" id=\"pfp-url-hidden\" name=\"pfp_url\" value=\"\">";
 
-    print "<button type=\"submit\" class=\"goblinButtons\">Save Profile Picture</button>";
+            print "<button type=\"submit\" class=\"goblinButtons\">Save Profile Picture</button>";
 
-    print "</form>";
+            print "</form>";
 
-    print "<div style=\"margin-top:25px;\">";
-    print "<form action=\"deleteAccount.php\" method=\"GET\">";
-    print "<button type=\"submit\" class=\"deleteButton\">Delete Account</button>";
-    print "</form>";
-    print "</div>";
+            print "<div style=\"margin-top:25px;\">";
+            print "<form action=\"deleteAccount.php\" method=\"GET\">";
+            print "<button type=\"submit\" class=\"deleteButton\">Delete Account</button>";
+            print "</form>";
+            print "</div>";
 
-    print "</div>";
-    print "</div>";
+            print "</div>";
+            print "</div>";
 
-    print "</div>";
-
-
-} else {
-    print "<div class=\"signUpForms\">";
-    print "<p>Please log in to access settings.</p>";
-    print "<a href=\"signIn.php\">Sign In</a>";
-    print "</div>";
-}
-?>
+            print "</div>";
 
 
-
-    <footer>
+        } else {
+            print "<div class=\"signUpForms\">";
+            print "<p>Please log in to access settings.</p>";
+            print "<a href=\"signIn.php\">Sign In</a>";
+            print "</div>";
+        }
+        ?>
 
 
 
+        <footer>
 
-        <img src="img/goblinLogo.png" id="bottomLogo" alt="a goblin face in a coin; the logo">
-        <!--PLACEHOLDER!! REPLACE LATER: LOGO-->
 
-        <div>
-            <div class="footerFlex">
-                <!--Bottom left-->
-                <nav>
-                    <div class="footerGrid">
-                        <div class="footerGridItem1">
 
-                            <ol>
 
-                                <li>
-                                    <a href="support.php" class="titleLink">Support</a>
-                                </li>
-                                <li>
-                                    <p class="titleLink"> |</p>
-                                </li>
-                                <li>
-                                    <a href="tos.php" class="titleLink">Terms of Service</a>
-                                </li>
-                            </ol>
+            <img src="img/goblinLogo.png" id="bottomLogo" alt="a goblin face in a coin; the logo">
+            <!--PLACEHOLDER!! REPLACE LATER: LOGO-->
 
+            <div>
+                <div class="footerFlex">
+                    <!--Bottom left-->
+                    <nav>
+                        <div class="footerGrid">
+                            <div class="footerGridItem1">
+
+                                <ol>
+
+                                    <li>
+                                        <a href="support.php" class="titleLink">Support</a>
+                                    </li>
+                                    <li>
+                                        <p class="titleLink"> |</p>
+                                    </li>
+                                    <li>
+                                        <a href="tos.php" class="titleLink">Terms of Service</a>
+                                    </li>
+                                </ol>
+
+                            </div>
+
+                            <div class="footerGridItem2">
+                                <ol>
+
+
+                                    <li><a href="https://x.com/"> <img src="img/TwitterLogo.png" class="iconImg"
+                                                alt="X logo"></a></li>
+
+                                    <li><a href="https://www.instagram.com/"> <img src="img/instagram.png"
+                                                class="iconImg" alt="Instagram logo"></a>
+                                    </li>
+
+                                    <li> <a href="https://www.facebook.com/"> <img src="img/facebook.png"
+                                                class="iconImg" alt="Facebook logo"></a>
+                                    </li>
+
+                                    <!--This works, and now I'm too scared to touch it-->
+
+                                </ol>
+
+                            </div>
                         </div>
+                    </nav>
 
-                        <div class="footerGridItem2">
-                            <ol>
-
-
-                                <li><a href="https://x.com/"> <img src="img/TwitterLogo.png" class="iconImg"
-                                            alt="X logo"></a></li>
-
-                                <li><a href="https://www.instagram.com/"> <img src="img/instagram.png" class="iconImg"
-                                            alt="Instagram logo"></a>
-                                </li>
-
-                                <li> <a href="https://www.facebook.com/"> <img src="img/facebook.png" class="iconImg"
-                                            alt="Facebook logo"></a>
-                                </li>
-
-                                <!--This works, and now I'm too scared to touch it-->
-
-                            </ol>
-
-                        </div>
-                    </div>
-                </nav>
+                </div>
 
             </div>
 
-        </div>
-
-    </footer>
+        </footer>
 
 </body>
 

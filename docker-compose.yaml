@@ -1,9 +1,36 @@
 version: '3.9'
 services:
-  apache:
-    image: httpd:latest
+  web:
+    build: .
     container_name: goblingizmos
     ports:
       - '8080:80'
     volumes:
-      - .:/usr/local/apache2/htdocs
+      - .:/var/www/html
+    environment:
+      DB_HOST: mysql
+      DB_USER: user_for_gizmos
+      DB_PASSWORD: imagoblinforsomegizmos!252
+      DB_NAME: goblin_gizmos
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    container_name: goblingizmosSS
+    environment:
+      MYSQL_ROOT_PASSWORD: trinketsgizmos0goblins555
+      MYSQL_DATABASE: goblin_gizmos
+      MYSQL_USER: user_for_gizmos
+      MYSQL_PASSWORD: imagoblinforsomegizmos!252
+    volumes:
+      - ./goblingizmos_users.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./goblingizmos_postsbounties.sql:/docker-entrypoint-initdb.d/02-init.sql
+      - ./goblingizmos_community.sql:/docker-entrypoint-initdb.d/03-init.sql
+      - ./goblingizmos_comments.sql:/docker-entrypoint-initdb.d/04-init.sql
+      - db_data:/var/lib/mysql
+    ports:
+      - '3307:3306'
+
+volumes:
+  db_data:
