@@ -1,0 +1,3704 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #E4E9ED;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+}
+
+/* --- Sticky footer (basically stops the footer from just stopping halfway down shorter pages). sorry i have a larger monitor and this was bothering me a lot --- */
+html,
+body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    max-width: 100vw;
+}
+
+
+.page-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+footer {
+    flex-shrink: 0;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+/* Account settings: prevent label text from being cut off (It was showing as Change Passwo which was silly*/
+.infoInAccountSettings {
+    display: grid;
+    grid-template-columns: minmax(200px, 1fr) 2fr;
+    column-gap: 40px;
+    align-items: center;
+}
+
+
+.smallerLabelProfile {
+    width: auto;
+    /* stops forcing awkward fixed width */
+    overflow: visible;
+    /* ensures text isn't clipped */
+    word-break: normal;
+
+}
+
+
+.infoInAccountSettings h3 {
+    margin: 0;
+}
+
+/*
+h1,
+h2,
+h3 {
+    font-family: verdana;
+}
+*/
+/*FONT???*/
+
+@font-face {
+    font-family: JotiOneFont;
+    src: url(../css/fonts/JotiOne-Regular.ttf);
+}
+
+@font-face {
+
+    font-family: tiltWarp;
+    src: url(../css/fonts/TiltWarp-Regular-VariableFont_XROT\,YROT.ttf);
+
+}
+
+@font-face {
+    font-family: rubik;
+    src: url(../css/fonts/Rubik-VariableFont_wght.ttf);
+}
+
+h1 {
+    font-family: JotiOneFont, Verdana;
+}
+
+h2,
+h3,
+h4 {
+    font-family: tiltWarp, Verdana;
+}
+
+p,
+a {
+    font-family: rubik, Arial;
+}
+
+
+/*
+p {
+    font-family: arial;
+}
+*/
+
+img {
+    width: 100px;
+    height: auto;
+}
+
+
+
+.firstContainer {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+}
+
+
+
+.secondContainer {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+}
+
+#communityFeed {
+    grid-column: 1 / -1;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.secondComGridPost form {
+    grid-column: 1 / -1;
+}
+
+header ol li p {
+    color: #F6FAFD;
+}
+
+
+
+/*Phone*/
+@media (max-width:600px) {
+
+    /*USER PROFILE IMG*/
+    .userIconImageForSmaller {
+        width: 100px;
+        border-radius: 50%;
+    }
+
+
+    /*Home Page
+    */
+
+
+    .headerGridItem a img {
+        width: 70px;
+
+    }
+
+    .headerGridItem {
+        justify-self: center;
+    }
+
+
+
+    aside {
+        /*Code from another assignment*/
+        height: auto;
+        width: 90%;
+        max-width: 350px;
+        text-align: center;
+        border: solid 1px black;
+        font-size: medium;
+        background-color: rgb(233, 233, 233);
+        display: flex;
+        flex-direction: column;
+        padding: 8px;
+        margin: 0 auto;
+        gap: 8px;
+    }
+
+    .adBoxes {
+        border: 1px black solid;
+        padding: 8px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+
+    /*Header css*/
+
+    header {
+        background-color: #232C33;
+        padding: 5px;
+        display: block;
+        color: white;
+        width: 100%;
+        position: relative;
+    }
+
+    .headerGrid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 3px;
+        padding-right: 80px;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
+
+    #userIconGridItem {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+    }
+
+    ol {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        padding: 2px;
+    }
+
+    .titleLink {
+        color: white;
+        font-size: medium;
+    }
+
+    h1 {
+        font-size: x-large;
+        text-align: center;
+        margin: 5px 0;
+    }
+
+
+
+
+
+
+    /*Footer info*/
+    footer {
+        background-color: #232C33;
+        padding: 5px;
+        display: block;
+        color: white;
+        width: 100%;
+    }
+
+
+    footer a {
+        color: white;
+    }
+
+    .footerFlex {
+
+        display: block;
+        padding: 5px;
+
+    }
+
+    .iconImg {
+        width: 30px;
+        height: auto;
+        padding: 5px;
+    }
+
+    #bottomLogo {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        width: 200px;
+    }
+
+
+
+    /*Home*/
+
+    .homeTabLinks {
+        color: white;
+        font-size: larger;
+        background-color: #375F5D;
+        padding: 20px;
+        /* width: 300px;*/
+
+        text-align: center;
+        justify-content: center;
+
+        border-radius: 2px;
+
+    }
+
+    .homeTabGrid {
+
+        display: flex;
+        align-items: center;
+
+    }
+
+    .homeTabImgBox {
+        background-color: white;
+        padding: 10px;
+        /*width: 650px;*/
+        box-shadow: 10px 5px 5px gray;
+    }
+
+    .homeTabLinks a {
+        color: white;
+    }
+
+    #infoBoxHome {
+        background-color: white;
+        padding: 20px;
+        /*width: 500px;*/
+        box-shadow: 10px 5px 5px gray;
+        /* margin-left: auto;
+        margin-right: 400px;*/
+
+    }
+
+
+
+    .footerGrid {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    .homeImg {
+        width: 220px;
+        max-width: 100%;
+        background-color: white;
+        padding: 10px;
+        box-shadow: 5px 5px 5px gray;
+    }
+
+
+    .megaGridOrFlex {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: max-content;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    #homeGridItem1 {
+        /*The aside*/
+        grid-column: 1 / span 2;
+        grid-row: 5 / span 4;
+        justify-self: center;
+        width: 100%;
+    }
+
+    #homeGridItem2 {
+        /*welcome box*/
+        grid-column: 1 / span 2;
+        grid-row-start: 1;
+        justify-self: center;
+        /* margin-left: 20px;*/
+        width: 100%;
+        max-width: 400px;
+    }
+
+    #homeGridItem3 {
+        /*categories button*/
+        grid-column-start: 1;
+        grid-row-start: 2;
+        justify-self: center;
+        padding: 10px;
+        /* height: 50px;*/
+        width: 100%;
+        max-width: 200px;
+    }
+
+    #homeGridItem4 {
+        /* sign up bitton*/
+        grid-column-start: 2;
+        grid-row-start: 2;
+        justify-self: center;
+        padding: 10px;
+        height: auto;
+        width: 100%;
+        max-width: 200px;
+    }
+
+    #homeGridItem5 {
+        /* coins img*/
+        grid-column-start: 1;
+        grid-row-start: 3;
+        justify-self: center;
+    }
+
+    #homeGridItem6 {
+        /*turtle*/
+        grid-column-start: 2;
+        grid-row-start: 3;
+        justify-self: center;
+    }
+
+
+
+    /*Categories*/
+
+
+
+    /*This is for categories*/
+
+    .categoryContainer {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 10px;
+        row-gap: 10px;
+        column-gap: 10px;
+        width: 100%;
+    }
+
+    .categoryGridItem {
+        background-color: #F6FAFD;
+        padding: 5px;
+        box-shadow: 5px 5px 5px gray;
+        border: solid 1px gray;
+        text-align: center;
+        width: 100%;
+        max-width: 160px;
+        margin: 20px;
+    }
+
+    .categoryGridItem h3 {
+        margin: 10px;
+    }
+
+    .categoryGridItem img {
+        padding-bottom: 10px;
+    }
+
+    .categoryGridItem a {
+        color: black
+    }
+
+
+
+    .specificCatItem5 {
+        /*  background-color: red;*/
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+        align-items: start;
+        justify-content: center;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .boxesForEachPost {
+        background-color: white;
+        border: 1px solid #232C33;
+        box-shadow: 5px 5px 5px gray;
+        padding: 18px;
+        padding-bottom: 18px;
+        width: 100%;
+        max-width: 320px;
+        min-height: 280px;
+        max-height: 350px;
+        overflow: hidden;
+        margin: 0 auto 25px auto;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        border-radius: 4px;
+        position: relative;
+        transition: max-height 0.3s ease;
+    }
+
+    .boxesForEachPost.expanded {
+        max-height: none;
+    }
+
+    .expandPostBtn {
+        background-color: #375F5D;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 0.9em;
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    .boxesForEachPost:hover .expandPostBtn {
+        opacity: 1;
+    }
+
+    .expandPostBtn:hover {
+        background-color: #2a4a48;
+    }
+
+
+    .gridItemForPostBox1 {
+        /*post id*/
+        grid-row-start: 7;
+        margin-left: auto;
+        margin-right: auto;
+        grid-column-start: 2;
+
+    }
+
+    .gridItemForPostBox2 {
+        /*user id*/
+        grid-row-start: 6;
+        margin-left: auto;
+        margin-right: auto;
+        grid-column-start: 2;
+
+    }
+
+    .gridItemForPostBox3 {
+        /*username*/
+        background-color: #232C33;
+        color: white;
+        padding: 10px 14px;
+        border-radius: 4px;
+        text-align: center;
+        font-weight: 700;
+    }
+
+    .gridItemForPostBox3 p {
+        margin: 0;
+        color: white;
+    }
+
+    .gridItemForPostBox4 {
+        /*user pfp*/
+        grid-column-start: 1;
+        grid-row-start: 1;
+        justify-content: left;
+        display: block;
+
+        width: 100px;
+
+
+    }
+
+
+
+    .gridItemForPostBox4 img {
+        border-radius: 50%;
+    }
+
+
+
+    .gridItemForPostBox5,
+    .gridItemForPostBox9,
+    .gridItemForPostBox10,
+    .gridItemForPostBox11,
+    .gridItemForPostBox13,
+    .gridItemForPostBox14 {
+        width: 100%;
+        margin: 0;
+        text-align: center;
+    }
+
+    .gridItemForPostBox5 {
+        font-weight: 700;
+        text-transform: capitalize;
+        color: #375F5D;
+    }
+
+    .gridItemForPostBox9 {
+        /*price*/
+        grid-column: 2;
+        grid-row: 2;
+        text-align: right;
+        font-weight: 700;
+    }
+
+    .gridItemForPostBox10 {
+        /*location*/
+        font-size: 1em;
+        color: #232C33;
+    }
+
+    .gridItemForPostBox11 {
+        /*desc*/
+        font-size: 1.1em;
+        line-height: 1.4;
+    }
+
+    .gridItemForPostBox12 {
+        /*post img*/
+        text-align: center;
+        margin: 0;
+    }
+
+    .gridItemForPostBox12 img {
+        width: 100%;
+        max-width: 270px;
+        height: auto;
+        border-radius: 4px;
+        border: 1px solid #d9d9d9;
+        background-color: #f3f3f3;
+        padding: 8px;
+    }
+
+    .gridItemForPostBox13 {
+        /*csfw nsfw*/
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #375F5D;
+    }
+
+    .gridItemForPostBox14 {
+        /*post date*/
+        font-size: 0.95em;
+        color: #232C33;
+    }
+
+
+    .gridItemForPostBoxViewPost {
+        /*The link*/
+
+        grid-row-start: 7;
+        grid-column-start: 1;
+
+        width: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+        text-align: center;
+
+    }
+
+    .gridItemForPostBoxViewPost a {
+        color: #232C33;
+        text-decoration: underline;
+        font-weight: 700;
+    }
+
+
+    /*Bounties on the side*/
+
+    .bountiesSection {
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        grid-template-rows: auto;
+        column-gap: 5px;
+        height: 400px;
+    }
+
+    .bountiesSection h3 {
+        grid-row-start: 1;
+        grid-column-start: 1;
+        text-align: center;
+    }
+
+
+
+    .bigBountyOnCat {
+        margin-left: auto;
+        margin-right: auto;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-template-rows: auto auto;
+        justify-content: center;
+        justify-self: center;
+        column-gap: 25px;
+
+    }
+
+
+    .boxesForEachBounty {
+        /*Side view on categories*/
+        background-color: white;
+
+        height: auto;
+        grid-row-start: 2;
+        justify-content: center;
+        justify-self: center;
+        box-shadow: 5px 5px 5px gray;
+        margin-top: 25px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .gridItemForBountyDisplayBox11 {
+        /*Desc*/
+    }
+
+    .gridItemForBountyDisplayBox12 {
+        /*Img*/
+    }
+
+    .bountyClickStyle a,
+    p {
+        color: #232C33;
+    }
+
+
+
+
+
+
+
+
+    /*Community Tab*/
+
+    .communityGridContainer {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+        padding: 0 10px;
+        overflow-x: hidden;
+    }
+
+    #comGridItem1 {
+        /*The aside*/
+        grid-row-start: 2;
+        justify-self: center;
+        width: 100%;
+        margin-bottom: 25px;
+    }
+
+    #comGridItem2 {
+        grid-row-start: 1;
+        justify-self: center;
+        background-color: white;
+        margin-bottom: 25px;
+        height: auto;
+        margin-top: 25px;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    #comGridItem3 {
+        grid-row-start: 3;
+        border: solid 1px gray;
+        box-shadow: 5px 5px 5px gray;
+        background-color: white;
+        margin-bottom: 25px;
+        text-align: center;
+        width: 100%;
+    }
+
+    #comGridItem4 {
+        grid-row-start: 3;
+        justify-self: center;
+    }
+
+    .comFriendsHeader {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /*Smaller grid for text area*/
+
+    .secondComGridPost {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 400px;
+        border: solid 1px gray;
+        box-shadow: 5px 5px 5px gray;
+        background-color: white;
+        height: auto;
+        padding: 15px;
+        gap: 10px;
+    }
+
+    .secondComGridPost form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .postTopRow {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    #postItem1 {
+        justify-self: center;
+    }
+
+    #postItem2 {
+        width: 100%;
+    }
+
+    #postItem2 textarea {
+        width: 100%;
+        max-width: 100%;
+        min-height: 60px;
+    }
+
+    #postItem2 textarea::placeholder {
+        color: #B4BEC9;
+    }
+
+    .postBottomRow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+    }
+
+    #postItem3 {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+        font-size: small;
+        width: 100%;
+    }
+
+    #postItem3 select {
+        max-width: 100%;
+        width: auto;
+    }
+
+    #postItem3 .addBoxPost {
+        width: auto;
+    }
+
+    #postItem4 {
+        width: 100%;
+        text-align: center;
+    }
+
+    #postItem4 .goblinButtons {
+        width: auto;
+        padding: 10px 30px;
+    }
+
+    /*Images on this tab*/
+    #userProfilePicture {
+        width: 50px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .comIcons {
+        width: 30px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+
+    /*Search Tab*/
+
+    .searchGridContainer {
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: max-content;
+        margin-top: 25px;
+
+
+    }
+
+    #searchGridItem1 {
+        /*aside*/
+        grid-column-start: 1;
+        grid-row-start: 3;
+        justify-self: center;
+
+
+    }
+
+    #searchGridItem2 {
+        /*search bar*/
+        grid-column-start: 1;
+        grid-row-start: 1;
+        background-color: white;
+        padding: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        /*width: 500px;*/
+        box-shadow: 5px 5px 5px gray;
+    }
+
+    #searchGridItem3 {
+        /*Bounty button*/
+
+        grid-row-start: 2;
+        padding: 10px;
+        /*align-content: center;*/
+        justify-self: center;
+    }
+
+    #searchGridItem4 {
+        /*Posts*/
+        grid-column-start: 1;
+        grid-row: 4 / span 2;
+    }
+
+    .searchBar {
+        background-color: white;
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        background-color: #B4BEC9;
+        padding: 10px;
+        justify-content: center;
+        column-gap: 7px;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px;
+
+
+
+    }
+
+    .searchBarItems {
+        width: 125px;
+        height: 35px;
+        border: none;
+        background-color: #B4BEC9;
+        color: black;
+        font-weight: 700;
+    }
+
+    .comIcons {
+        vertical-align: middle;
+    }
+
+    #borderForSearch {
+        border-right: solid black 3px;
+        height: 40px;
+    }
+
+
+    /*Buttons (Perhaps this can be used later)*/
+
+    .goblinButtons {
+        background-color: #375F5D;
+        padding: 25px;
+        color: white;
+        font-size: larger;
+        font-weight: 800;
+        display: inline-block;
+        text-decoration: none;
+        border: none;
+    }
+
+    .goblinButtons:hover {
+        cursor: pointer;
+    }
+
+    .goblinButtons a {
+        color: white;
+    }
+
+
+
+
+    /*The categories themselves (autographs...)*/
+
+
+    .specificCategoryLayoutGrid {
+        display: grid;
+        grid-template-columns: auto;
+        grid-auto-rows: max-content;
+        margin-top: 25px;
+        margin-bottom: 25px;
+
+
+    }
+
+    .specificCatItem1 {
+        /*aside*/
+        grid-column-start: 1;
+        grid-row-start: 3;
+        /*Had to specify the amount of rows it spanned or else it would've
+        gone on forever*/
+        justify-self: center;
+
+
+
+        /*This tab is on ozempic*/
+
+
+
+    }
+
+    .specificCatItem2 {
+        /*button*/
+        grid-column-start: 2;
+        grid-row-start: 2;
+        padding: 10px;
+        justify-self: center;
+        position: relative;
+        z-index: 10;
+    }
+
+    .specificCatItem3 {
+        /*info part*/
+        grid-column-start: 1;
+        grid-row-start: 1;
+        display: grid;
+        grid-template-columns: auto auto;
+        background-color: F6FAFD;
+        padding: 15px;
+        /*width: 700px;*/
+        /*height: 250px;*/
+        text-align: center;
+        justify-self: center;
+        column-gap: 10px;
+        align-items: center;
+        box-shadow: 5px 5px 5px gray;
+    }
+
+    .specificCatItem3 img {
+        width: 150px;
+
+    }
+
+    .specificCatItem4 {
+        /*post heading*/
+        grid-column-start: 1;
+        grid-row-start: 4;
+        font-size: larger;
+        font-weight: 700;
+        text-decoration: underline;
+        padding: 10px;
+        justify-self: center;
+    }
+
+    .specificCatItem5 {
+        /*post section*/
+        grid-column: 1 / span 2;
+        grid-row-start: 5;
+        justify-self: center;
+    }
+
+    .grayBoxInInfo {
+        background-color: #B4BEC9;
+        padding: 20px;
+        align-self: center;
+
+
+    }
+
+    .bountiesSection {
+        background-color: #E4E9ED;
+        text-decoration: underline;
+        font-size: x-large;
+        font-weight: 700;
+        border: solid 1px black;
+        display: grid;
+        grid-template-columns: auto;
+
+        /*I'm leaving this as a weird stick idc*/
+
+    }
+
+
+
+    /*Sign in*/
+
+    .signUpForms {
+        background-color: #F6FAFD;
+        box-shadow: 5px 5px 5px gray;
+        text-align: center;
+        padding: 10px;
+        /* width: 700px;*/
+        margin-left: auto;
+        margin-right: auto;
+
+    }
+
+    .signInForm {
+        display: grid;
+        grid-template-columns: auto;
+        row-gap: 20px;
+    }
+
+    .inputBoxes {
+        width: 100%;
+        max-width: 400px;
+        height: 40px;
+    }
+
+    .signUpGap {
+        display: grid;
+        row-gap: 50px;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
+
+    /*TOS*/
+
+    .TOS {
+        background-color: #F6FAFD;
+        padding: 10px;
+        /* width: 900px;*/
+        margin-left: 25px;
+        margin-right: 25px;
+        box-shadow: 5px 5px 5px gray;
+        margin-bottom: 25px;
+        margin-top: 25px;
+
+    }
+
+
+    /*Support*/
+
+
+    .FAQ {
+        background-color: #F6FAFD;
+        padding: 10px;
+        box-shadow: 5px 5px 5px gray;
+        margin-left: 25px;
+        margin-right: 25px;
+        /* width: 700px;*/
+        text-align: left;
+        margin-top: 25px;
+        margin-bottom: 25px;
+
+    }
+
+
+    .FAQHeading {
+        border-bottom: solid 1px gray;
+    }
+
+
+
+    .downArrowIcon {
+        width: 25px;
+    }
+
+    .bordersForQuestions {
+        padding: 10px;
+        border-bottom: solid gray 1px;
+
+    }
+
+    .bordersForQuestions a {
+        color: black;
+    }
+
+
+    .answerBox {
+        border-bottom: solid 1px gray;
+
+
+    }
+
+
+    .formStyleSupport {
+        padding: 10px;
+    }
+
+    .formStyleSupport textarea {
+        width: 100%;
+        max-width: 400px;
+    }
+
+
+    /*User Profile*/
+
+    .entireAreaUserProfile {
+        text-align: center;
+        padding: 20px;
+        /*width: 700px;*/
+        /*margin: auto;*/
+        /*Don't be mad Carter but the margin auto stretched
+        it out too much on the mobile version*/
+
+    }
+
+    .smallerProfileBox {
+        background-color: #F6FAFD;
+        padding: 20px;
+        box-shadow: 5px 5px 5px gray;
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        row-gap: 25px;
+        column-gap: 25px;
+        margin-bottom: 25px;
+        align-items: center;
+    }
+
+    .evenSmallerProfileBox {
+        background-color: #232C33;
+        color: white;
+        padding: 6px;
+        width: 300px;
+        border-radius: 5px;
+        margin-bottom: 25px;
+    }
+
+    .evenSmallerProfileBox {
+        background-color: #232C33;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .evenSmallerProfileBox input {
+        flex: 1;
+        margin: 0;
+    }
+
+    .evenSmallerProfileBox .iconImg {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        flex-shrink: 0;
+    }
+
+    .evenSmallerProfileBox input {
+        /* width: 400px;*/
+        height: 40px;
+        background-color: #232C33;
+        border: solid 1px white;
+        color: white;
+    }
+
+    .smallerLabelProfile {
+        padding: 0;
+        width: auto;
+        text-align: left;
+        display: flex;
+        align-items: center;
+    }
+
+    .evenSmallerProfileBox {
+        background-color: #232C33;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 52px;
+    }
+
+    .evenSmallerProfileBox input {
+        flex: 1;
+        margin: 0;
+        height: 40px;
+        background-color: #232C33;
+        border: solid 1px white;
+        color: white;
+        min-width: 0;
+    }
+
+    .evenSmallerProfileBox .iconImg {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        flex-shrink: 0;
+    }
+
+    #holdingSpace {
+        grid-column: 1 / span 2;
+        /* span both columns of the grid */
+        justify-self: start;
+        margin-top: 20px;
+    }
+
+    /*Account settings*/
+
+    .accountInfo {
+        text-align: center;
+        /*This is literally just the heading*/
+    }
+
+
+    .deleteButton {
+        background-color: #FF7373;
+        padding: 25px;
+        color: white;
+        font-size: larger;
+        font-weight: 800;
+        display: inline-block;
+        border: solid 1px #FF7373;
+
+
+
+    }
+
+
+    .infoInAccountSettings {
+        display: grid;
+        grid-template-columns: 20% auto;
+
+    }
+
+    #deleteButtonSpecifically {
+        text-align: center;
+    }
+
+
+    /*Making a Post*/
+
+    .addBoxPost {
+        background: none;
+        width: auto;
+        height: auto;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    /*
+    .addBoxPost input[type="file"] {
+        display: none;
+    }
+
+    #postItem3 select {
+        cursor: pointer;
+    }
+
+    #postItem3 input[type="radio"] {
+        cursor: pointer;
+    }
+    */
+
+    #postItem4 .goblinButtons {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 20px;
+        padding-right: 20px;
+        cursor: pointer;
+    }
+
+    .textAreaSize {
+        width: 100%;
+        max-width: 400px;
+        height: 100px;
+    }
+
+
+    #holdingSpace {
+        margin-top: 25px;
+    }
+
+    #postChecked {
+        cursor: pointer;
+    }
+
+    #post_condition {
+        cursor: pointer;
+    }
+
+    #post_boxCondition {
+        cursor: pointer;
+    }
+
+    #post_sfw_nsfw {
+        cursor: pointer;
+    }
+
+
+}
+
+
+
+
+
+/*Tablet*/
+@media (min-width: 600px) and (max-width: 1000px) {
+
+
+    /*USER PROFILE IMG*/
+    .userIconImageForSmaller {
+        width: 75px;
+        border-radius: 50%;
+    }
+
+    /*Home Page
+    */
+
+
+    .headerGridItem a img {
+        width: 50px;
+    }
+
+
+
+    aside {
+        height: auto;
+        width: 90%;
+        max-width: 500px;
+        text-align: center;
+        border: solid 1px black;
+        font-size: large;
+        background-color: rgb(233, 233, 233);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 8px;
+        margin: 0 auto;
+        gap: 8px;
+    }
+
+    .adBoxes {
+        border: 1px black solid;
+        padding: 5px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+
+    /*Header css*/
+
+    header {
+        background-color: #232C33;
+        padding: 5px;
+        display: block;
+        color: white;
+        width: 100%;
+        position: relative;
+    }
+
+    .headerGrid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 3px;
+        padding-right: 90px;
+        align-items: center;
+        width: 100%;
+    }
+
+    #userIconGridItem {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+    }
+
+    ol {
+        list-style: none;
+        display: flex;
+        align-items: center;
+
+        /* justify-content: space-around;*/
+    }
+
+    li {
+        padding: 2px;
+
+
+    }
+
+    /*
+    .logoImage {
+        width: 100px;
+        height: auto;
+    }
+        */
+
+    .titleLink {
+        color: white;
+        font-size: large;
+
+    }
+
+
+
+    h1 {
+        font-size: xx-large;
+        text-align: center;
+    }
+
+
+
+
+
+
+    /*Footer info*/
+    footer {
+        background-color: #232C33;
+        padding: 5px;
+        display: block;
+        color: white;
+        width: 100%;
+    }
+
+
+    footer a {
+        color: white;
+    }
+
+    .footerFlex {
+
+        display: block;
+        padding: 5px;
+
+    }
+
+    .iconImg {
+        width: 30px;
+        height: auto;
+        padding: 5px;
+    }
+
+    #bottomLogo {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        width: 200px;
+    }
+
+
+
+    /*Home*/
+
+    .homeTabLinks {
+        color: white;
+        font-size: larger;
+        background-color: #375F5D;
+        padding: 20px;
+        /* width: 300px;*/
+
+        text-align: center;
+        justify-content: center;
+
+        border-radius: 2px;
+
+    }
+
+    .homeTabGrid {
+
+        display: flex;
+        align-items: center;
+
+    }
+
+    .homeTabImgBox {
+        background-color: white;
+        padding: 10px;
+        /*width: 650px;*/
+        box-shadow: 10px 5px 5px gray;
+    }
+
+    .homeTabLinks a {
+        color: white;
+    }
+
+    #infoBoxHome {
+        background-color: white;
+        padding: 20px;
+        /*width: 500px;*/
+        box-shadow: 10px 5px 5px gray;
+        /* margin-left: auto;
+        margin-right: 400px;*/
+
+    }
+
+
+
+    .footerGrid {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    .homeImg {
+        width: 220px;
+        max-width: 100%;
+        background-color: white;
+        padding: 10px;
+        box-shadow: 5px 5px 5px gray;
+    }
+
+
+    .megaGridOrFlex {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: max-content;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    #homeGridItem1 {
+        /*The aside*/
+        grid-column: 1 / span 2;
+        grid-row: 5 / span 4;
+        justify-self: center;
+        width: 100%;
+    }
+
+    #homeGridItem2 {
+        /*welcome box*/
+        grid-column: 1 / span 2;
+        grid-row-start: 1;
+        justify-self: center;
+        /* margin-left: 20px;*/
+        width: 100%;
+        max-width: 400px;
+    }
+
+    #homeGridItem3 {
+        /*categories button*/
+        grid-column-start: 1;
+        grid-row-start: 2;
+        justify-self: center;
+        padding: 10px;
+        /* height: 50px;*/
+        width: 100%;
+        max-width: 200px;
+    }
+
+    #homeGridItem4 {
+        /* sign up bitton*/
+        grid-column-start: 2;
+        grid-row-start: 2;
+        justify-self: center;
+        padding: 10px;
+        height: auto;
+        width: 100%;
+        max-width: 200px;
+    }
+
+    #homeGridItem5 {
+        /* coins img*/
+        grid-column-start: 1;
+        grid-row-start: 3;
+        justify-self: center;
+    }
+
+    #homeGridItem6 {
+        /*turtle*/
+        grid-column-start: 2;
+        grid-row-start: 3;
+        justify-self: center;
+    }
+
+
+
+    /*Categories*/
+
+
+
+    /*This is for categories*/
+
+    .categoryContainer {
+        display: grid;
+        grid-template-columns: auto auto;
+        padding: 10px;
+        row-gap: 50px;
+        column-gap: 50px;
+    }
+
+    .categoryGridItem {
+        background-color: #F6FAFD;
+        padding: 5px;
+        box-shadow: 5px 5px 5px gray;
+        border: solid 1px gray;
+        text-align: center;
+        width: 160px;
+        margin: 20px;
+    }
+
+    .categoryGridItem h3 {
+        margin: 10px;
+    }
+
+    .categoryGridItem img {
+        padding-bottom: 10px;
+    }
+
+    .categoryGridItem a {
+        color: black
+    }
+
+
+    /*THE POSTS*/
+
+
+
+    .specificCatItem5 {
+        /*  background-color: red;*/
+        display: grid;
+        grid-template-columns: repeat(2, minmax(280px, 330px));
+        gap: 25px;
+        align-items: start;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .boxesForEachPost {
+        background-color: white;
+        border: 1px solid #232C33;
+        box-shadow: 5px 5px 5px gray;
+        padding: 18px;
+        padding-bottom: 18px;
+        width: 100%;
+        max-width: 320px;
+        min-height: 280px;
+        max-height: 350px;
+        overflow: hidden;
+        margin-bottom: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        border-radius: 4px;
+        position: relative;
+        transition: max-height 0.3s ease;
+    }
+
+    .boxesForEachPost.expanded {
+        max-height: none;
+    }
+
+    .expandPostBtn {
+        background-color: #375F5D;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 0.9em;
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    .boxesForEachPost:hover .expandPostBtn {
+        opacity: 1;
+    }
+
+    .expandPostBtn:hover {
+        background-color: #2a4a48;
+    }
+
+    .gridItemForPostBox1 {
+        /*post id*/
+        grid-row-start: 7;
+        margin-left: auto;
+        margin-right: auto;
+        grid-column-start: 2;
+
+    }
+
+    .gridItemForPostBox2 {
+        /*user id*/
+        grid-row-start: 6;
+        margin-left: auto;
+        margin-right: auto;
+        grid-column-start: 2;
+
+    }
+
+    .gridItemForPostBox3 {
+        /*username*/
+        background-color: #232C33;
+        color: white;
+        padding: 10px 14px;
+        border-radius: 4px;
+        text-align: center;
+        font-weight: 700;
+    }
+
+    .gridItemForPostBox3 p {
+        margin: 0;
+        color: white;
+    }
+
+    .gridItemForPostBox4 {
+        /*user pfp*/
+        grid-column-start: 1;
+        grid-row-start: 1;
+        justify-content: left;
+        display: block;
+        width: 100px;
+    }
+
+    .gridItemForPostBox4 img {
+        border-radius: 50%;
+    }
+
+    .gridItemForPostBox5,
+    .gridItemForPostBox9,
+    .gridItemForPostBox10,
+    .gridItemForPostBox11,
+    .gridItemForPostBox13,
+    .gridItemForPostBox14 {
+        width: 100%;
+        margin: 0;
+        text-align: center;
+    }
+
+    .gridItemForPostBox5 {
+        font-weight: 700;
+        text-transform: capitalize;
+        color: #375F5D;
+    }
+
+    .gridItemForPostBox9 {
+        /*price*/
+        grid-column-start: 1;
+        grid-row-start: 6;
+
+    }
+
+    .gridItemForPostBox10 {
+        /*location*/
+        font-size: 1em;
+        color: #232C33;
+    }
+
+    .gridItemForPostBox11 {
+        /*desc*/
+        font-size: 1.1em;
+        line-height: 1.4;
+    }
+
+    .gridItemForPostBox12 {
+        /*post img*/
+        text-align: center;
+        margin: 0;
+    }
+
+    .gridItemForPostBox12 img {
+        width: 100%;
+        max-width: 270px;
+        height: auto;
+        border-radius: 4px;
+        border: 1px solid #d9d9d9;
+        background-color: #f3f3f3;
+        padding: 8px;
+    }
+
+    .gridItemForPostBox13 {
+        /*csfw nsfw*/
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #375F5D;
+    }
+
+    .gridItemForPostBox14 {
+        /*post date*/
+        font-size: 0.95em;
+        color: #232C33;
+    }
+
+
+    .gridItemForPostBoxViewPost {
+        /*The link*/
+
+        grid-row-start: 7;
+        grid-column-start: 1;
+
+        width: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+        text-align: center;
+
+    }
+
+    .gridItemForPostBoxViewPost a {
+        color: #232C33;
+        text-decoration: underline;
+        font-weight: 700;
+    }
+
+
+
+    /*Bounties on the side*/
+
+    .bountiesSection {
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        grid-template-rows: auto;
+        column-gap: 5px;
+        height: 400px;
+
+    }
+
+    .bountiesSection h3 {
+        grid-row-start: 1;
+        grid-column-start: 2;
+    }
+
+
+
+    .bigBountyOnCat {
+        margin-left: auto;
+        margin-right: auto;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-template-rows: auto auto;
+        justify-content: center;
+        justify-self: center;
+        column-gap: 25px;
+
+    }
+
+
+    .boxesForEachBounty {
+        /*Side view on categories*/
+        background-color: white;
+        width: 150px;
+        height: auto;
+        grid-row-start: 2;
+        justify-content: center;
+        justify-self: center;
+        box-shadow: 5px 5px 5px gray;
+        margin-top: 25px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .gridItemForBountyDisplayBox11 {
+        /*Desc*/
+    }
+
+    .gridItemForBountyDisplayBox12 {
+        /*Img*/
+    }
+
+    .bountyClickStyle a,
+    p {
+        color: #232C33;
+    }
+
+
+
+
+
+
+    /*Community Tab*/
+
+    .communityGridContainer {
+        display: grid;
+        grid-template-columns: auto;
+
+
+    }
+
+    #comGridItem1 {
+        /*The aside*/
+
+        grid-row-start: 2;
+        justify-self: center;
+
+        margin-bottom: 25px;
+    }
+
+    #comGridItem2 {
+
+        grid-row-start: 1;
+        justify-self: center;
+        background-color: white;
+        margin-bottom: 25px;
+        height: 110px;
+    }
+
+    #comGridItem3 {
+
+        grid-row-start: 3;
+        /* justify-self: center;*/
+        border: solid 1px gray;
+        box-shadow: 5px 5px 5px gray;
+        background-color: white;
+        /* width: 700px;*/
+        /* height: 100px;*/
+        margin-bottom: 25px;
+        text-align: center;
+
+    }
+
+
+
+    #comGridItem4 {
+
+        grid-row-start: 3;
+        justify-self: center;
+    }
+
+
+
+    .comFriendsHeader {
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+
+    /*Smaller grid for text area*/
+
+
+    .secondComGridPost {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        box-shadow: 5px 5px 5px gray;
+        padding: 12px 14px;
+        width: 500px;
+        height: 200px;
+        border: solid 1px gray;
+        gap: 10px;
+        margin-top: 20px;
+        font-family: rubik, Arial;
+    }
+
+    .postTopRow {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    #postItem1 {
+        flex-shrink: 0;
+    }
+
+    #postItem2 {
+        flex: 1;
+
+    }
+
+    #postItem2 textarea {
+        width: 100%;
+        border: none;
+        outline: none;
+        resize: none;
+        font-family: rubik, Arial;
+        font-size: 1rem;
+        color: black;
+        background: transparent;
+        padding: 6px 0;
+        box-sizing: border-box;
+    }
+
+    #postItem2 textarea::placeholder {
+        color: #B4BEC9;
+    }
+
+    .postBottomRow {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    #postItem3 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+        font-size: larger;
+    }
+
+
+    #postItem4 {
+        margin-left: auto;
+    }
+
+    /*Images on this tab*/
+    #userProfilePicture {
+        width: 50px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .comIcons {
+        width: 30px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+
+    /*Search Tab*/
+
+    .searchGridContainer {
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: max-content;
+        margin-top: 25px;
+
+
+    }
+
+    #searchGridItem1 {
+        /*aside*/
+        grid-column-start: 1;
+        grid-row-start: 3;
+
+        justify-self: center;
+
+
+    }
+
+    #searchGridItem2 {
+        /*search bar*/
+        grid-column-start: 1;
+        grid-row-start: 1;
+        background-color: white;
+        padding: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        /*width: 500px;*/
+        box-shadow: 5px 5px 5px gray;
+
+    }
+
+    #searchGridItem3 {
+        /*Bounty button*/
+
+
+        grid-row-start: 2;
+        padding: 10px;
+        /*align-content: center;*/
+        justify-self: center;
+    }
+
+    #searchGridItem4 {
+        /*Posts*/
+        grid-column-start: 1;
+        grid-row: 4 / span 2;
+    }
+
+    .searchBar {
+        background-color: white;
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        background-color: #B4BEC9;
+        padding: 10px;
+        justify-content: center;
+        column-gap: 7px;
+        border-radius: 5px;
+
+
+
+    }
+
+    .searchBarItems {
+        width: 150px;
+        height: 35px;
+        border: none;
+        background-color: #B4BEC9;
+        color: black;
+        font-weight: 700;
+        cursor: auto;
+    }
+
+    #category {
+        cursor: pointer;
+    }
+
+    #sort {
+        cursor: pointer;
+    }
+
+    .comIcons {
+        vertical-align: middle;
+    }
+
+    #borderForSearch {
+        border-right: solid black 3px;
+        height: 40px;
+    }
+
+
+
+    /*Buttons (Perhaps this can be used later)*/
+
+    .goblinButtons {
+        background-color: #375F5D;
+        padding: 25px;
+        color: white;
+        font-size: larger;
+        font-weight: 800;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .goblinButtons a {
+        color: white;
+    }
+
+
+
+
+    /*The categories themselves (autographs...)*/
+
+
+    .specificCategoryLayoutGrid {
+        display: grid;
+        grid-template-columns: auto;
+        grid-auto-rows: max-content;
+        margin-top: 25px;
+        margin-bottom: 25px;
+
+
+    }
+
+    .specificCatItem1 {
+        /*aside*/
+        grid-column-start: 1;
+        grid-row-start: 3;
+        /*Had to specify the amount of rows it spanned or else it would've
+        gone on forever*/
+        justify-self: center;
+
+
+
+    }
+
+    .specificCatItem2 {
+        /*button*/
+        grid-column-start: 1;
+        grid-row-start: 2;
+        padding: 10px;
+        justify-self: center;
+        margin-top: 15px;
+        align-items: center;
+    }
+
+    .specificCatItem3 {
+        /*info part*/
+        grid-column-start: 1;
+        grid-row-start: 1;
+        display: grid;
+        grid-template-columns: auto auto;
+        background-color: F6FAFD;
+        padding: 15px;
+        /*width: 700px;*/
+        height: 250px;
+        text-align: center;
+        justify-self: center;
+        column-gap: 10px;
+        align-items: center;
+        box-shadow: 5px 5px 5px gray;
+    }
+
+    .specificCatItem3 img {
+        width: 150px;
+
+    }
+
+    .specificCatItem4 {
+        /*post heading*/
+        grid-column-start: 1;
+        grid-row-start: 4;
+        font-size: larger;
+        font-weight: 700;
+        text-decoration: underline;
+        padding: 10px;
+        justify-self: center;
+    }
+
+    .specificCatItem5 {
+        /*post section*/
+        grid-column: 1 / span 2;
+        grid-row-start: 5;
+        justify-self: center;
+    }
+
+    .grayBoxInInfo {
+        background-color: #B4BEC9;
+        padding: 20px;
+        align-self: center;
+
+
+    }
+
+    .bountiesSection {
+        background-color: #E4E9ED;
+        text-decoration: underline;
+        font-size: x-large;
+        font-weight: 700;
+        border: solid 1px black;
+
+    }
+
+
+
+    /*Sign in*/
+
+    .signUpForms {
+        background-color: #F6FAFD;
+        box-shadow: 5px 5px 5px gray;
+        text-align: center;
+        padding: 10px;
+        /* width: 700px;*/
+        margin-left: auto;
+        margin-right: auto;
+
+    }
+
+    .signInForm {
+        display: grid;
+        grid-template-columns: auto;
+        row-gap: 20px;
+    }
+
+    .inputBoxes {
+        width: 100%;
+        max-width: 400px;
+        height: 40px;
+    }
+
+    .signUpGap {
+        display: grid;
+        row-gap: 50px;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
+
+    /*TOS*/
+
+    .TOS {
+        background-color: white;
+        padding: 10px;
+        /* width: 900px;*/
+        margin-left: 25px;
+        margin-right: 25px;
+        box-shadow: 5px 5px 5px gray;
+        margin-bottom: 25px;
+        margin-top: 25px;
+
+    }
+
+
+    /*Support*/
+
+
+    .FAQ {
+        background-color: white;
+        padding: 10px;
+        box-shadow: 5px 5px 5px gray;
+        margin-left: 25px;
+        margin-right: 25px;
+        /* width: 700px;*/
+        text-align: left;
+        margin-top: 25px;
+        margin-bottom: 25px;
+
+    }
+
+
+    .FAQHeading {
+        border-bottom: solid 1px gray;
+    }
+
+
+
+    .downArrowIcon {
+        width: 25px;
+    }
+
+    .bordersForQuestions {
+        padding: 10px;
+        border-bottom: solid gray 1px;
+
+    }
+
+    .bordersForQuestions a {
+        color: black;
+    }
+
+
+    .answerBox {
+        border-bottom: solid 1px gray;
+
+
+    }
+
+
+    .formStyleSupport {
+        padding: 10px;
+    }
+
+    .formStyleSupport textarea {
+        width: 100%;
+        max-width: 400px;
+    }
+
+
+    /*User Profile*/
+
+    .entireAreaUserProfile {
+        text-align: center;
+        padding: 20px;
+        /*width: 700px;*/
+        /*margin: auto;*/
+
+    }
+
+    .smallerProfileBox {
+        background-color: white;
+        padding: 10px;
+        box-shadow: 5px 5px 5px gray;
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        grid-template-rows: auto auto auto auto;
+        row-gap: 20px;
+        column-gap: 20px;
+        margin-bottom: 25px;
+        align-items: center;
+    }
+
+    .evenSmallerProfileBox {
+        background-color: #232C33;
+        color: white;
+        padding: 10px;
+        /* width: 300px;*/
+        border-radius: 5px;
+        margin-bottom: 25px;
+
+
+    }
+
+    .evenSmallerProfileBox input {
+        /* width: 400px;*/
+
+
+        height: 40px;
+        background-color: #232C33;
+        border: solid 1px white;
+        color: white;
+    }
+
+    .smallerLabelProfile {
+        padding: 0;
+        width: auto;
+        text-align: left;
+        display: flex;
+        align-items: center;
+    }
+
+    /*Account settings*/
+
+    .accountInfo {
+        text-align: center;
+        /*This is literally just the heading*/
+    }
+
+
+    .deleteButton {
+        background-color: #FF7373;
+        padding: 25px;
+        color: white;
+        font-size: larger;
+        font-weight: 800;
+        display: inline-block;
+        border: solid 1px #FF7373;
+
+
+
+    }
+
+
+    .infoInAccountSettings {
+        display: grid;
+        grid-template-columns: 35% auto;
+
+    }
+
+    #deleteButtonSpecifically {
+        text-align: center;
+    }
+
+
+    /*Making a Post*/
+
+    .addBoxPost {
+        background: none;
+        width: auto;
+        height: auto;
+        padding: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .addBoxPost .iconImg {
+        width: 28px;
+        height: auto;
+        cursor: pointer;
+    }
+
+    .addBoxPost input[type="file"] {
+        display: none;
+    }
+
+    #postItem3 select {
+        cursor: pointer;
+    }
+
+    #postItem3 input[type="radio"] {
+        cursor: pointer;
+    }
+
+    #postItem4 .goblinButtons {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 20px;
+        padding-right: 20px;
+        cursor: pointer;
+    }
+
+    .textAreaSize {
+        width: 500px;
+        height: 100px;
+    }
+
+
+    #holdingSpace {
+        margin-top: 25px;
+    }
+
+    #postChecked {
+        cursor: pointer;
+    }
+
+    #post_condition {
+        cursor: pointer;
+    }
+
+    #post_boxCondition {
+        cursor: pointer;
+    }
+
+    #post_sfw_nsfw {
+        cursor: pointer;
+    }
+
+
+}
+
+
+
+
+/*Desktop*/
+@media (min-width:1000px) {
+
+
+    /*USER PROFILE IMG*/
+    .userIconImageForSmaller {
+        width: 100px;
+        height: auto;
+
+        border-radius: 50%;
+    }
+
+
+
+
+
+
+    /*Home Page
+    */
+
+
+
+    aside {
+        /*Code from another assignment*/
+        /*float: right;*/
+
+        /*  height: 100px;*/
+
+        /*margin-left: 800px;*/
+        height: 600px;
+        width: 250px;
+        text-align: center;
+        border: solid 1px black;
+        font-size: large;
+        background-color: rgb(233, 233, 233);
+
+        padding: 8px;
+
+
+        /*See, this disturbs the flow, BUUUT it looks like the thing.  And it's not crazy*/
+
+
+
+    }
+
+    .adBoxes {
+        border: 1px black solid;
+
+    }
+
+
+    /*Header css*/
+
+    header {
+        background-color: #232C33;
+        padding: 5px;
+        display: block;
+        color: white;
+        width: 100%;
+        position: relative;
+    }
+
+    .headerGrid {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+        padding-right: 120px;
+        align-items: center;
+        width: 100%;
+    }
+
+    #userIconGridItem {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+    }
+
+    ol {
+        list-style: none;
+        display: flex;
+        align-items: center;
+
+        justify-content: space-around;
+    }
+
+    li {
+        padding: 3px;
+
+
+    }
+
+
+    .titleLink {
+        color: white;
+        font-size: large;
+
+    }
+
+
+
+    h1 {
+        font-size: xxx-large;
+        text-align: center;
+    }
+
+
+
+
+
+
+    /*Footer info*/
+    footer {
+        background-color: #232C33;
+        padding: 5px;
+        display: block;
+        color: white;
+        width: 100%;
+    }
+
+
+    footer a {
+        color: white;
+    }
+
+    .footerFlex {
+
+        display: block;
+        padding: 5px;
+
+    }
+
+    .iconImg {
+        width: 30px;
+        height: auto;
+        padding: 5px;
+    }
+
+    #bottomLogo {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        width: 200px;
+    }
+
+
+    .homeTabLinks {
+        color: white;
+        font-size: larger;
+        background-color: #375F5D;
+        padding: 20px;
+        /* width: 300px;*/
+
+        text-align: center;
+        justify-content: center;
+
+        border-radius: 2px;
+
+    }
+
+    .homeTabGrid {
+
+        display: flex;
+        align-items: center;
+
+    }
+
+    .homeTabImgBox {
+        background-color: white;
+        padding: 10px;
+        /*width: 650px;*/
+        box-shadow: 10px 5px 5px gray;
+    }
+
+    .homeTabLinks a {
+        color: white;
+    }
+
+    #infoBoxHome {
+        background-color: white;
+        padding: 20px;
+        /*width: 500px;*/
+        box-shadow: 10px 5px 5px gray;
+        /* margin-left: auto;
+        margin-right: 400px;*/
+
+    }
+
+    /*
+    .headerGridItem img {
+        width: 7000px;
+    }*/
+
+    .footerGrid {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    .homeImg {
+        width: 330px;
+        background-color: white;
+        padding: 10px;
+        box-shadow: 5px 5px 5px gray;
+    }
+
+
+    .megaGridOrFlex {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-template-rows: auto auto auto;
+    }
+
+    #homeGridItem1 {
+        /*The aside*/
+        grid-column-start: 3;
+        grid-row: 1 / span 3;
+        justify-self: center;
+    }
+
+    #homeGridItem2 {
+        /*welcome box*/
+        grid-column: 1 / span 2;
+        grid-row-start: 1;
+        justify-self: center;
+        margin-left: 20px;
+        width: 700px;
+    }
+
+    #homeGridItem3 {
+        /*categories button*/
+        grid-column-start: 1;
+        grid-row-start: 2;
+        justify-self: center;
+        padding: 10px;
+        height: 50px;
+        width: 300px;
+
+
+
+    }
+
+    #homeGridItem4 {
+        /* sign up bitton*/
+        grid-column-start: 2;
+        grid-row-start: 2;
+        justify-self: center;
+        padding: 10px;
+        height: 50px;
+        width: 300px;
+
+    }
+
+    #homeGridItem5 {
+        /* coins img*/
+        grid-column-start: 1;
+        grid-row-start: 3;
+        justify-self: center;
+    }
+
+    #homeGridItem6 {
+        /*turtle*/
+        grid-column-start: 2;
+        grid-row-start: 3;
+        justify-self: center;
+    }
+
+
+
+    /*Categories*/
+
+
+
+    /*This is for categories*/
+
+    .categoryContainer {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto;
+        padding: 10px;
+        row-gap: 10px;
+        column-gap: 10px;
+
+    }
+
+    .categoryGridItem {
+        background-color: #F6FAFD;
+        padding: 5px;
+        box-shadow: 5px 5px 5px gray;
+        border: solid 1px gray;
+        text-align: center;
+        width: 160px;
+        margin: 20px;
+    }
+
+    .categoryGridItem h3 {
+        margin: 10px;
+    }
+
+    .categoryGridItem img {
+        padding-bottom: 10px;
+    }
+
+    .categoryGridItem a {
+        color: black
+    }
+
+
+
+    /*THE POSTS THEMSELVES*/
+
+
+    .specificCatItem5 {
+        /*  background-color: red;*/
+        display: grid;
+        grid-template-columns: repeat(2, 330px);
+        gap: 25px;
+        align-items: start;
+        justify-content: start;
+        /*grid-template-rows: max-content;*/
+    }
+
+    .boxesForEachPost {
+        background-color: white;
+        border: 1px solid #232C33;
+        box-shadow: 5px 5px 5px gray;
+        padding: 18px;
+        padding-bottom: 18px;
+        width: 320px;
+        min-height: 280px;
+        max-height: 350px;
+        overflow: hidden;
+        margin-bottom: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        border-radius: 4px;
+        position: relative;
+        transition: max-height 0.3s ease;
+    }
+
+    .boxesForEachPost.expanded {
+        max-height: none;
+    }
+
+    .expandPostBtn {
+        background-color: #375F5D;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 0.9em;
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    .boxesForEachPost:hover .expandPostBtn {
+        opacity: 1;
+    }
+
+    .expandPostBtn:hover {
+        background-color: #2a4a48;
+    }
+
+    .gridItemForPostBox1 {
+        /*post id*/
+        grid-row-start: 7;
+        margin-left: auto;
+        margin-right: auto;
+        grid-column-start: 2;
+
+    }
+
+    .gridItemForPostBox2 {
+        /*user id*/
+        grid-row-start: 6;
+        margin-left: auto;
+        margin-right: auto;
+        grid-column-start: 2;
+
+    }
+
+    .gridItemForPostBox3 {
+        /*username*/
+        background-color: #232C33;
+        color: white;
+        padding: 10px 14px;
+        border-radius: 4px;
+        text-align: center;
+        font-weight: 700;
+    }
+
+    .gridItemForPostBox3 p {
+        margin: 0;
+        color: white;
+    }
+
+    .gridItemForPostBox4 {
+        /*user pfp*/
+        grid-column-start: 1;
+        grid-row-start: 1;
+        justify-content: left;
+        display: block;
+
+        width: 100px;
+
+
+    }
+
+
+
+    .gridItemForPostBox4 img {
+        border-radius: 50%;
+    }
+
+    .gridItemForPostBox5,
+    .gridItemForPostBox9,
+    .gridItemForPostBox10,
+    .gridItemForPostBox11,
+    .gridItemForPostBox13,
+    .gridItemForPostBox14 {
+        width: 100%;
+        margin: 0;
+        text-align: center;
+    }
+
+    .gridItemForPostBox5 {
+        font-weight: 700;
+        text-transform: capitalize;
+        color: #375F5D;
+    }
+
+    .gridItemForPostBox9 {
+        /*price*/
+        grid-column-start: 1;
+        grid-row-start: 6;
+
+    }
+
+    .gridItemForPostBox10 {
+        /*location*/
+        font-size: 1em;
+        color: #232C33;
+    }
+
+    .gridItemForPostBox11 {
+        /*desc*/
+        font-size: 1.1em;
+        line-height: 1.4;
+    }
+
+    .gridItemForPostBox12 {
+        /*post img*/
+        text-align: center;
+        margin: 0;
+    }
+
+    .gridItemForPostBox12 img {
+        width: 100%;
+        max-width: 270px;
+        height: auto;
+        border-radius: 4px;
+        border: 1px solid #d9d9d9;
+        background-color: #f3f3f3;
+        padding: 8px;
+    }
+
+    .gridItemForPostBox13 {
+        /*csfw nsfw*/
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #375F5D;
+    }
+
+    .gridItemForPostBox14 {
+        /*post date*/
+        font-size: 0.95em;
+        color: #232C33;
+    }
+
+
+    .gridItemForPostBoxViewPost {
+        /*The link*/
+
+        grid-row-start: 7;
+        grid-column-start: 1;
+
+        width: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+        text-align: center;
+
+    }
+
+    .gridItemForPostBoxViewPost a {
+        color: #232C33;
+        text-decoration: underline;
+        font-weight: 700;
+    }
+
+
+    /*Bounties on the side*/
+
+    .bigBountyOnCat {
+        margin-left: auto;
+        margin-right: auto;
+        display: grid;
+        grid-template-columns: auto;
+        justify-content: center;
+        justify-self: center;
+    }
+
+
+    .boxesForEachBounty {
+        /*Side view on categories*/
+        background-color: white;
+        width: 200px;
+        box-shadow: 5px 5px 5px gray;
+        margin-top: 25px;
+    }
+
+
+    .gridItemForBountyDisplayBox11 {
+        /*Desc*/
+    }
+
+    .gridItemForBountyDisplayBox12 {
+        /*Img*/
+    }
+
+    .bountyClickStyle a,
+    p {
+        color: #232C33;
+    }
+
+
+
+
+
+
+    /*Community Tab*/
+
+    .communityGridContainer {
+        display: grid;
+        grid-template-columns: auto auto auto;
+
+
+
+    }
+
+    #comGridItem1 {
+        /*The aside*/
+        grid-column-start: 3;
+        grid-row: 1 / span 3;
+        justify-self: center;
+    }
+
+    #comGridItem2 {
+        grid-column: 1 / span 2;
+        grid-row-start: 1;
+        justify-self: center;
+        background-color: white;
+        height: auto;
+        margin-top: 25px;
+    }
+
+    #comGridItem3 {
+        grid-column: 1 / span 2;
+        grid-row-start: 2;
+        justify-self: center;
+        border: solid 1px gray;
+        box-shadow: 5px 5px 5px gray;
+        background-color: white;
+        width: 700px;
+        height: 100px;
+    }
+
+    #comGridItem4 {
+        grid-column: 1 / span 2;
+        grid-row-start: 3;
+        justify-self: center;
+    }
+
+    /*Smaller grid for text area*/
+
+    .secondComGridPost {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-template-rows: auto auto;
+        width: 700px;
+        border: solid 1px gray;
+        box-shadow: 5px 5px 5px gray;
+        background-color: white;
+        height: auto;
+    }
+
+    .postTopRow {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    #postItem1 {
+        grid-column-start: 1;
+        justify-self: center;
+        margin-top: 10px;
+    }
+
+    #postItem2 {
+        grid-column-start: 2;
+        justify-self: center;
+        margin-top: 10px;
+    }
+
+    #postItem2 textarea {
+        width: 400px;
+    }
+
+    #postItem2 textarea::placeholder {
+        color: #B4BEC9;
+    }
+
+    .postBottomRow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #postItem3 {
+        grid-column-start: 2;
+        grid-row-start: 2;
+        justify-self: center;
+        font-size: larger;
+    }
+
+
+    #postItem4 {
+        grid-column-start: 3;
+        grid-row-start: 2;
+        justify-self: center;
+    }
+
+    /*Images on this tab*/
+    #userProfilePicture {
+        width: 80px;
+    }
+
+    .comIcons {
+        width: 30px;
+    }
+
+
+    /*Search Tab*/
+
+    .searchGridContainer {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-template-rows: auto auto;
+        margin-top: 25px;
+
+    }
+
+    #searchGridItem1 {
+        /*aside*/
+        grid-column-start: 3;
+        grid-row: 2 / span 2;
+        align-content: center;
+
+
+
+    }
+
+    #searchGridItem2 {
+        /*search bar*/
+        grid-column: 1 / span 2;
+        grid-row-start: 1;
+        background-color: white;
+        padding: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 700px;
+        box-shadow: 5px 5px 5px gray;
+    }
+
+    #searchGridItem3 {
+        /*Bounty button*/
+        grid-column-start: 3;
+        grid-row-start: 1;
+        padding: 10px;
+        align-content: center;
+    }
+
+    #searchGridItem4 {
+        /*Posts*/
+        grid-column: 1 / span 2;
+        grid-row: 2 / span 2;
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+
+    .searchBar {
+        background-color: white;
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        background-color: #B4BEC9;
+        padding: 20px;
+        column-gap: 7px;
+        border-radius: 5px;
+        align-items: center;
+
+
+
+
+    }
+
+    .searchBarItems {
+        width: 150px;
+        height: 35px;
+        border: none;
+        background-color: #B4BEC9;
+        color: black;
+        font-weight: 700;
+        cursor: auto;
+    }
+
+    #category {
+        cursor: pointer;
+    }
+
+    #sort {
+        cursor: pointer;
+    }
+
+    .comIcons {
+        vertical-align: middle;
+    }
+
+    #borderForSearch {
+        border-right: solid black 3px;
+        height: 40px;
+    }
+
+
+    /*Buttons (Perhaps this can be used later)*/
+
+    .goblinButtons {
+        background-color: #375F5D;
+        padding: 25px;
+        color: white;
+        font-size: larger;
+        font-weight: 800;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .goblinButtons a {
+        color: white;
+    }
+
+
+
+
+    /*The categories themselves (autographs...)*/
+
+
+    .specificCategoryLayoutGrid {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-auto-rows: max-content;
+        margin-top: 25px;
+        margin-bottom: 25px;
+
+
+    }
+
+    .specificCatItem1 {
+        /*aside*/
+        grid-column-start: 3;
+        grid-row: 1 / span 3;
+        /*Had to specify the amount of rows it spanned or else it would've
+        gone on forever*/
+
+
+    }
+
+    .specificCatItem2 {
+        /*button*/
+        grid-column-start: 2;
+        grid-row-start: 2;
+        padding: 10px;
+        justify-self: center;
+        margin-top: 15px;
+        align-items: center;
+        position: relative;
+        z-index: 10;
+    }
+
+    .specificCatItem3 {
+        /*info part*/
+        grid-column: 1 / span 2;
+        grid-row-start: 1;
+        display: grid;
+        grid-template-columns: auto auto;
+        background-color: #F6FAFD;
+        padding: 15px;
+        width: 700px;
+        /*height: 110px;*/
+        text-align: center;
+        justify-self: center;
+        column-gap: 10px;
+        align-items: center;
+        box-shadow: 5px 5px 5px gray;
+    }
+
+    .specificCatItem3 img {
+        width: 250px;
+    }
+
+    .specificCatItem4 {
+        /*post heading*/
+        grid-column-start: 1 / span 2;
+        grid-row-start: 2;
+        font-size: larger;
+        font-weight: 700;
+        text-decoration: underline;
+        padding: 10px;
+        justify-self: center;
+    }
+
+    .specificCatItem5 {
+        /*post section*/
+        grid-column: 1 / span 2;
+        grid-row-start: 3;
+        display: grid;
+        grid-template-columns: repeat(2, 320px);
+        justify-content: center;
+        gap: 40px;
+        margin-top: 10px;
+    }
+
+    .grayBoxInInfo {
+        background-color: #B4BEC9;
+        padding: 20px;
+        align-self: center;
+
+
+    }
+
+    .bountiesSection {
+        background-color: #E4E9ED;
+        border: none;
+        border-left: black 1px solid;
+        font-size: x-large;
+        font-weight: 700;
+    }
+
+
+
+    /*Sign in*/
+
+    .signUpForms {
+        background-color: #F6FAFD;
+        box-shadow: 5px 5px 5px gray;
+        text-align: center;
+        padding: 10px;
+        width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+
+    }
+
+    .signInForm {
+        display: grid;
+        grid-template-columns: auto;
+        row-gap: 20px;
+    }
+
+    .inputBoxes {
+        width: 100%;
+        max-width: 400px;
+        height: 40px;
+    }
+
+    .signUpGap {
+        display: grid;
+        row-gap: 50px;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
+
+    /*TOS*/
+
+    .TOS {
+        background-color: white;
+        padding: 10px;
+        width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 5px 5px 5px gray;
+        margin-bottom: 25px;
+        margin-top: 25px;
+
+    }
+
+
+    /*Support*/
+
+
+    .FAQ {
+        background-color: white;
+        padding: 10px;
+        box-shadow: 5px 5px 5px gray;
+        margin-left: auto;
+        margin-right: auto;
+        width: 700px;
+        text-align: left;
+        margin-top: 25px;
+        margin-bottom: 25px;
+
+    }
+
+
+    .FAQHeading {
+        border-bottom: solid 1px gray;
+    }
+
+
+
+    .downArrowIcon {
+        width: 25px;
+    }
+
+    .bordersForQuestions {
+        padding: 10px;
+        border-bottom: solid gray 1px;
+
+    }
+
+    .bordersForQuestions a {
+        color: black;
+    }
+
+
+    .answerBox {
+        border-bottom: solid 1px gray;
+
+
+    }
+
+
+    .formStyleSupport {
+        padding: 10px;
+    }
+
+    .formStyleSupport textarea {
+        width: 600px;
+    }
+
+
+    /*User Profile*/
+
+    .entireAreaUserProfile {
+        text-align: center;
+        padding: 20px;
+        width: 700px;
+        margin: auto;
+
+    }
+
+    .smallerProfileBox {
+        background-color: white;
+        padding: 10px;
+        box-shadow: 5px 5px 5px gray;
+        display: grid;
+        grid-template-columns: 25% auto;
+        grid-template-rows: auto auto auto;
+        row-gap: 5px;
+        margin-bottom: 25px;
+
+    }
+
+    .evenSmallerProfileBox {
+        background-color: #232C33;
+        color: white;
+        padding: 10px;
+        width: 450px;
+        border-radius: 5px;
+        margin-bottom: 25px;
+
+
+    }
+
+    .evenSmallerProfileBox input {
+        width: 400px;
+        height: 40px;
+        background-color: #232C33;
+        border: solid 1px white;
+        color: white;
+    }
+
+    .smallerLabelProfile {
+        padding: 10px;
+        width: 400px;
+        text-align: left;
+
+    }
+
+    /*Account settings*/
+
+    .accountInfo {
+        text-align: center;
+        /*This is literally just the heading*/
+    }
+
+
+    .deleteButton {
+        background-color: #FF7373;
+        padding: 25px;
+        color: white;
+        font-size: larger;
+        font-weight: 800;
+        display: inline-block;
+        border: solid 1px #FF7373;
+
+
+
+    }
+
+
+    .infoInAccountSettings {
+        display: grid;
+        grid-template-columns: 25% auto;
+
+    }
+
+    #deleteButtonSpecifically {
+        text-align: center;
+    }
+
+
+    /*Making a Post*/
+
+    .addBoxPost {
+        background-color: #B4BEC9;
+        width: 300px;
+        height: 100px;
+    }
+
+    .textAreaSize {
+        width: 500px;
+        height: 100px;
+    }
+
+    #holdingSpace {
+        margin-top: 25px;
+    }
+
+    .addBoxPost .iconImg {
+        width: 28px;
+        height: auto;
+        cursor: pointer;
+    }
+
+    .addBoxPost input[type="file"] {
+        display: none;
+    }
+
+
+    #postItem3 select {
+        cursor: pointer;
+    }
+
+    #postItem3 input[type="radio"] {
+        cursor: pointer;
+    }
+
+    #postItem4 .goblinButtons {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 20px;
+        padding-right: 20px;
+        cursor: pointer;
+    }
+
+    .textAreaSize {
+        width: 500px;
+        height: 100px;
+    }
+
+
+    #holdingSpace {
+        margin-top: 25px;
+    }
+
+    #postChecked {
+        cursor: pointer;
+    }
+
+    #post_condition {
+        cursor: pointer;
+    }
+
+    #post_boxCondition {
+        cursor: pointer;
+    }
+
+    #post_sfw_nsfw {
+        cursor: pointer;
+    }
+
+    /*Post View*/
+    .postDetailBox {
+        background-color: white;
+        box-shadow: 5px 5px 5px gray;
+        padding: 30px;
+        margin: 25px auto;
+        width: 700px;
+        text-align: left;
+    }
+
+    .postDetailBox p {
+        margin: 0;
+    }
+
+}
