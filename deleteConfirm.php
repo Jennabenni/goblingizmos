@@ -4,7 +4,13 @@ session_start();
 /*DO NOT DELETE THESE */
 
 //include("db-connect.php");
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+
+
+//DOCKER CONNECTION DO NOT TOUCH ARF ARF
+require 'db_connectionGG.php';
+
+
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -152,7 +158,7 @@ if (!$targetPost) {
 }
 
 $isAuthor = ((int) $targetPost['user_id'] === (int) $_SESSION['user_id']);
-$isAdmin  = (isset($row['access_level']) && $row['access_level'] === 'admin');
+$isAdmin = (isset($row['access_level']) && $row['access_level'] === 'admin');
 
 if (!$isAuthor && !$isAdmin) {
     /* User is neither the author nor an admin — they should not be here */
@@ -168,25 +174,25 @@ if (!$isAuthor && !$isAdmin) {
  * --------------------------------------------------------------- */
 $categoryFileMap = array(
     "autographs" => "categories/autographsCategory.php",
-    "books"      => "categories/booksCategories.php",
-    "caps"       => "categories/bottleCapsCategories.php",
-    "cans"       => "categories/cansCategories.php",
-    "charms"     => "categories/charmsCategories.php",
-    "coins"      => "categories/coinsCategories.php",
-    "figures"    => "categories/figuresCategories.php",
-    "jewelry"    => "categories/jewelryCategories.php",
-    "magnets"    => "categories/magnetsCategories.php",
-    "minerals"   => "categories/mineralsCategories.php",
-    "perfume"    => "categories/perfumeCategories.php",
-    "plates"     => "categories/platesCategories.php",
-    "cards"      => "categories/cardsCategories.php",
-    "plushies"   => "categories/plushiesCategories.php",
-    "prints"     => "categories/printsCategories.php",
-    "stamps"     => "categories/stampsCategories.php",
-    "tickets"    => "categories/ticketsCategories.php",
-    "games"      => "categories/videoGamesCategories.php",
-    "vinyls"     => "categories/vinylsCategories.php",
-    "other"      => "categories/otherCategories.php",
+    "books" => "categories/booksCategories.php",
+    "caps" => "categories/bottleCapsCategories.php",
+    "cans" => "categories/cansCategories.php",
+    "charms" => "categories/charmsCategories.php",
+    "coins" => "categories/coinsCategories.php",
+    "figures" => "categories/figuresCategories.php",
+    "jewelry" => "categories/jewelryCategories.php",
+    "magnets" => "categories/magnetsCategories.php",
+    "minerals" => "categories/mineralsCategories.php",
+    "perfume" => "categories/perfumeCategories.php",
+    "plates" => "categories/platesCategories.php",
+    "cards" => "categories/cardsCategories.php",
+    "plushies" => "categories/plushiesCategories.php",
+    "prints" => "categories/printsCategories.php",
+    "stamps" => "categories/stampsCategories.php",
+    "tickets" => "categories/ticketsCategories.php",
+    "games" => "categories/videoGamesCategories.php",
+    "vinyls" => "categories/vinylsCategories.php",
+    "other" => "categories/otherCategories.php",
 );
 
 
@@ -391,7 +397,7 @@ if (isset($_POST['confirm_delete'])) {
             <form method="POST" action="<?php print htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
 
                 <input type="hidden" name="post_id" value="<?php print htmlspecialchars($postId); ?>">
-                <input type="hidden" name="type"    value="<?php print htmlspecialchars($postType); ?>">
+                <input type="hidden" name="type" value="<?php print htmlspecialchars($postType); ?>">
 
                 <!-- Confirm button uses the existing deleteButton style (red) -->
                 <button type="submit" name="confirm_delete" class="deleteButton">Yes, Delete It</button>
@@ -444,9 +450,12 @@ if (isset($_POST['confirm_delete'])) {
 
                         <div class="footerGridItem2">
                             <ol>
-                                <li><a href="https://x.com/"><img src="img/TwitterLogo.png" class="iconImg" alt="X logo"></a></li>
-                                <li><a href="https://www.instagram.com/"><img src="img/instagram.png" class="iconImg" alt="Instagram logo"></a></li>
-                                <li><a href="https://www.facebook.com/"><img src="img/facebook.png" class="iconImg" alt="Facebook logo"></a></li>
+                                <li><a href="https://x.com/"><img src="img/TwitterLogo.png" class="iconImg"
+                                            alt="X logo"></a></li>
+                                <li><a href="https://www.instagram.com/"><img src="img/instagram.png" class="iconImg"
+                                            alt="Instagram logo"></a></li>
+                                <li><a href="https://www.facebook.com/"><img src="img/facebook.png" class="iconImg"
+                                            alt="Facebook logo"></a></li>
                             </ol>
                         </div>
 

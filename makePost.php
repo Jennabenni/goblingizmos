@@ -15,13 +15,20 @@ error_reporting(E_ALL);
 
 //include("../db-connect.php");
 //include(__DIR__ . "/db-connect.php");
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
 
 //include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
+
+
+
+
+//DOCKER CONNECTION DO NOT TOUCH ARF ARF
+require 'db_connectionGG.php';
+
 
 
 /*
@@ -602,9 +609,12 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
                 do I put pictures from my computer to database?? */
 
                 print "<div class='addBoxPost'>";
-                print "<img src=\"img/image.png\" class=\"iconImg\" alt=\"small picture box icon\"> ";
-                print "<label for=\"imagePost\"></label>";
-                print "<input type=\"file\" id=\"imagePost\" name='post_img'>";
+                //print "<img src=\"img/image.png\" class=\"iconImg\" alt=\"small picture box icon\"> ";
+                print "<label for=\"imagePost\">
+                <img src=\"img/image.png\" class=\"iconImg\" alt=\"small picture box icon\">
+                <input type=\"file\" id=\"imagePost\" name='post_img'>
+                </label>";
+                //print "<input type=\"file\" id=\"imagePost\" name='post_img'>";
                 print " </div>";
 
                 /*

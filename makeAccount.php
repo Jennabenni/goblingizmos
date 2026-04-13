@@ -15,12 +15,19 @@ error_reporting(E_ALL);
 
 //include("../db-connect.php");
 //include(__DIR__ . "/db-connect.php");
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
 //include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
+
+
+
+//DOCKER CONNECTION DO NOT TOUCH ARF ARF
+require 'db_connectionGG.php';
+
+
 
 //This will be Inserting into the DB
 
@@ -393,9 +400,10 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 
                     <div class='addBoxPost'>
-                        <img src="img/image.png" class="iconImg" alt="small picture box icon">
-                        <label for="imagePost"></label>
-                        <input type="file" id="user_pfp" name="user_pfp">
+                        <label for="user_pfp">
+                            <img src="img/image.png" class="iconImg" alt="small picture box icon">
+                            <input type="file" id="user_pfp" name="user_pfp">
+                        </label>
                     </div>
 
 

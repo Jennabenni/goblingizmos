@@ -7,12 +7,18 @@ session_start();
 
 //include("../db-connect.php");
 //include(__DIR__ . "/../db-connect.php");
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //WAIT THIS ONE WORKED??
 //local
 
 //include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
 //remote
+
+
+
+//DOCKER CONNECTION DO NOT TOUCH ARF ARF
+require '../db_connectionGG.php';
+
 
 
 /* FIX: initialize variables */

@@ -1,6 +1,13 @@
 <?php
 session_start();
-include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+//include("/home/ad/je686804/public_html/dig3134c/assignment03/db-connect.php");
+
+
+
+//DOCKER CONNECTION DO NOT TOUCH ARF ARF
+require 'db_connectionGG.php';
+
+
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || !isset($_SESSION['user_id'])) {
     header("Location: signIn.php");
@@ -117,6 +124,7 @@ if (isset($_POST['cancel_delete'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -189,7 +197,7 @@ if (isset($_POST['cancel_delete'])) {
 
                 <?php if (!$showConfirmation) { ?>
                     <div style="width:100%; text-align:center;">
-                    <p>Please enter your password to continue.</p>
+                        <p>Please enter your password to continue.</p>
                     </div>
 
                     <form method="POST">
@@ -200,29 +208,30 @@ if (isset($_POST['cancel_delete'])) {
                         <div style="display:flex; justify-content:center; margin-top:15px;">
                             <button type="submit" name="verify" class="goblinButtons">Verify</button>
                         </div>
-                        </div>
-                    </form>
-                <?php } else { ?>
-                    <p style="text-align:center; margin-bottom:15px;">Are you sure you want to delete your account? This cannot be undone.</p>
+                </div>
+                </form>
+            <?php } else { ?>
+                <p style="text-align:center; margin-bottom:15px;">Are you sure you want to delete your account? This cannot
+                    be undone.</p>
 
-                    <form method="POST">
-                        <input type="hidden" name="password" value="<?php echo htmlspecialchars($_POST['password']); ?>">
+                <form method="POST">
+                    <input type="hidden" name="password" value="<?php echo htmlspecialchars($_POST['password']); ?>">
 
-                        <div style="display:flex; justify-content:center; gap:15px; margin-top:15px;">
+                    <div style="display:flex; justify-content:center; gap:15px; margin-top:15px;">
                         <button type="submit" name="confirm_delete" class="deleteButton">Yes, Delete My Account</button>
                         <button type="submit" name="cancel_delete" class="goblinButtons">No, Go Back</button>
                     </div>
-                    </form>
-                <?php } ?>
+                </form>
+            <?php } ?>
 
-                <?php
-                if (!empty($message)) {
-                    print "<p style=\"color:red;\">" . htmlspecialchars($message) . "</p>";
-                }
-                ?>
+            <?php
+            if (!empty($message)) {
+                print "<p style=\"color:red;\">" . htmlspecialchars($message) . "</p>";
+            }
+            ?>
 
-            </div>
         </div>
+    </div>
 
     </div>
 
@@ -252,9 +261,12 @@ if (isset($_POST['cancel_delete'])) {
 
                         <div class="footerGridItem2">
                             <ol>
-                                <li><a href="https://x.com/"><img src="img/TwitterLogo.png" class="iconImg" alt="X logo"></a></li>
-                                <li><a href="https://www.instagram.com/"><img src="img/instagram.png" class="iconImg" alt="Instagram logo"></a></li>
-                                <li><a href="https://www.facebook.com/"><img src="img/facebook.png" class="iconImg" alt="Facebook logo"></a></li>
+                                <li><a href="https://x.com/"><img src="img/TwitterLogo.png" class="iconImg"
+                                            alt="X logo"></a></li>
+                                <li><a href="https://www.instagram.com/"><img src="img/instagram.png" class="iconImg"
+                                            alt="Instagram logo"></a></li>
+                                <li><a href="https://www.facebook.com/"><img src="img/facebook.png" class="iconImg"
+                                            alt="Facebook logo"></a></li>
                             </ol>
                         </div>
                     </div>
@@ -265,6 +277,7 @@ if (isset($_POST['cancel_delete'])) {
     </footer>
 
 </body>
+
 </html>
 
 <?php
