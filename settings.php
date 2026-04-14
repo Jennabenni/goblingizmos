@@ -23,10 +23,10 @@ require 'db_connectionGG.php';
 
 
 
-/*
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-*/
+
 
 if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 
@@ -42,6 +42,7 @@ if (isset($_SESSION['logged_in']) && isset($_SESSION['user_id'])) {
 
 }
 
+/*
 $pfpMessage = "";
 
 // Check if a profile picture URL was submitted and user is logged in
@@ -66,6 +67,39 @@ if (isset($_POST['pfp_url']) && isset($_SESSION['logged_in']) && isset($_SESSION
 
         $pfpMessage = "Profile picture updated successfully.";
     }
+}*/
+
+
+$pfpMessage = "";
+
+if (
+    isset($_FILES['profile_image']) &&
+    $_FILES['profile_image']['error'] == UPLOAD_ERR_OK &&
+    isset($_SESSION['user_id'])
+) {
+    $uploadDir = 'uploads/';
+    $fileName = basename($_FILES['profile_image']['name']);
+    $targetFile = $uploadDir . $fileName;
+
+
+    $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+    if (!in_array($_FILES['profile_image']['type'], $allowedTypes)) {
+        $pfpMessage = "Only JPG, JPEG, and PNG files are allowed.";
+    } else {
+        if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $targetFile)) {
+            $update_query = "UPDATE goblingizmos_users SET user_pfp = ? WHERE user_id = ?";
+            $stmt = $mysqli->prepare($update_query);
+            if (!$stmt) {
+                die("Prepare failed: " . $mysqli->error);
+            }
+            $stmt->bind_param("si", $targetFile, $_SESSION['user_id']);
+            $stmt->execute();
+            $stmt->close();
+            $pfpMessage = "Profile picture updated successfully.";
+        } else {
+            $pfpMessage = "Error uploading file.";
+        }
+    }
 }
 ?>
 
@@ -85,7 +119,7 @@ if (isset($_POST['pfp_url']) && isset($_SESSION['logged_in']) && isset($_SESSION
 
     <!-- === PROFILE PICTURE UPLOAD SCRIPT === -->
     <!-- This JavaScript runs in the browser and handles sending the image to Supabase Storage -->
-    <script>
+    <!-- <script>
         // Wait for the full page to load before trying to find elements on it
         document.addEventListener('DOMContentLoaded', function () {
 
@@ -157,7 +191,7 @@ if (isset($_POST['pfp_url']) && isset($_SESSION['logged_in']) && isset($_SESSION
                 }
             });
         });
-    </script>
+    </script>-->
 </head>
 
 <body>
@@ -244,71 +278,7 @@ if (isset($_POST['pfp_url']) && isset($_SESSION['logged_in']) && isset($_SESSION
 
 
 
-        <!--
 
-        <a href="userProfile.php">
-            <img src="img/backbutton.png" class="iconImg" alt="back button">
-        </a>
-
-        <h2 class="accountInfo">Account Information</h2>
-
--->
-        <?php
-        /*
-
-        if (isset($_SESSION['logged_in'])) {
-
-
-            print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . "\">";
-
-
-            print "<div class=\"FAQ\">";
-
-
-            print " <div class=\"infoInAccountSettings\">";
-
-            print "<div class=\"smallerLabelProfile\">";
-            print " <h3>Change Password</h3>";
-            print "</div>";
-            print " <div class=\"evenSmallerProfileBox\">";
-
-            /*
-Here's the thing.  Editing your password is a good customization step, HOWEVER, if they forget it, we have no way of knowing what it was, nor do we have a 'forget password' system.
-
-
-
-                        //print " <input type=\"text\" name=\"password\" value=\"" . $row['password'] . "\">";
-                        print "<input type=\"text\" name=\"updatePassword\" placeholder=\"Please enter your old password first\">";
-                        print " <button type=\"submit\" class=\"goblinButtons\" id=\"holdingSpace\" name=\"enter\">Enter</button>";
-
-                        if (isset($_POST['enter']) && (md5($_POST['password']) == ($row->password))) {
-                            print "<input type=\"text\" name=\"password\" placeholder=\"Please enter your old password first\">";
-                        }
-            */
-
-        /*
-print "<img src=\"img/pencilAndPaper.png\" class=\"iconImg\">";
-print "</div>";
-
-
-print "<div class=\"smallerLabelProfile\">";
-print "<h3>Change Email</h3>";
-print "</div>";
-print "<div class=\"evenSmallerProfileBox\">";
-print "<input type=\"text\" name=\"user_email\" value=\"" . $row['user_email'] . "\">";
-print "<img src=\"img/pencilAndPaper.png\" class=\"iconImg\">";
-print "</div>";
-
-
-print "</div>";
-
-
-
-print "</form>";
-
-}*/
-
-        ?>
         <?php
         if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
 
@@ -321,7 +291,7 @@ print "</form>";
 
             print "<h3 style=\"margin-bottom:15px;\">Profile Picture</h3>";
 
-            print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . "\" style=\"display:flex; flex-direction:column; align-items:center; gap:12px;\">";
+            print "<form method=\"POST\" enctype=\"multipart/form-data\" action=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . "\" style=\"display:flex; flex-direction:column; align-items:center; gap:12px;\">";
 
             if (!empty($pfpMessage)) {
                 print "<p>" . htmlspecialchars($pfpMessage) . "</p>";
@@ -332,14 +302,18 @@ print "</form>";
             }
 
             print "<label for=\"pfp-file-input\">Choose an image:</label>";
-            print "<input type=\"file\" id=\"pfp-file-input\" accept=\"image/*\">";
+            /* print "<input type=\"file\" id=\"pfp-file-input\" accept=\"image/*\">";
 
-            print "<img id=\"pfp-preview\" src=\"\" alt=\"Preview of your new profile picture\" style=\"display:none; max-width:150px; max-height:150px; border-radius:50%;\">";
+             print "<img id=\"pfp-preview\" src=\"\" alt=\"Preview of your new profile picture\" style=\"display:none; max-width:150px; max-height:150px; border-radius:50%;\">";
 
-            print "<p id=\"pfp-upload-status\" style=\"font-style:italic;\"></p>";
+             print "<p id=\"pfp-upload-status\" style=\"font-style:italic;\"></p>";
 
-            print "<input type=\"hidden\" id=\"pfp-url-hidden\" name=\"pfp_url\" value=\"\">";
+             print "<input type=\"hidden\" id=\"pfp-url-hidden\" name=\"pfp_url\" value=\"\">";
 
+             print "<button type=\"submit\" class=\"goblinButtons\">Save Profile Picture</button>";*/
+
+            //this is copilot stuff bc pfp upload isn't working
+            print "<input type=\"file\" name=\"profile_image\" accept=\"image/*\">";
             print "<button type=\"submit\" class=\"goblinButtons\">Save Profile Picture</button>";
 
             print "</form>";
