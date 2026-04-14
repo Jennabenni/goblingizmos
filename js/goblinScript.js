@@ -61,3 +61,10 @@ function insideBrowser() {
 }
 
 window.addEventListener("load", insideBrowser, false);
+
+// Toggle expand/collapse for post boxes
+function toggleExpand(btn) {
+    var postBox = btn.parentElement;
+    postBox.classList.toggle('expanded');
+    btn.textContent = postBox.classList.contains('expanded') ? 'Show Less' : 'Show More';
+}
