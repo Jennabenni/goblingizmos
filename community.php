@@ -553,8 +553,9 @@ if (!$resultCompost) {
             </div>
 
         </div>
-    </div>
 
+
+    </div>
 
 
     <footer>
@@ -615,6 +616,7 @@ if (!$resultCompost) {
         </div>
 
     </footer>
+
 
 </body>
 
