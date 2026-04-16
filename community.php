@@ -557,7 +557,6 @@ if (!$resultCompost) {
 
     </div>
 
-
     <footer>
 
 

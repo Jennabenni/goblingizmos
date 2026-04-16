@@ -27,7 +27,8 @@ body {
 }
 
 footer {
-    flex-shrink: 0;
+    /*flex-shrink: 0;*/
+
 }
 
 
@@ -144,7 +145,7 @@ header ol li p {
 
 
 /*Phone*/
-@media (max-width:600px) {
+@media (max-width:700px) {
 
     /*USER PROFILE IMG*/
     .userIconImageForSmaller {
@@ -1349,7 +1350,7 @@ header ol li p {
 
 
 /*Tablet*/
-@media (min-width: 600px) and (max-width: 1000px) {
+@media (min-width: 700px) and (max-width: 1000px) {
 
 
     /*USER PROFILE IMG*/
@@ -1674,7 +1675,7 @@ header ol li p {
         border: 1px solid #232C33;
         box-shadow: 5px 5px 5px gray;
         padding: 18px;
-        width: 320px;
+        width: 270px;
         margin-bottom: 25px;
         display: flex;
         flex-direction: column;
@@ -1900,12 +1901,20 @@ header ol li p {
     }
 
     #comGridItem2 {
-
+        /*
         grid-row-start: 1;
         justify-self: center;
         background-color: white;
         margin-bottom: 25px;
-        height: 110px;
+        height: 110px;*/
+
+        grid-column: 1 / span 2;
+        grid-row-start: 1;
+        justify-self: center;
+        background-color: white;
+        height: auto;
+        margin-top: 25px;
+        width: auto;
     }
 
     #comGridItem3 {
@@ -1946,7 +1955,7 @@ header ol li p {
         background-color: white;
         box-shadow: 5px 5px 5px gray;
         padding: 12px 14px;
-        width: 500px;
+        width: 100px;
         height: 200px;
         border: solid 1px gray;
         gap: 10px;
@@ -1966,6 +1975,7 @@ header ol li p {
 
     #postItem2 {
         flex: 1;
+
 
     }
 
@@ -1998,6 +2008,7 @@ header ol li p {
         gap: 8px;
         flex: 1;
         font-size: larger;
+        width: 200px;
     }
 
 
@@ -2140,6 +2151,7 @@ header ol li p {
         grid-auto-rows: max-content;
         margin-top: 25px;
         margin-bottom: 25px;
+        width: 100px;
 
 
     }
@@ -2178,7 +2190,7 @@ header ol li p {
         height: 250px;
         text-align: center;
         justify-self: center;
-        column-gap: 10px;
+        column-gap: 2px;
         align-items: center;
         box-shadow: 5px 5px 5px gray;
     }
@@ -2201,7 +2213,7 @@ header ol li p {
 
     .specificCatItem5 {
         /*post section*/
-        grid-column: 1 / span 2;
+        grid-column-start: 1 / span 2;
         grid-row-start: 5;
         justify-self: center;
     }
