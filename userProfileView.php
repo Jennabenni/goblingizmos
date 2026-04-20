@@ -106,7 +106,7 @@ if (isset($_GET['user_id']) && $_GET['user_id'] !== '') {
 
             <div class="headerGrid">
 
-                <!--This is the section with the logo, nav, and the user profile picture-->
+
 
                 <div class="headerGridItem" id="logoFlex">
                     <img class="logoImage" src="img/goblinLogo.png" alt="a goblin face in a coin; the logo">

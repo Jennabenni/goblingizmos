@@ -21,12 +21,12 @@ require 'db_connectionGG.php';
 
 
 
-/*WHY DO THESE ALL HAVE BUTTONS FUCK */
 
+/*
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
+*/
 
 
 
@@ -46,7 +46,7 @@ if (
     $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = ?";
 
 
-    //honestly all of this could be used
+
 
     $stmt = $mysqli->prepare($query_user_info_on_pages);
 
@@ -345,7 +345,7 @@ if (!$resultCompost) {
 
 
             <div id="comGridItem2" class="secondComGridPost">
-                <!--This is where user makes post PHP-->
+
                 <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) { ?>
 
                     <form method="POST" action="<?php print htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
@@ -405,7 +405,7 @@ if (!$resultCompost) {
                             </div>
 
                             <div id="postItem4">
-                                <!--<img src="img/sendArrow.png" class="comIcons" alt="Post Bounty">-->
+
                                 <button type="submit" class="goblinButtons" name="submit">Post</button>
                             </div>
 
@@ -432,8 +432,8 @@ if (!$resultCompost) {
 
                     /* FIX: display posts based on query success, not on login state */
                     if ($resultCompost && $resultCompost->num_rows > 0) {
-                        //I don't have time to delve into this
-                    
+
+
                         while (($row2 = $resultCompost->fetch_array(MYSQLI_ASSOC))) {
 
 
@@ -487,7 +487,7 @@ if (!$resultCompost) {
                     
 
                             print "<div class=\"gridItemForPostBoxViewPost\">";
-                            //print "<a href=\"../categories/postView.php?compost_id=" . $row2['compost_id'] . "\"\">View Post</a>";
+
                             print "</div>";
 
                             /* -- EDIT BUTTON --
@@ -532,7 +532,7 @@ if (!$resultCompost) {
 
 
 
-                            //THE COMMENTS (Viewing)
+                            //THE COMMENTS
                             print "<div><a href=\"communityComments.php?compost_id=" . htmlspecialchars($row2['compost_id']) . "\"\">See Comments</a>></div>";
 
                             print "</div>";

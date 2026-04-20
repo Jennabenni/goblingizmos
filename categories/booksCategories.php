@@ -60,13 +60,9 @@ if (
 if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) {
     $query_all = "SELECT post_id, goblingizmos_postsbounties.user_id, post_or_bounty, post_category, post_condition, post_boxCondition, post_price, post_location, post_description, post_img, post_sfw_nsfw, post_creation_date, goblingizmos_users.username, goblingizmos_users.user_pfp FROM `goblingizmos_postsbounties` INNER JOIN goblingizmos_users ON goblingizmos_postsbounties.user_id=goblingizmos_users.user_id ORDER BY post_id DESC";
 
-    //NOBODY MOVE DONT TOUCH THIS
-
-    //Date format broke it??
-    //Do we need times honestly
 
     $result = $mysqli->query($query_all);
-    //This was hiding in my other code
+
 
 } else if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "user")) {
     $query_some = "SELECT post_id, goblingizmos_postsbounties.user_id, post_or_bounty, post_category, post_condition, post_boxCondition, post_price, post_location, post_description, post_img, post_sfw_nsfw, post_creation_date, goblingizmos_users.username, goblingizmos_users.user_pfp FROM `goblingizmos_postsbounties` INNER JOIN goblingizmos_users ON goblingizmos_postsbounties.user_id=goblingizmos_users.user_id ORDER BY post_id DESC";
@@ -104,7 +100,6 @@ if (isset($_SESSION['access_level'])) {
 
             <div class="headerGrid">
 
-                <!--This is the section with the logo, nav, and the user profile picture-->
 
                 <div class="headerGridItem" id="logoFlex">
                     <img class="logoImage" src="../img/goblinLogo.png" alt="a goblin face in a coin; the logo">
@@ -172,7 +167,7 @@ if (isset($_SESSION['access_level'])) {
 
             <div class="specificCatItem1">
                 <aside class="bountiesSection">
-                    <h3>Bounties</h3>
+                    <h2>Bounties</h2>
 
                     <div class="bigBountyOnCat">
                         <?php
@@ -236,13 +231,10 @@ if (isset($_SESSION['access_level'])) {
 
             </div>
 
-            <!-- <div>
 
-            <h3>Bounties</h3>
-        </div>-->
 
             <div class="specificCatItem4">
-                <h3>Posts</h3>
+                <h2>Posts</h2>
             </div>
 
             <div class="specificCatItem5">

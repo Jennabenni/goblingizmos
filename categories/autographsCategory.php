@@ -46,8 +46,6 @@ if (
     $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = ?";
 
 
-    //honestly all of this could be used
-
     $stmt = $mysqli->prepare($query_user_info_on_pages);
 
     if (!$stmt) {
@@ -81,25 +79,15 @@ if (
             post_img
             post_sfw_nsfw
             post_creation_date
-
-
-
-
-
-            so, I wanted to filter by autograph first, but I'll try dumping everything
             */
 
 
 if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "admin")) {
     $query_all = "SELECT post_id, goblingizmos_postsbounties.user_id, post_or_bounty, post_category, post_condition, post_boxCondition, post_price, post_location, post_description, post_img, post_sfw_nsfw, post_creation_date, goblingizmos_users.username, goblingizmos_users.user_pfp FROM `goblingizmos_postsbounties` INNER JOIN goblingizmos_users ON goblingizmos_postsbounties.user_id=goblingizmos_users.user_id ORDER BY post_id DESC";
 
-    //NOBODY MOVE DONT TOUCH THIS
-
-    //Date format broke it??
-    //Do we need times honestly
 
     $result = $mysqli->query($query_all);
-    //This was hiding in my other code
+
 
 } else if (isset($_SESSION['access_level']) && ($_SESSION['access_level'] == "user")) {
     $query_some = "SELECT post_id, goblingizmos_postsbounties.user_id, post_or_bounty, post_category, post_condition, post_boxCondition, post_price, post_location, post_description, post_img, post_sfw_nsfw, post_creation_date, goblingizmos_users.username, goblingizmos_users.user_pfp FROM `goblingizmos_postsbounties` INNER JOIN goblingizmos_users ON goblingizmos_postsbounties.user_id=goblingizmos_users.user_id ORDER BY post_id DESC";
@@ -140,7 +128,6 @@ if (isset($_SESSION['access_level'])) {
 
             <div class="headerGrid">
 
-                <!--This is the section with the logo, nav, and the user profile picture-->
 
                 <div class="headerGridItem" id="logoFlex">
                     <img class="logoImage" src="../img/goblinLogo.png" alt="a goblin face in a coin; the logo">
@@ -223,10 +210,10 @@ if (isset($_SESSION['access_level'])) {
                                     print "<div class=\"boxesForEachBounty\">";
                                     print "<a href=\"../search.php\" class=\"bountyClickStyle\">";
                                     print "<div class=\"gridItemForBountyDisplayBox11\"><p>" . htmlspecialchars($row3['post_description']) . "</p></div>";
-                                    //this always exists
+
                                     if (!empty($row3['post_img'])) {
                                         print "<div class=\"gridItemForBountyDisplayBox12\"><img src=\"../" . htmlspecialchars($row3['post_img']) . "\" alt=\"bounty image\"></div>";
-                                        //doesn't always exist
+
                                     }
                                     print "</a>";
                                     print "</div>";
@@ -291,14 +278,10 @@ if (isset($_SESSION['access_level'])) {
                         //for admins
                 
                         if (($row['post_category'] == 'autographs') && ($row['post_or_bounty'] == 'post')) {
-                            //IT'S THAT EASY???
-                            //Look how much thinking sleep can get ya
-                            // who would've thought
-                
+
+
                             print "<div class=\"boxesForEachPost\">";
 
-                            /* print "<div class=\"gridItemForPostBox1\">" . "<p> Post Id:" . $row['post_id'] . "</p>" . "</div>"; */ /* these made it so the user and post IDs showed, seemed silly so I kept it but hid it*/
-                            /* print "<div class=\"gridItemForPostBox2\">" . "<p>User Id:" . $row['user_id'] . "</p>" . "</div>"; */
                             print "<div class=\"gridItemForPostBox3\"><p>" . htmlspecialchars($row['username']) . "</p></div>";
                             print "<div class=\"gridItemForPostBox4\">";
 
@@ -333,8 +316,8 @@ if (isset($_SESSION['access_level'])) {
                             print "<div class=\"gridItemForPostBox14\"><p>" . htmlspecialchars($row['post_creation_date']) . "</p></div>";
                             //always exists
                 
-                            // print "<a href=\"../categories/postView.php?post_id=" . $row['post_id'] . "\"\">View Post</a>";
-                
+
+
                             print "<div class=\"gridItemForPostBoxViewPost\">";
                             print "<a href=\"../categories/postView.php?post_id=" . urlencode($row['post_id']) . "\">View Post</a>";
                             print "</div>";
@@ -389,9 +372,8 @@ if (isset($_SESSION['access_level'])) {
                                 print "<div class=\"gridItemForPostBox9\"><p>$" . htmlspecialchars($row2['post_price']) . "</p></div>";
                                 //doesn't always exist
                 
-                                //I made it in $ because I do NOT have the time to code in a whole other currency section
-                                //Hate to be like that but oh well
-                
+
+
                             }
 
                             print "<div class=\"gridItemForPostBox11\"><p>" . htmlspecialchars($row2['post_description']) . "</p></div>";
@@ -426,8 +408,8 @@ if (isset($_SESSION['access_level'])) {
                                 print "</div>";
                             }
 
-                            //to validate i need to change the a tags to look like buttons
-                
+
+
                             /* -- DELETE BUTTON (user loop) --
                              * Regular users can only delete their own posts. */
                             if ((int) $row2['user_id'] === (int) $_SESSION['user_id']) {
@@ -448,8 +430,6 @@ if (isset($_SESSION['access_level'])) {
                     print "<div class=\"signUpForms\">";
                     print "<p>Please create an account with us to view these posts; It's free!</p>";
 
-                    //These were supposed to be available but I'm not sure
-                    //the fastest way to fix it
                     print "</div>";
                 }
 

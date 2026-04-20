@@ -168,7 +168,7 @@ if (isset($_SESSION['access_level'])) {
 
             <div class="specificCatItem1">
                 <aside class="bountiesSection">
-                    <h3>Bounties</h3>
+                    <h2>Bounties</h2>
                     <div class="bigBountyOnCat">
                         <?php
 
@@ -225,13 +225,10 @@ if (isset($_SESSION['access_level'])) {
 
             </div>
 
-            <!-- <div>
 
-            <h3>Bounties</h3>
-        </div>-->
 
             <div class="specificCatItem4">
-                <h3>Posts</h3>
+                <h2>Posts</h2>
             </div>
 
             <div class="specificCatItem5">

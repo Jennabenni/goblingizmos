@@ -18,11 +18,11 @@ session_start();
 require 'db_connectionGG.php';
 
 
-
+/*
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
+*/
 
-//test
 
 
 
@@ -39,7 +39,7 @@ if (
 ) {
 
 
-    //This is for the pfp right??
+
 
     /* FIX: use prepared statement instead of direct SQL concatenation */
     $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = ?";
@@ -73,7 +73,7 @@ if (isset($_GET['compost_id'])) {
 
     $query_get_comment = "SELECT * FROM `goblingizmos_comments` INNER JOIN goblingizmos_community ON goblingizmos_comments.compost_id=goblingizmos_community.compost_id INNER JOIN goblingizmos_users ON goblingizmos_comments.user_id=goblingizmos_users.user_id WHERE goblingizmos_community.compost_id = '" . $_GET['compost_id'] . "'
     ORDER BY comment_compost_creation_date ASC ";
-    //I think I gotta innerjoin
+
     /*
       - user_id (Foreign Key)
         - comment_compost_id (Primary key)
@@ -154,7 +154,7 @@ if (
 
             <div class="headerGrid">
 
-                <!--This is the section with the logo, nav, and the user profile picture-->
+
 
                 <div class="headerGridItem" id="logoFlex">
                     <img class="logoImage" src="img/goblinLogo.png" alt="a goblin face in a coin; the logo">
@@ -327,13 +327,8 @@ if (
          */
 
         print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER['PHP_SELF']) . "?compost_id=" . $_GET['compost_id'] . "\">";
-        //didnt do the enctype because I didnt allow for media uploads
-        
 
-        //display user pfp
-//textbox
-//submit
-        
+
 
         if (
             isset($_SESSION['logged_in']) &&
@@ -366,15 +361,6 @@ if (
 
 
 
-
-
-
-
-
-
-
-
-
     </div>
 
 
@@ -385,11 +371,11 @@ if (
 
 
         <img src="img/goblinLogo.png" id="bottomLogo" alt="a goblin face in a coin; the logo">
-        <!--PLACEHOLDER!! REPLACE LATER: LOGO-->
+
 
         <div>
             <div class="footerFlex">
-                <!--Bottom left-->
+
                 <nav>
                     <div class="footerGrid">
                         <div class="footerGridItem1">
@@ -424,7 +410,7 @@ if (
                                             alt="Facebook logo"></a>
                                 </li>
 
-                                <!--This works, and now I'm too scared to touch it-->
+
 
                             </ol>
 

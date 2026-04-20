@@ -36,7 +36,7 @@ if (
     $query_user_info_on_pages = "SELECT * FROM `goblingizmos_users` WHERE user_id = ?";
 
 
-    //honestly all of this could be used
+
 
     $stmt = $mysqli->prepare($query_user_info_on_pages);
 
@@ -85,7 +85,6 @@ if (
 
             <div class="headerGrid">
 
-                <!--This is the section with the logo, nav, and the user profile picture-->
 
                 <div class="headerGridItem" id="logoFlex">
                     <img class="logoImage" src="img/goblinLogo.png" alt="a goblin face in a coin; the logo">
@@ -155,10 +154,8 @@ if (
         </header>
 
 
-        <!--Oh good lord 20 categories. yeah i noticed thanks this was fun to individually check-->
-
         <div class="categoryContainer">
-            <!--Big DIV, for grid-->
+
 
             <div class="categoryGridItem">
                 <a href="categories/autographsCategory.php">
@@ -179,7 +176,7 @@ if (
                 </a>
             </div>
 
-            <!--Do I need a bigger div to hold the categories?-->
+
 
 
             <div class="categoryGridItem">
