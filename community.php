@@ -371,37 +371,41 @@ if (!$resultCompost) {
                                     <input type="file" id="imagePost" name='compost_img'>
                                 </div>
 
+                                <div>
+                                    <select name="compost_category" id="category">
+                                        <option value="autographs">Autographs</option>
+                                        <option value="books">Books</option>
+                                        <option value="caps">Bottle Caps</option>
+                                        <option value="cans">Cans</option>
+                                        <option value="charms">Charms</option>
+                                        <option value="coins">Coins</option>
+                                        <option value="figures">Figures</option>
+                                        <option value="jewelry">Jewelry</option>
+                                        <option value="magnets">Magnets</option>
+                                        <option value="minerals">Minerals</option>
+                                        <option value="perfume">Perfume</option>
+                                        <option value="plates">Plates</option>
+                                        <option value="cards">Playing Cards</option>
+                                        <option value="plushies">Plushies</option>
+                                        <option value="prints">Prints</option>
+                                        <option value="stamps">Stamps</option>
+                                        <option value="tickets">Tickets</option>
+                                        <option value="games">Video Games</option>
+                                        <option value="vinyls">Vinyls</option>
+                                        <option value="other">Other</option>
 
-                                <select name="compost_category" id="category">
-                                    <option value="autographs">Autographs</option>
-                                    <option value="books">Books</option>
-                                    <option value="caps">Bottle Caps</option>
-                                    <option value="cans">Cans</option>
-                                    <option value="charms">Charms</option>
-                                    <option value="coins">Coins</option>
-                                    <option value="figures">Figures</option>
-                                    <option value="jewelry">Jewelry</option>
-                                    <option value="magnets">Magnets</option>
-                                    <option value="minerals">Minerals</option>
-                                    <option value="perfume">Perfume</option>
-                                    <option value="plates">Plates</option>
-                                    <option value="cards">Playing Cards</option>
-                                    <option value="plushies">Plushies</option>
-                                    <option value="prints">Prints</option>
-                                    <option value="stamps">Stamps</option>
-                                    <option value="tickets">Tickets</option>
-                                    <option value="games">Video Games</option>
-                                    <option value="vinyls">Vinyls</option>
-                                    <option value="other">Other</option>
 
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="sfw">SFW</label>
+                                    <input type="radio" name="compost_sfw_nsfw" value="SFW">
 
-                                </select>
-
-                                <label for="sfw">SFW</label>
-                                <input type="radio" name="compost_sfw_nsfw" value="SFW">
-
-                                <label for="nsfw">NSFW</label>
-                                <input type="radio" name="compost_sfw_nsfw" value="NSFW">
+                                </div>
+                                <div>
+                                    <label for="nsfw">NSFW</label>
+                                    <input type="radio" name="compost_sfw_nsfw" value="NSFW">
+                                </div>
                             </div>
 
                             <div id="postItem4">
@@ -533,7 +537,7 @@ if (!$resultCompost) {
 
 
                             //THE COMMENTS
-                            print "<div><a href=\"communityComments.php?compost_id=" . htmlspecialchars($row2['compost_id']) . "\"\">See Comments</a>></div>";
+                            print "<div><a class=\"seeCommentsStyle\"href=\"communityComments.php?compost_id=" . htmlspecialchars($row2['compost_id']) . "\"\">See Comments</a></div>";
 
                             print "</div>";
 
