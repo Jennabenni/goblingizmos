@@ -183,7 +183,7 @@ if (isset($_GET['post_id'])) {
 
         if ($viewedPost) {
 
-            print "<div class=\"boxesForEachPost\">";
+            print "<div class=\"boxesForEachPostINSIDE\">";
 
             print "<div class=\"gridItemForPostBox3\"><p>" . htmlspecialchars($viewedPost['username']) . "</p></div>";
 

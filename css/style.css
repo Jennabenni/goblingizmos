@@ -374,6 +374,7 @@ header ol li p {
         grid-column: 1 / span 2;
         grid-row: 5 / span 4;
         justify-self: center;
+        margin-top: 25px;
     }
 
     #homeGridItem2 {
@@ -490,6 +491,41 @@ header ol li p {
 
         border-radius: 4px;
     }
+
+    .boxesForEachPostSEARCH {
+
+        background-color: white;
+        border: 1px solid #232C33;
+        box-shadow: 5px 5px 5px gray;
+        padding: 18px;
+        width: 320px;
+        margin-bottom: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        border-radius: 4px;
+        margin-top: 25px;
+
+
+    }
+
+
+
+    .boxesForEachPostINSIDE {
+        background-color: white;
+        border: 1px solid #232C33;
+        box-shadow: 5px 5px 5px gray;
+        padding: 18px;
+        width: 400px;
+        margin-bottom: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        border-radius: 4px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
 
 
     .gridItemForPostBox1 {
@@ -880,6 +916,8 @@ header ol li p {
         /*Posts*/
         grid-column-start: 1;
         grid-row: 4 / span 2;
+        margin-right: auto;
+        margin-left: auto;
     }
 
     .searchBar {
@@ -971,7 +1009,7 @@ header ol li p {
 
     .specificCatItem2 {
         /*button*/
-        grid-column-start: 2;
+        grid-column-start: 1;
         grid-row-start: 2;
         padding: 10px;
         justify-self: center;
@@ -985,7 +1023,7 @@ header ol li p {
         grid-row-start: 1;
         display: grid;
         grid-template-columns: auto auto;
-        background-color: F6FAFD;
+        background-color: #F6FAFD;
         padding: 15px;
         /*width: 700px;*/
         /*height: 250px;*/
@@ -1054,6 +1092,7 @@ header ol li p {
         margin-right: auto;
 
     }
+
 
     .signInForm {
         display: grid;
@@ -1172,7 +1211,7 @@ header ol li p {
         background-color: #232C33;
         color: white;
         padding: 6px;
-        width: 300px;
+        /* width: 220px;*/
         border-radius: 5px;
         margin-bottom: 25px;
     }
@@ -1573,6 +1612,7 @@ header ol li p {
         grid-column: 1 / span 2;
         grid-row: 5 / span 4;
         justify-self: center;
+        margin-top: 25px;
     }
 
     #homeGridItem2 {
@@ -1690,6 +1730,37 @@ header ol li p {
         flex-direction: column;
         gap: 14px;
         border-radius: 4px;
+    }
+
+    .boxesForEachPostSEARCH {
+
+        background-color: white;
+        border: 1px solid #232C33;
+        box-shadow: 5px 5px 5px gray;
+        padding: 18px;
+        width: 450px;
+        margin-bottom: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        border-radius: 4px;
+
+
+    }
+
+    .boxesForEachPostINSIDE {
+        background-color: white;
+        border: 1px solid #232C33;
+        box-shadow: 5px 5px 5px gray;
+        padding: 18px;
+        width: 450px;
+        margin-bottom: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        border-radius: 4px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .gridItemForPostBox1 {
@@ -2056,7 +2127,8 @@ header ol li p {
         grid-row-start: 3;
 
         justify-self: center;
-
+        margin-left: auto;
+        margin-right: auto;
 
     }
 
@@ -2085,8 +2157,11 @@ header ol li p {
 
     #searchGridItem4 {
         /*Posts*/
-        grid-column-start: 1;
+        grid-column: 1/span 2;
         grid-row: 4 / span 2;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 25px;
     }
 
     .searchBar {
@@ -2160,7 +2235,7 @@ header ol li p {
         grid-auto-rows: max-content;
         margin-top: 25px;
         margin-bottom: 25px;
-        width: 100px;
+        /*width: 200px;*/
 
 
     }
@@ -2172,6 +2247,8 @@ header ol li p {
         /*Had to specify the amount of rows it spanned or else it would've
         gone on forever*/
         justify-self: center;
+        margin-left: auto;
+        margin-right: auto;
 
 
 
@@ -2193,7 +2270,7 @@ header ol li p {
         grid-row-start: 1;
         display: grid;
         grid-template-columns: auto auto;
-        background-color: F6FAFD;
+        background-color: #F6FAFD;
         padding: 15px;
         /*width: 700px;*/
         height: 250px;
@@ -2826,6 +2903,40 @@ header ol li p {
         flex-direction: column;
         gap: 12px;
         border-radius: 4px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .boxesForEachPostSEARCH {
+
+        background-color: white;
+        border: 1px solid #232C33;
+        box-shadow: 5px 5px 5px gray;
+        padding: 18px;
+        width: 270px;
+        margin-bottom: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        border-radius: 4px;
+        margin-top: 25px;
+
+
+    }
+
+    .boxesForEachPostINSIDE {
+        background-color: white;
+        border: 1px solid #232C33;
+        box-shadow: 5px 5px 5px gray;
+        padding: 18px;
+        width: 600px;
+        margin-bottom: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        border-radius: 4px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
 

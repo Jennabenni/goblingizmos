@@ -198,7 +198,7 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="js/goblinScript.js"></script>
 
-    <title>Goblin Gizmos - Home</title>
+    <title>Goblin Gizmos - Search</title>
 </head>
 
 
@@ -427,7 +427,7 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
                     foreach ($displayRows as $row2) {
                         if ($row2['post_or_bounty'] == 'bounty') {
 
-                            print "<div class=\"boxesForEachPost\">";
+                            print "<div class=\"boxesForEachPostSEARCH\">";
                             print "<div class=\"gridItemForPostBox3\">" . "<p>" . $row2['username'] . "</p>" . "</div>";
                             print "<div class=\"gridItemForPostBox4\">";
                             print "<a href=\"userProfileView.php?user_id=" . urlencode($row2['user_id']) . "\">";

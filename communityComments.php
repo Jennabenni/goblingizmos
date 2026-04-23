@@ -227,139 +227,139 @@ if (
 
 
 
+        <div class="commentViewing">
+            <?php
 
-        <?php
+            if ($resultCompostUser) {
 
-        if ($resultCompostUser) {
-
-            while ($row2 = $resultCompostUser->fetch_array(MYSQLI_ASSOC)) {
-
-
-                print "<div class=\"boxesForEachPost\">";
+                while ($row2 = $resultCompostUser->fetch_array(MYSQLI_ASSOC)) {
 
 
-
-                print "<div class=\"gridItemForPostBox3\">" . "<p>" . ($row2['username']) . "</p>" . "</div>";
-                print "<div class=\"gridItemForPostBox4\">";
-
-                print "<div class=\"gridItemForPostBox5\">" . "<p>" . ($row2['compost_category']) . "</p>" . "</div>";
-
-
-                print "<a href=\"userProfileView.php?user_id=" . ($row2['user_id']) . "\">";
-                if (!empty($row2['user_pfp'])) {
-                    print "<img src=\"" . htmlspecialchars($row2['user_pfp']) . "\" alt=\"profile image of user\" onerror=\"this.src='img/PFP.png';\">";
-                } else {
-                    print "<img src=\"img/PFP.png\" alt=\"profile image of user\">";
-                }
-                print "</a>";
-                print "</div>";
+                    print "<div class=\"boxesForEachPostINSIDE\">";
 
 
 
-                print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2['compost_description'] . "</p>" . "</div>";
+                    print "<div class=\"gridItemForPostBox3\">" . "<p>" . ($row2['username']) . "</p>" . "</div>";
+                    print "<div class=\"gridItemForPostBox4\">";
+
+                    print "<div class=\"gridItemForPostBox5\">" . "<p>" . ($row2['compost_category']) . "</p>" . "</div>";
+
+
+                    print "<a href=\"userProfileView.php?user_id=" . ($row2['user_id']) . "\">";
+                    if (!empty($row2['user_pfp'])) {
+                        print "<img src=\"" . htmlspecialchars($row2['user_pfp']) . "\" alt=\"profile image of user\" onerror=\"this.src='img/PFP.png';\">";
+                    } else {
+                        print "<img src=\"img/PFP.png\" alt=\"profile image of user\">";
+                    }
+                    print "</a>";
+                    print "</div>";
 
 
 
-                if (!empty($row2['compost_img'])) {
-                    print "<div class=\"gridItemForPostBox12\">" . "<img src=\"" . ($row2['compost_img']) . "\" alt=\"community post image\">" . "</div>";
-
-                }
-
-                if (!empty($row2['compost_sfw_nsfw'])) {
-                    print "<div class=\"gridItemForPostBox13\">" . "<p>" . ($row2['compost_sfw_nsfw']) . "</p>" .
-                        "</div>";
-
-                }
-
-
-                print "<div class=\"gridItemForPostBox14\">" . "<p>" . ($row2['compost_creation_date']) . "</p>" . "</div>";
+                    print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row2['compost_description'] . "</p>" . "</div>";
 
 
 
+                    if (!empty($row2['compost_img'])) {
+                        print "<div class=\"gridItemForPostBox12\">" . "<img src=\"" . ($row2['compost_img']) . "\" alt=\"community post image\">" . "</div>";
+
+                    }
+
+                    if (!empty($row2['compost_sfw_nsfw'])) {
+                        print "<div class=\"gridItemForPostBox13\">" . "<p>" . ($row2['compost_sfw_nsfw']) . "</p>" .
+                            "</div>";
+
+                    }
 
 
-                print "</div>";
+                    print "<div class=\"gridItemForPostBox14\">" . "<p>" . ($row2['compost_creation_date']) . "</p>" . "</div>";
 
 
 
-            }
-
-
-
-        }
-
-        if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in'] == true)) {
-            if ($comment_result) {
-                while ($row3 = $comment_result->fetch_array(MYSQLI_ASSOC)) {
-
-                    print "<div class=\"boxesForEachPost\">";
-
-                    print "<p>" . $row3['username'] . "</p>";
-                    print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row3['comment_text'] . "</p>" . "</div>";
-                    print "<p>" . $row3['comment_compost_creation_date'] . "</p>";
 
 
                     print "</div>";
 
 
+
                 }
 
+
+
             }
-        } else {
-            print "<p>Please log in to view comments on this post</p>";
 
-        }
+            if ((isset($_SESSION['logged_in'])) && ($_SESSION['logged_in'] == true)) {
+                if ($comment_result) {
+                    while ($row3 = $comment_result->fetch_array(MYSQLI_ASSOC)) {
 
+                        print "<div class=\"boxesForEachPostINSIDE\">";
 
-
-        print "<div class = \"FAQ\">";
-
-        /*
-
-        Okay so the new table has
-
-        - user_id (Foreign Key)
-        - comment_compost_id (Primary key)
-        - compost_id (Foreign key)
-        - comment_text
-        - comment_compost_likes
-        - comment_compost_creation_date
-         */
-
-        print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER['PHP_SELF']) . "?compost_id=" . $_GET['compost_id'] . "\">";
+                        print "<p>" . $row3['username'] . "</p>";
+                        print "<div class=\"gridItemForPostBox11\">" . "<p>" . $row3['comment_text'] . "</p>" . "</div>";
+                        print "<p>" . $row3['comment_compost_creation_date'] . "</p>";
 
 
+                        print "</div>";
 
-        if (
-            isset($_SESSION['logged_in']) &&
-            $_SESSION['logged_in'] === true &&
-            isset($row)
-        ) {
 
-            if (!empty($row['user_pfp'])) {
-                print "<a href=\"userProfile.php\"><img src=\"" . htmlspecialchars($row['user_pfp']) . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\" onerror=\"this.src='img/PFP.png';\"></a>";
+                    }
+
+                }
+            } else {
+                print "<p>Please log in to view comments on this post</p>";
+
+            }
+
+
+
+            print "<div class = \"FAQ\">";
+
+            /*
+
+            Okay so the new table has
+
+            - user_id (Foreign Key)
+            - comment_compost_id (Primary key)
+            - compost_id (Foreign key)
+            - comment_text
+            - comment_compost_likes
+            - comment_compost_creation_date
+             */
+
+            print "<form method=\"POST\" action=\"" . htmlspecialchars($_SERVER['PHP_SELF']) . "?compost_id=" . $_GET['compost_id'] . "\">";
+
+
+
+            if (
+                isset($_SESSION['logged_in']) &&
+                $_SESSION['logged_in'] === true &&
+                isset($row)
+            ) {
+
+                if (!empty($row['user_pfp'])) {
+                    print "<a href=\"userProfile.php\"><img src=\"" . htmlspecialchars($row['user_pfp']) . "\" class=\"userIconImageForSmaller\" alt=\"User's chosen profile picture\" onerror=\"this.src='img/PFP.png';\"></a>";
+                } else {
+                    print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
+                }
             } else {
                 print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
             }
-        } else {
-            print "<a href=\"userProfile.php\"> <img src=\"img/PFP.png\" class=\"userIconImageForSmaller\" alt=\"Profile\"></a>";
-        }
 
-        print "<textarea placeholder='Input Text' class='textAreaSize' rows='7' cols='50' id='comment_text' name ='comment_text'></textarea>";
+            print "<textarea placeholder='Input Text' class='textAreaSize' rows='7' cols='50' id='comment_text' name ='comment_text'></textarea>";
 
 
-        print " <button type=\"submit\" class=\"goblinButtons\" id=\"holdingSpace\" name=\"submit\">Comment</button>";
+            print " <button type=\"submit\" class=\"goblinButtons\" id=\"holdingSpace\" name=\"submit\">Comment</button>";
 
 
-        print "</form>";
+            print "</form>";
 
 
 
 
 
-        ?>
+            ?>
 
-
+        </div>
 
     </div>
 
