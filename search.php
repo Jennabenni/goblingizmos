@@ -286,16 +286,13 @@ if (isset($_GET['search']) || isset($_GET['post_category'])) {
                 <aside>
                     <h4>Advertisements</h4>
                     <div class="adBoxes">
-                        <p>Miss your wife? Get another!</p>
-                        <p>Call xxx-xxx-xxxx</p>
+                        <img src="img/spinAd.jpg" alt="goblin in a gacha ball">
                     </div>
                     <div class="adBoxes">
-                        <p>Your foot fungus tells you a lot about your personality</p>
-                        <p>Call xxx-xxx-xxxx</p>
+                        <img src="img/rosieAd.jpg" alt="goblin in a gacha ball">
                     </div>
                     <div class="adBoxes">
-                        <p>Is life a pain? Join the club</p>
-                        <p>Call xxx-xxx-xxxx</p>
+                        <img src="img/uncleSamAd.jpg" alt="goblin in a gacha ball">
                     </div>
                 </aside>
             </div>

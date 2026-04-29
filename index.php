@@ -208,16 +208,13 @@ Three columns, three rows
                     <h4>Advertisements</h4>
 
                     <div class="adBoxes">
-                        <p>Have you wondered what insurance can do for you?</p>
-                        <p>Call xxx-xxx-xxxx</p>
+                        <img src="img/spinAd.jpg" alt="goblin in a gacha ball">
                     </div>
                     <div class="adBoxes">
-                        <p>Been in an accident? That's unfortunate</p>
-                        <p>Call xxx-xxx-xxxx</p>
+                        <img src="img/rosieAd.jpg" alt="goblin in a gacha ball">
                     </div>
                     <div class="adBoxes">
-                        <p>Your wife is hot.</p>
-                        <p>Call xxx-xxx-xxxx</p>
+                        <img src="img/uncleSamAd.jpg" alt="goblin in a gacha ball">
                     </div>
 
 

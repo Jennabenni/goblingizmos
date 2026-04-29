@@ -327,16 +327,13 @@ if (!$resultCompost) {
 
                     <h4>Advertisements</h4>
                     <div class="adBoxes">
-                        <p>Tired of the ads? Wish you could get rid of them?</p>
-                        <p>Call xxx-xxx-xxxx</p>
+                        <img src="img/spinAd.jpg" alt="goblin in a gacha ball">
                     </div>
                     <div class="adBoxes">
-                        <p>Wear protection.</p>
-                        <p>Call xxx-xxx-xxxx</p>
+                        <img src="img/rosieAd.jpg" alt="goblin in a gacha ball">
                     </div>
                     <div class="adBoxes">
-                        <p>Find your soulmate!</p>
-                        <p>Call xxx-xxx-xxxx</p>
+                        <img src="img/uncleSamAd.jpg" alt="goblin in a gacha ball">
                     </div>
 
                 </aside>
